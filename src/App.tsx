@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <div>Tennis Pulse</div>
+      <div>Tennis Pulse App</div>
     </>
   );
 }
