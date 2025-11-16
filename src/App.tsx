@@ -1,14 +1,7 @@
-import File from "@/logo/File";
-import logo from "./assets/logo.png";
-import logoWithText from "./assets/logoWithText.png";
-
 function App() {
   return (
     <>
-      <div>Tennis Pulse App</div>
-      <img src={logo} alt="" />
-      <img src={logoWithText} alt="" />
-      {/* <File /> */}
+      <div className="bg-tp-primary">Tennis Pulse App</div>
     </>
   );
 }
