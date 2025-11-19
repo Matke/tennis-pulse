@@ -17,6 +17,7 @@
   --color-tp-secondary: oklch(58.8% 0.084 210.99);
   --color-tp-tertiary: oklch(69.31% 0.212 138.92);
   --color-tp-warning: oklch(58.15% 0.186 30.72);
+  --color-tp-typography: oklch(96.85% 0.012 209.81);
 
   /* 
     Loader color
@@ -110,13 +111,35 @@
 }
 
 /*
+  Custom scrollbar design
+*/
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-platinum-900);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-charcoal-500);
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-200);
+  }
+}
+
+/*
   Applying font
 */
 html {
   font-family: var(--font-outfit);
 }
 
-/* Loading animation */
+/* Loading animation (loader,spinner) */
 @keyframes l1 {
   to {
     transform: rotate(0.5turn);
