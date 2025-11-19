@@ -32,12 +32,13 @@ const TestPage = () => {
           <Button
             label="Novak Djokovic"
             themeColor="primary"
-            //   disabled
+            disabled={isDataFetching}
             className="w-72"
             uppercaseLabel
             buttonSize="huge"
             isLoading={isDataFetching}
             onClick={() => setIsDataFetching(!isDataFetching)}
+            loaderText="Serving data"
           />
           <div className="w-full flex-col items-center justify-center gap-2 space-y-2 space-x-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0 md:space-x-0">
             <Button

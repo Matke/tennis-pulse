@@ -1,9 +1,11 @@
-type LoaderProps = {
+export type LoaderProps = {
   size: number;
   borderSize: number;
   className?: string;
   backgroundLoaderColor?: string;
   loaderColor?: string;
+  loaderText?: string;
+  children?: React.ReactNode;
 };
 
 const Loader = ({
@@ -12,9 +14,10 @@ const Loader = ({
   className,
   backgroundLoaderColor = "",
   loaderColor = "",
+  children,
 }: LoaderProps) => {
   return (
-    <>
+    <div className="flex items-center justify-center">
       <div
         style={{
           width: `${size}px`,
@@ -26,7 +29,8 @@ const Loader = ({
         }}
         className={className}
       />
-    </>
+      {children}
+    </div>
   );
 };
 

@@ -26,6 +26,7 @@ export type ButtonProps = {
   loaderColor?: string;
   loaderWithLabel?: boolean;
   backgroundLoaderColor?: string;
+  loaderText?: string;
   uppercaseLabel?: boolean;
   position?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -45,6 +46,7 @@ const Button = ({
   position = "relative",
   loaderWithLabel = false,
   loaderColor = "",
+  loaderText,
   backgroundLoaderColor = "",
   uppercaseLabel = false,
   ...rest
@@ -125,7 +127,18 @@ const Button = ({
               size={20}
               borderSize={2}
               loaderColor={loaderColor || setLoaderColor(themeColor)}
-            />
+              className="loading-container"
+            >
+              {/* without loaderText only simple loader will be displayed */}
+              {loaderText && (
+                <span>
+                  <span className={`loading-text pl-3 grayscale filter`}>
+                    {loaderText}
+                  </span>
+                  <span className="dot-animation"></span>
+                </span>
+              )}
+            </Loader>
           </div>
         )}
 

@@ -24,6 +24,9 @@
   */
   --color-tp-loader-transparent: oklch(98.73% 0.03 100.86 / 0.05);
 
+  /*
+    Colors
+  */
   --color-sunbeam-yellow-50: oklch(98.73% 0.03 100.86);
   --color-sunbeam-yellow-100: oklch(97.76% 0.059 102.29);
   --color-sunbeam-yellow-200: oklch(95.82% 0.114 102.92);
@@ -71,6 +74,18 @@
   --color-pacific-blue-800: oklch(36.36% 0.05 211.43);
   --color-pacific-blue-900: oklch(23.66% 0.028 211.46);
   --color-pacific-blue-950: oklch(19.71% 0.021 211.92);
+
+  --color-sky-aqua-50: oklch(97.59% 0.023 206.62);
+  --color-sky-aqua-100: oklch(95.29% 0.045 204.91);
+  --color-sky-aqua-200: oklch(90.97% 0.086 206.75);
+  --color-sky-aqua-300: oklch(87.59% 0.117 206.83);
+  --color-sky-aqua-400: oklch(85.01% 0.137 208.48);
+  --color-sky-aqua-500: oklch(82.9% 0.144 211.3);
+  --color-sky-aqua-600: oklch(70.31% 0.122 210.89);
+  --color-sky-aqua-700: oklch(56.84% 0.098 210.36);
+  --color-sky-aqua-800: oklch(42.55% 0.073 210.58);
+  --color-sky-aqua-900: oklch(27.18% 0.046 206.54);
+  --color-sky-aqua-950: oklch(21.87% 0.037 206.89);
 
   --color-rosy-copper-50: oklch(95.44% 0.017 26.65);
   --color-rosy-copper-100: oklch(90.82% 0.033 27.11);
@@ -139,9 +154,37 @@ html {
   font-family: var(--font-outfit);
 }
 
-/* Loading animation (loader,spinner) */
-@keyframes l1 {
-  to {
-    transform: rotate(0.5turn);
+/* 
+   Dots loading animation
+*/
+.loading-container {
+  display: flex; /* Aligns text and dots horizontally */
+  align-items: center;
+}
+
+.loading-text {
+  margin-right: 1px; /* Space between text and dots */
+}
+
+.dot-animation::after {
+  content: ""; /* Initial empty content for the pseudo-element */
+  animation: dot-cycle 1.5s steps(1, end) infinite; /* Apply the animation */
+}
+
+@keyframes dot-cycle {
+  0% {
+    content: ".";
   }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  75% {
+    content: "";
+  } /* All dots disappear briefly */
+  100% {
+    content: ".";
+  } /* Restart with one dot */
 }
