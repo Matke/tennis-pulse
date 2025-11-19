@@ -1,9 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
 @import "tailwindcss";
 
 @theme {
+  /* 
+    Custom font
+  */
+  --font-josefin: "Josefin Sans", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+
+  /*
+    Custom colors
+  */
   --color-tp-primary: oklch(91.47% 0.191 101.03);
-  --color-tp-secondary: oklch(66.27% 0.108 135.42);
-  --color-tp-tertiary: oklch(58.8% 0.084 210.99);
+  --color-tp-secondary: oklch(58.8% 0.084 210.99);
+  --color-tp-tertiary: oklch(69.31% 0.212 138.92);
+  --color-tp-warning: oklch(58.15% 0.186 30.72);
+
+  /* 
+    Loader color
+  */
+  --color-tp-loader-transparent: oklch(98.73% 0.03 100.86 / 0.05);
 
   --color-sunbeam-yellow-50: oklch(98.73% 0.03 100.86);
   --color-sunbeam-yellow-100: oklch(97.76% 0.059 102.29);
@@ -28,6 +46,18 @@
   --color-muted-olive-800: oklch(35.15% 0.052 134.99);
   --color-muted-olive-900: oklch(23.02% 0.028 136.29);
   --color-muted-olive-950: oklch(19.38% 0.022 136.5);
+
+  --color-radioactive-grass-50: oklch(97.73% 0.032 136.63);
+  --color-radioactive-grass-100: oklch(95.42% 0.062 135.71);
+  --color-radioactive-grass-200: oklch(91.22% 0.122 136.09);
+  --color-radioactive-grass-300: oklch(87.47% 0.178 136.67);
+  --color-radioactive-grass-400: oklch(84.47% 0.225 137.57);
+  --color-radioactive-grass-500: oklch(81.79% 0.252 139.02);
+  --color-radioactive-grass-600: oklch(69.31% 0.212 138.92);
+  --color-radioactive-grass-700: oklch(55.97% 0.169 138.73);
+  --color-radioactive-grass-800: oklch(42.07% 0.124 138.43);
+  --color-radioactive-grass-900: oklch(26.91% 0.074 137.49);
+  --color-radioactive-grass-950: oklch(21.91% 0.058 135.79);
 
   --color-pacific-blue-50: oklch(96.85% 0.012 209.81);
   --color-pacific-blue-100: oklch(93.48% 0.023 210.4);
@@ -77,4 +107,18 @@
   --color-platinum-900: oklch(20.86% 0.013 264.25);
   /* best for dark mode background */
   --color-platinum-950: oklch(17.73% 0.009 264.32);
+}
+
+/*
+  Applying font
+*/
+html {
+  font-family: var(--font-outfit);
+}
+
+/* Loading animation */
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
 }

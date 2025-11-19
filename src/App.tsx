@@ -1,10 +1,11 @@
+import router from "@/router";
+import { RouterProvider } from "react-router";
+
 function App() {
   return (
-    <>
-      <div className="bg-tp-primary text-platinum-950 p-2 tracking-wider">
-        Tennis Pulse App
-      </div>
-    </>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
 }
 
