@@ -14,17 +14,19 @@ const Loader = ({
   loaderColor = "",
 }: LoaderProps) => {
   return (
-    <div
-      style={{
-        width: `${size}px`,
-        aspectRatio: "1",
-        borderRadius: "50%",
-        border: `${borderSize}px solid`,
-        borderColor: `var(${backgroundLoaderColor || "--color-tp-loader-transparent"}) var(${loaderColor || "--color-charcoal-950"})`,
-        animation: "spin 1s infinite linear",
-      }}
-      className={className}
-    />
+    <>
+      <div
+        style={{
+          width: `${size}px`,
+          aspectRatio: "1",
+          borderRadius: "50%",
+          border: `${borderSize}px solid`,
+          borderColor: `var(${backgroundLoaderColor || "--color-tp-loader-transparent"}) var(${loaderColor || "--color-charcoal-950"})`,
+          animation: "spin 1s infinite linear",
+        }}
+        className={className}
+      />
+    </>
   );
 };
 
