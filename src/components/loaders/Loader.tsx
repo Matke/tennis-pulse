@@ -29,6 +29,7 @@ const Loader = ({
         }}
         className={className}
       />
+      {/* Used for loader text if wanted */}
       {children}
     </div>
   );

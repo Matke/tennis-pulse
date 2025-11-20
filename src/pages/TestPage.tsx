@@ -1,5 +1,6 @@
 // components
 import Button from "@/components/buttons/Button";
+import Typography from "@/components/text/Typography";
 
 // icons
 import { MdOutlineSportsTennis } from "react-icons/md";
@@ -210,6 +211,47 @@ const TestPage = () => {
             loaderWithLabel
           />
         </div>
+
+        <h1 className="text-tp-typography p-2 text-2xl underline">
+          Typography
+        </h1>
+        <Button
+          label="Novak Djokovic"
+          themeColor="primary"
+          onClick={() => console.log("Na ovome kroku")}
+          className="self-center"
+          loaderWithLabel
+        />
+        <Typography variant="title" as="h1" className="font-bold">
+          Tennis Pulse App
+        </Typography>
+        <Typography
+          variant="subtitle"
+          as="h2"
+          className="text-8xl font-semibold underline"
+        >
+          Tennis Pulse App
+        </Typography>
+        <Typography
+          variant="paragraph"
+          as="h4"
+          className="font-semibold underline"
+        >
+          Tennis Pulse App
+        </Typography>
+        <Typography
+          variant="paragraph-medium"
+          as="h3"
+          className="font-semibold"
+        >
+          Tennis Pulse App
+        </Typography>
+        <Typography variant="label" className="font-semibold">
+          Tennis Pulse App
+        </Typography>
+        <Typography variant="label-small" className="font-semibold">
+          Tennis Pulse App
+        </Typography>
       </div>
     </div>
   );
