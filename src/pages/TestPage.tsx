@@ -219,7 +219,7 @@ const TestPage = () => {
           label="Novak Djokovic"
           themeColor="primary"
           onClick={() => console.log("Na ovome kroku")}
-          className="self-center"
+          className="ml-2 w-80 self-center rounded-none"
           loaderWithLabel
         />
         <Typography variant="title" as="h1" className="font-bold">
