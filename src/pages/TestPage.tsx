@@ -1,5 +1,6 @@
 // components
 import Button from "@/components/buttons/Button";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 
 // icons
@@ -10,6 +11,8 @@ import { FaTrash } from "react-icons/fa";
 import { FaHourglassStart } from "react-icons/fa";
 import { RiSettings3Fill } from "react-icons/ri";
 import { PiSneakerMoveFill } from "react-icons/pi";
+import { MdDelete } from "react-icons/md";
+
 import { useState } from "react";
 
 const TestPage = () => {
@@ -210,48 +213,156 @@ const TestPage = () => {
             className="self-center"
             loaderWithLabel
           />
+          <Button
+            label="Novak Djokovic"
+            themeColor="primary"
+            onClick={() => console.log("Na ovome kroku")}
+            className="ml-2 w-80 self-center rounded-none"
+            loaderWithLabel
+          />
         </div>
 
         <h1 className="text-tp-typography p-2 text-2xl underline">
           Typography
         </h1>
-        <Button
-          label="Novak Djokovic"
-          themeColor="primary"
-          onClick={() => console.log("Na ovome kroku")}
-          className="ml-2 w-80 self-center rounded-none"
-          loaderWithLabel
-        />
-        <Typography variant="title" as="h1" className="font-bold">
-          Tennis Pulse App
+        <div className="p-2">
+          <Typography variant="title" as="h1" className="font-bold">
+            Tennis Pulse App
+          </Typography>
+          <Typography
+            variant="subtitle"
+            as="h2"
+            className="text-8xl font-semibold underline"
+          >
+            Tennis Pulse App
+          </Typography>
+          <Typography
+            variant="paragraph"
+            as="h4"
+            className="font-semibold underline"
+          >
+            Tennis Pulse App
+          </Typography>
+          <Typography
+            variant="paragraph-medium"
+            as="h3"
+            className="font-semibold"
+          >
+            Tennis Pulse App
+          </Typography>
+          <Typography variant="label" className="font-semibold">
+            Tennis Pulse App
+          </Typography>
+          <Typography variant="label-small" className="font-semibold">
+            Tennis Pulse App
+          </Typography>
+        </div>
+
+        <Typography variant="subtitle" as="h2" className="p-2 underline">
+          Button Icons
         </Typography>
-        <Typography
-          variant="subtitle"
-          as="h2"
-          className="text-8xl font-semibold underline"
-        >
-          Tennis Pulse App
-        </Typography>
-        <Typography
-          variant="paragraph"
-          as="h4"
-          className="font-semibold underline"
-        >
-          Tennis Pulse App
-        </Typography>
-        <Typography
-          variant="paragraph-medium"
-          as="h3"
-          className="font-semibold"
-        >
-          Tennis Pulse App
-        </Typography>
-        <Typography variant="label" className="font-semibold">
-          Tennis Pulse App
-        </Typography>
-        <Typography variant="label-small" className="font-semibold">
-          Tennis Pulse App
-        </Typography>
+
+        <div className="m-4 flex items-center justify-start gap-2">
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="tertiary"
+            variant="flat"
+            rounded
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="primary"
+            variant="filled"
+            hoverClass
+            isLoading
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="primary"
+            variant="outlined"
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="secondary"
+            variant="filled"
+            isLoading
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="secondary"
+            variant="outlined"
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="secondary"
+            variant="flat"
+            rounded
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="warning"
+            variant="outlined"
+            rounded
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="warning"
+            variant="flat"
+            rounded
+            hoverClass
+          />
+          <ButtonIcon
+            icon={<BiSolidTennisBall className="h-5 w-5" />}
+            themeColor="warning"
+            variant="filled"
+            rounded
+            hoverClass
+          />
+          <ButtonIcon
+            icon={<MdDelete className="h-5 w-5" />}
+            themeColor="warning"
+            variant="filled"
+            rounded
+          />
+          <ButtonIcon
+            icon={<MdDelete className="h-5 w-5" />}
+            rounded
+            disabled
+            themeColor="primary"
+            variant="filled"
+          />
+          <ButtonIcon
+            icon={
+              <MdDelete className="h-5 w-5 hover:not-disabled:opacity-90" />
+            }
+            rounded
+          />
+          <ButtonIcon
+            icon={<MdDelete className="h-5 w-5" />}
+            rounded
+            backgroundColor="bg-tp-secondary"
+            borderColor="border-tp-secondary"
+          />
+          <ButtonIcon
+            icon={<MdDelete className="h-10 w-10" />}
+            rounded
+            backgroundColor="bg-tp-tertiary"
+            borderColor="border-none"
+            iconColor="text-tp-typography"
+            className="p-4"
+            hoverClass
+            smallLabel="Delete"
+            smallLabelColor="text-tp-primary tracking-wider"
+          />
+          <ButtonIcon
+            icon={<MdDelete className="h-6 w-6" />}
+            variant="flat"
+            hoverClass
+            iconColor="text-tp-typography"
+            smallLabel="Delete"
+            smallLabelColor="text-tp-typography tracking-wider"
+          />
+        </div>
       </div>
     </div>
   );

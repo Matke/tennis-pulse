@@ -1,7 +1,6 @@
 import Button from "@/components/buttons/Button";
 import ReactPlayer from "react-player";
 import tennisBalls from "../assets/tennisBalls.mp4";
-import logoWithText from "../assets/logoWithText.png";
 import logo from "../assets/logo.png";
 import { motion } from "motion/react";
 

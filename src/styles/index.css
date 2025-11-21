@@ -14,10 +14,12 @@
     Custom colors
   */
   --color-tp-primary: oklch(91.47% 0.191 101.03);
-  --color-tp-secondary: oklch(58.8% 0.084 210.99);
+  --color-tp-secondary: oklch(85.01% 0.137 208.48);
   --color-tp-tertiary: oklch(69.31% 0.212 138.92);
   --color-tp-warning: oklch(58.15% 0.186 30.72);
   --color-tp-typography: oklch(96.85% 0.012 209.81);
+  --color-tp-typography-secondary: oklch(17.73% 0.009 264.32);
+  --color-tp-background: oklch(18.11% 0.002 197.01);
 
   /* 
     Loader color
@@ -86,6 +88,18 @@
   --color-sky-aqua-800: oklch(42.55% 0.073 210.58);
   --color-sky-aqua-900: oklch(27.18% 0.046 206.54);
   --color-sky-aqua-950: oklch(21.87% 0.037 206.89);
+
+  --color-electric-aqua-50: oklch(97.72% 0.025 202.82);
+  --color-electric-aqua-100: oklch(95.88% 0.049 201.08);
+  --color-electric-aqua-200: oklch(92.26% 0.091 201.74);
+  --color-electric-aqua-300: oklch(89.65% 0.123 201.63);
+  --color-electric-aqua-400: oklch(87.62% 0.141 202.79);
+  --color-electric-aqua-500: oklch(86.53% 0.148 204.02);
+  --color-electric-aqua-600: oklch(73.09% 0.125 204.17);
+  --color-electric-aqua-700: oklch(59.24% 0.101 203.51);
+  --color-electric-aqua-800: oklch(44.25% 0.075 203.58);
+  --color-electric-aqua-900: oklch(28.13% 0.048 201.42);
+  --color-electric-aqua-950: oklch(22.58% 0.038 203.52);
 
   --color-rosy-copper-50: oklch(95.44% 0.017 26.65);
   --color-rosy-copper-100: oklch(90.82% 0.033 27.11);
