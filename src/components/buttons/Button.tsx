@@ -29,7 +29,7 @@ export type ButtonProps = {
   loaderText?: string;
   uppercaseLabel?: boolean;
   position?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 const Button = ({
@@ -99,7 +99,6 @@ const Button = ({
 
   // TODO: Refactor so that variants of buttons can be created for example: a warning button with outline (secondary) button design
   // make handelVariants() function and create "flat" | "outline" and "filled" buttons with color variations
-
   return (
     <button
       type={type}
