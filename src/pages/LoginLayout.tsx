@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import tennisBalls from "../assets/tennisBalls.mp4";
 import logoWithText from "../assets/logoWithText.png";
 import logo from "../assets/logo.png";
+import { motion } from "motion/react";
 
 const LoginLayout = () => {
   return (
@@ -13,7 +14,14 @@ const LoginLayout = () => {
           <div className="mt-[-60px] flex items-center justify-center">
             <img src={logo} alt="" className="h-50 w-50" />
           </div>
-          <h1 className="mb-6 text-3xl font-bold text-white">Login</h1>
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="mb-6 text-3xl font-bold text-white"
+          >
+            Login
+          </motion.h1>
 
           <form className="space-y-4">
             <input
