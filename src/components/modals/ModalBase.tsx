@@ -11,6 +11,7 @@ export type ModalBaseProps = {
   buttons?: ButtonProps[];
 
   description?: string;
+  divider?: boolean;
   icon?: React.ReactNode;
 };
 
@@ -31,6 +32,7 @@ const ModalBaseFM = ({
   title,
   icon,
   description,
+  divider = false,
   open,
   onClose,
 }: ModalBaseProps) => {
@@ -46,7 +48,7 @@ const ModalBaseFM = ({
   return createPortal(
     <AnimatePresence>
       {open && (
-        <motion.div className="fixed inset-0 z-50 flex items-center justify-center">
+        <motion.div className="fixed inset-0 z-50 mb-3 flex items-end justify-center md:mb-0 md:items-center">
           {/* Overlay */}
           <motion.div
             className="absolute inset-0 backdrop-blur-xs"
@@ -89,8 +91,15 @@ const ModalBaseFM = ({
               </Typography>
             </div>
 
+            {/* TODO: Add children */}
+
+            {/* adds line between buttons and content */}
+            {divider && (
+              <div className="border-tp-divider/20 absolute inset-x-0 bottom-0 h-[30%] w-full border-t" />
+            )}
+
             {/* Buttons */}
-            <div className="mt-4 flex w-full flex-col items-center justify-between gap-2 md:flex-row">
+            <div className="mt-4 flex flex-row items-center justify-around gap-2 md:w-full md:gap-x-3">
               <Button
                 label="Yes"
                 themeColor="warning"
