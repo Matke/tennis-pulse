@@ -8,11 +8,12 @@ export type ModalBaseProps = {
   title: string;
   open: boolean;
   onClose: () => void;
-  buttons?: ButtonProps[];
+  buttons: ButtonProps[];
 
   description?: string;
   divider?: boolean;
   icon?: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 // animation setup for framer
@@ -31,8 +32,10 @@ const modalVariants = {
 const ModalBaseFM = ({
   title,
   icon,
+  buttons,
   description,
   divider = false,
+  children,
   open,
   onClose,
 }: ModalBaseProps) => {
@@ -94,7 +97,9 @@ const ModalBaseFM = ({
               </Typography>
             </div>
 
-            {/* TODO: Add children */}
+            {children && (
+              <div className="my-6 overflow-x-hidden">{children}</div>
+            )}
 
             {/* adds line between buttons and content */}
             {divider && (
@@ -103,22 +108,18 @@ const ModalBaseFM = ({
 
             {/* Buttons */}
             <div className="mt-4 flex flex-row items-center justify-around gap-2 md:w-full md:gap-x-3">
-              <Button
-                label="Yes"
-                themeColor="warning"
-                onClick={() => console.log("Na ovome kroku")}
-                className="w-full"
-                buttonSize="base"
-                loaderWithLabel
-              />
-              <Button
-                label="No"
-                themeColor="tertiary"
-                onClick={onClose}
-                className="w-full"
-                buttonSize="base"
-                loaderWithLabel
-              />
+              {buttons.map((buttonData) => (
+                <Button
+                  label={buttonData.label}
+                  themeColor={buttonData.themeColor}
+                  onClick={buttonData.onClick}
+                  className={buttonData.className}
+                  disabled={buttonData.disabled}
+                  isLoading={buttonData.isLoading}
+                  buttonSize={buttonData.buttonSize}
+                  loaderWithLabel={buttonData.loaderWithLabel}
+                />
+              ))}
             </div>
           </motion.div>
         </motion.div>

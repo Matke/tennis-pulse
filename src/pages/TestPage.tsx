@@ -382,6 +382,22 @@ const TestPage = () => {
           open={open}
           onClose={() => setOpen(false)}
           icon={<RiAlertFill className="h-10 w-10" />}
+          buttons={[
+            {
+              label: "Yes",
+              themeColor: "warning",
+              onClick: () => console.log("Na ovome kroku"),
+              className: "w-full",
+              buttonSize: "base",
+            },
+            {
+              label: "No",
+              themeColor: "tertiary",
+              onClick: () => setOpen(false),
+              className: "w-full",
+              buttonSize: "base",
+            },
+          ]}
         />
       </div>
     </div>
