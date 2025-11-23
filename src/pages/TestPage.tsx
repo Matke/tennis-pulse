@@ -9,14 +9,16 @@ import { BiSolidTennisBall } from "react-icons/bi";
 import { GiTennisCourt } from "react-icons/gi";
 import { FaTrash } from "react-icons/fa";
 import { FaHourglassStart } from "react-icons/fa";
-import { RiSettings3Fill } from "react-icons/ri";
+import { RiAlertFill, RiSettings3Fill } from "react-icons/ri";
 import { PiSneakerMoveFill } from "react-icons/pi";
 import { MdDelete } from "react-icons/md";
 
 import { useState } from "react";
+import ModalBase from "@/components/modals/ModalBase";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   return (
     <div className="bg-charcoal-900 fixed flex h-screen w-screen flex-col">
       <div className="bg-tp-primary text-platinum-950 z-10 w-full p-2 tracking-wider">
@@ -232,16 +234,16 @@ const TestPage = () => {
           <Typography
             variant="subtitle"
             as="h2"
-            className="text-8xl font-semibold underline"
+            className="text-2xl font-semibold underline"
           >
             Tennis Pulse App
           </Typography>
           <Typography
             variant="paragraph"
             as="h4"
-            className="font-semibold underline"
+            className="text-8xl font-semibold uppercase underline"
           >
-            Tennis Pulse App
+            Tennis Pulse App dasd
           </Typography>
           <Typography
             variant="paragraph-medium"
@@ -250,7 +252,7 @@ const TestPage = () => {
           >
             Tennis Pulse App
           </Typography>
-          <Typography variant="label" className="font-semibold">
+          <Typography variant="label" className="text-9xl font-semibold">
             Tennis Pulse App
           </Typography>
           <Typography variant="label-small" className="font-semibold">
@@ -364,6 +366,23 @@ const TestPage = () => {
             smallLabelColor="text-tp-typography tracking-wider"
           />
         </div>
+
+        <Typography variant="subtitle" as="h2" className="p-2 underline">
+          Modals
+        </Typography>
+        <Button
+          label="Open modal"
+          themeColor="primary"
+          onClick={() => setOpen(true)}
+          className="ml-2"
+        />
+        <ModalBase
+          title="Confirm delete"
+          description="Are you sure you want to delete this?"
+          open={open}
+          onClose={() => setOpen(false)}
+          icon={<RiAlertFill className="h-10 w-10" />}
+        />
       </div>
     </div>
   );
