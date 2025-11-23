@@ -27,17 +27,17 @@ const Typography = ({
       case "title":
         return ` text-3xl ${color || "text-tp-typography"}`;
       case "subtitle":
-        return ` text-2xl ${color || "text-tp-typography"} `;
+        return ` text-2xl ${color || "text-tp-typography"}`;
       case "paragraph":
-        return ` text-base ${color || "text-tp-typography"} `;
+        return ` text-base ${color || "text-tp-typography"}`;
       case "paragraph-medium":
-        return ` text-xl ${color || "text-tp-typography"} `;
+        return ` text-xl ${color || "text-tp-typography"}`;
       case "paragraph-small":
-        return ` text-lg ${color || "text-tp-typography"} `;
+        return ` text-lg ${color || "text-tp-typography"}`;
       case "label":
-        return ` text-sm ${color || "text-tp-typography"} `;
+        return ` text-sm ${color || "text-tp-typography"}`;
       case "label-small":
-        return ` text-xs ${color || "text-tp-typography"} `;
+        return ` text-xs ${color || "text-tp-typography"}`;
       default:
         return "";
     }
