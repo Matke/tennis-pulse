@@ -29,7 +29,7 @@ const modalVariants = {
   exit: { opacity: 0, scale: 0.95, y: 25 },
 };
 
-const ModalBaseFM = ({
+const ModalBase = ({
   title,
   icon,
   buttons,
@@ -129,4 +129,4 @@ const ModalBaseFM = ({
   );
 };
 
-export default ModalBaseFM;
+export default ModalBase;
