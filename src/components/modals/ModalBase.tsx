@@ -45,6 +45,9 @@ const ModalBaseFM = ({
     return () => document.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
+  // animation wont execute on close if null is returned
+  // if (!open) return null;
+
   return createPortal(
     <AnimatePresence>
       {open && (
