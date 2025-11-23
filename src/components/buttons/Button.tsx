@@ -7,7 +7,13 @@ export type ButtonThemeColor = "primary" | "secondary" | "tertiary" | "warning";
 
 export type ButtonTypeAction = "button" | "submit" | "reset" | undefined;
 
-export type ButtonSize = "small" | "medium" | "base" | "large" | "huge";
+export type ButtonSize =
+  | "x-small"
+  | "small"
+  | "medium"
+  | "base"
+  | "large"
+  | "huge";
 
 export type ButtonIconPosition = "left" | "right";
 
@@ -84,6 +90,8 @@ const Button = ({
 
   const setButtonSize = (buttonSize: ButtonSize) => {
     switch (buttonSize) {
+      case "x-small":
+        return "px-1 py-1 md:px-2 md:py-1";
       case "small":
         return " px-2 py-1 md:px-4 md:py-1 ";
       case "medium":
