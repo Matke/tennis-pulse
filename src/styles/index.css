@@ -252,3 +252,22 @@ html {
     content: ".";
   } /* Restart with one dot */
 }
+
+/* 
+  Autofill input browser override classes
+*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #e5e5e6 !important;
+  caret-color: #e5e5e6 !important;
+
+  box-shadow: 0 0 0px 1000px #111212 inset !important;
+  border: 1px solid #e5e5e6 !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+// needed for @ autofill override
+input:-webkit-autofill::first-line {
+  -webkit-text-fill-color: #e5e5e6 !important;
+}

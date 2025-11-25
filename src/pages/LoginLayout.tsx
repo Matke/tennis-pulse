@@ -23,10 +23,10 @@ const LoginLayout = () => {
           </motion.h1>
 
           <form className="space-y-6">
-            <InputText placeholder="Email" fullWidth />
+            <InputText placeholder="Email" fullWidth required />
             <InputText placeholder="Password" fullWidth />
             <Button
-              label="Login to Tennis Pulse"
+              label="Login"
               themeColor="primary"
               onClick={() => console.log("Na ovome kroku")}
               className="w-full self-center rounded-none"
