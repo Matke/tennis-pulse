@@ -6,12 +6,13 @@ import newLogo from "../assets/newLogo.png";
 import { motion } from "motion/react";
 import InputText from "@/components/inputs/InputText";
 import Typography from "@/components/text/Typography";
+import InputPassword from "@/components/inputs/InputPassword";
 
 const LoginLayout = () => {
   return (
     <div className="flex h-screen">
       {/* LEFT — Form */}
-      <div className="bg-tp-background flex w-1/2 items-center justify-center p-12">
+      <div className="bg-tp-background flex w-1/2 items-center justify-center p-12 select-none">
         <div className="w-full max-w-sm">
           <motion.h1
             initial={{ opacity: 0 }}
@@ -24,7 +25,7 @@ const LoginLayout = () => {
 
           <form className="space-y-6">
             <InputText placeholder="Email" fullWidth required />
-            <InputText placeholder="Password" fullWidth />
+            <InputPassword placeholder="Password" fullWidth />
             <Button
               label="Login"
               themeColor="primary"
@@ -53,7 +54,7 @@ const LoginLayout = () => {
             <Typography
               variant="title"
               as="h1"
-              className="relative flex h-auto items-center justify-center bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text py-1 text-center text-6xl font-extrabold text-transparent select-auto"
+              className="relative flex h-auto animate-pulse items-center justify-center bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text py-1 text-center text-6xl font-extrabold text-transparent select-auto"
             >
               Tennis Pulse
             </Typography>
