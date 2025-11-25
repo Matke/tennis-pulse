@@ -1,18 +1,28 @@
+// Components
 import Typography from "@/components/text/Typography";
-import { FaRegEye } from "react-icons/fa";
+
+// framer motion
 import { motion } from "framer-motion";
+
+// Icons
 import { GoCheckCircleFill } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
+// import { FaRegEye } from "react-icons/fa";
 
 export type InputProps = {
-  placeholder: string;
   value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  placeholder: string;
 
   type?: string;
   name?: string;
   error?: string;
   errorPlaceholderClass?: string;
+  errorIcon?: React.ReactNode | null;
+  successIcon?: React.ReactNode | null;
+  isValidField?: boolean;
   className?: string;
+  labelClass?: string;
   fullWidth?: boolean;
   isIconVisible?: boolean;
   backgroundInputColor?: string;
@@ -22,25 +32,40 @@ export type InputProps = {
 //! placeholder acts as id,name,and htmlFor in this version of Input Text Component
 const InputText = ({
   value,
+  onChange,
   placeholder,
   type = "text",
   name = "",
-  error = "Invalid email or password",
+  error = "",
   errorPlaceholderClass = "",
+  errorIcon = null,
+  successIcon = null,
+  isValidField = false,
   className,
+  labelClass = "",
   fullWidth = false,
   isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
   ...rest
 }: InputProps) => {
+  // TODO: isValidField should relay on error, change code later
+
   const nameId = name || placeholder.toLocaleLowerCase("en-US");
+
+  const iconError = errorIcon || (
+    <IoIosCloseCircle className="text-tp-warning absolute top-3.5 right-3 ml-3 h-5 w-5" />
+  );
+  const iconSuccess = successIcon || (
+    <GoCheckCircleFill className="text-tp-tertiary absolute top-3.5 right-3 ml-3 h-5 w-5" />
+  );
 
   return (
     <div className={backgroundInputColor}>
       <div className="relative bg-inherit">
         <input
           value={value}
+          onChange={onChange}
           type={type}
           id={nameId}
           name={nameId}
@@ -51,27 +76,26 @@ const InputText = ({
         />
         <label
           htmlFor={nameId}
-          className="peer-placeholder-shown:text-tp-typography text-tp-typography peer-focus:text-charcoal-200 absolute -top-3 left-1 mx-1 cursor-text bg-inherit px-1 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-1 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm"
+          className={`peer-placeholder-shown:text-tp-typography ${error ? "text-tp-warning" : "text-tp-typography"} peer-focus:text-charcoal-200 absolute -top-3 left-1 mx-1 cursor-text bg-inherit px-1 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-1 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${labelClass}`}
         >
           {placeholder} {required ? "*" : ""}
         </label>
 
         <div>
-          {/* TODO: Change this for icon */}
-          {/* <FaRegEye className="text-tp-divider absolute top-3.5 right-3 ml-3 h-5 w-5" /> */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <IoIosCloseCircle className="text-tp-warning absolute top-3.5 right-3 ml-3 h-5 w-5" />
+            {error && iconError}
+            {isValidField && iconSuccess}
           </motion.div>
         </div>
       </div>
       {error && (
         <Typography
           variant="label-small"
-          className={`text-tp-warning mt-1.5 ml-2.5`}
+          className={`text-tp-warning mt-1.5 ml-2.5 ${errorPlaceholderClass}`}
         >
           {error}
         </Typography>
