@@ -2,17 +2,17 @@ import Button from "@/components/buttons/Button";
 import ReactPlayer from "react-player";
 import tennisBalls from "../assets/tennisBalls.mp4";
 import logo from "../assets/logo.png";
+import newLogo from "../assets/newLogo.png";
 import { motion } from "motion/react";
+import InputText from "@/components/inputs/InputText";
+import Typography from "@/components/text/Typography";
 
 const LoginLayout = () => {
   return (
     <div className="flex h-screen">
       {/* LEFT — Form */}
-      <div className="bg-charcoal-950 flex w-1/2 items-center justify-center p-12">
+      <div className="bg-tp-background flex w-1/2 items-center justify-center p-12">
         <div className="w-full max-w-sm">
-          <div className="mt-[-60px] flex items-center justify-center">
-            <img src={logo} alt="" className="h-50 w-50" />
-          </div>
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -22,19 +22,11 @@ const LoginLayout = () => {
             Login
           </motion.h1>
 
-          <form className="space-y-4">
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full rounded border border-white p-3 text-white placeholder:text-white"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full rounded border border-white p-3 text-white placeholder:text-white"
-            />
+          <form className="space-y-6">
+            <InputText placeholder="Email" fullWidth required />
+            <InputText placeholder="Password" fullWidth />
             <Button
-              label="Login to Tennis Pulse"
+              label="Login"
               themeColor="primary"
               onClick={() => console.log("Na ovome kroku")}
               className="w-full self-center rounded-none"
@@ -45,7 +37,30 @@ const LoginLayout = () => {
       </div>
 
       {/* RIGHT — Image */}
-      <div className="relative hidden h-full w-1/2 md:block">
+      <div className="relative block h-full w-1/2">
+        {/* Logo with text */}
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center select-none">
+          <img src={newLogo} alt="" className="back h-60 w-60" />
+          <div className="relative text-center">
+            <Typography
+              variant="title"
+              as="h1"
+              className="absolute mx-auto box-content flex w-full border bg-linear-to-r from-yellow-200 via-yellow-400 to-yellow-600 bg-clip-text py-1 text-6xl font-extrabold text-transparent blur-xl select-none"
+            >
+              Tennis Pulse
+            </Typography>
+
+            <Typography
+              variant="title"
+              as="h1"
+              className="relative flex h-auto items-center justify-center bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text py-1 text-center text-6xl font-extrabold text-transparent select-auto"
+            >
+              Tennis Pulse
+            </Typography>
+          </div>
+        </div>
+
+        {/* background video */}
         <ReactPlayer
           src={tennisBalls}
           playing
@@ -57,14 +72,7 @@ const LoginLayout = () => {
           className="object-cover blur-[0.3px]"
         />
 
-        <div
-          className="pointer-events-none absolute top-0 left-0 h-full w-full"
-          style={{
-            background:
-              "linear-gradient(to right, oklch(18.11% 0.002 197.01) 5%, oklch(0.2264 0 0 / 40%) 7%)",
-            backdropFilter: "blur(2px)",
-          }}
-        />
+        <div className="pointer-events-none absolute top-0 left-0 h-full w-full backdrop-blur-[1.7px] [background:linear-gradient(to_right,oklch(18.11%_0.002_197.01)_5%,oklch(0.2264_0_0/40%)_7%)]" />
       </div>
     </div>
   );

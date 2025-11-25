@@ -17,9 +17,10 @@
   --color-tp-secondary: oklch(85.01% 0.137 208.48);
   --color-tp-tertiary: oklch(55.98% 0.155 134.74);
   --color-tp-warning: oklch(56.23% 0.177 39.18);
-  --color-tp-typography: oklch(96.85% 0.012 209.81);
+  --color-tp-typography: oklch(92.22% 0.001 286.37);
   --color-tp-typography-secondary: oklch(17.73% 0.009 264.32);
   --color-tp-background: oklch(18.11% 0.002 197.01);
+  --color-tp-main-background: oklch(18.11% 0.002 197.01);
   --color-tp-divider: oklch(66.48% 0.034 263.43);
 
   /* 
@@ -250,4 +251,23 @@ html {
   100% {
     content: ".";
   } /* Restart with one dot */
+}
+
+/* 
+  Autofill input browser override classes
+*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #e5e5e6 !important;
+  caret-color: #e5e5e6 !important;
+
+  box-shadow: 0 0 0px 1000px #111212 inset !important;
+  border: 1px solid #e5e5e6 !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+// needed for @ autofill override
+input:-webkit-autofill::first-line {
+  -webkit-text-fill-color: #e5e5e6 !important;
 }

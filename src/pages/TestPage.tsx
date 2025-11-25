@@ -15,6 +15,7 @@ import { MdDelete } from "react-icons/md";
 
 import { useState } from "react";
 import ModalBase from "@/components/modals/ModalBase";
+import Input from "@/components/inputs/InputText";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
@@ -399,6 +400,10 @@ const TestPage = () => {
             },
           ]}
         />
+
+        <Typography variant="subtitle" as="h2" className="p-2 underline">
+          Inputs
+        </Typography>
       </div>
     </div>
   );
