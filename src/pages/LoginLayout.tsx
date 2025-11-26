@@ -22,7 +22,7 @@ const LoginLayout = () => {
     <div className="flex h-screen">
       {/* LEFT — Form */}
 
-      <div className="bg-tp-background w-1/2 p-12 select-none">
+      <div className="bg-charcoal-900 w-1/2 p-12 select-none">
         <Card>
           <div className="w-full max-w-sm">
             {/* icon pulse */}
@@ -200,7 +200,7 @@ const LoginLayout = () => {
               initial={{ filter: "blur(20px)", opacity: 0 }}
               animate={isInView ? { filter: "blur(0px)", opacity: 1 } : {}}
               transition={{ duration: 1.2, delay: 1.5 }}
-              className="text-center text-xl font-bold tracking-tighter sm:text-4xl md:text-6xl md:leading-16"
+              className="text-charcoal-900 text-center text-xl font-bold tracking-tighter sm:text-4xl md:text-6xl md:leading-16"
             >
               {"Welcome to"}
             </motion.h2>
@@ -247,7 +247,7 @@ const LoginLayout = () => {
           className="object-cover blur-[0.3px]"
         />
 
-        <div className="pointer-events-none absolute top-0 left-0 h-full w-full backdrop-blur-[1.7px] [background:linear-gradient(to_right,oklch(18.11%_0.002_197.01)_5%,oklch(0.2264_0_0/40%)_7%)]" />
+        <div className="pointer-events-none absolute top-0 left-0 h-full w-full backdrop-blur-[1.7px] [background:linear-gradient(to_right,rgb(25_25_26)_5%,rgba(6_6_6/0.4)_7%)]" />
       </div>
     </div>
   );
