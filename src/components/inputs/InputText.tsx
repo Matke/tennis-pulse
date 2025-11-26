@@ -61,7 +61,7 @@ const InputText = ({
   );
 
   return (
-    <div className={backgroundInputColor}>
+    <div className={`${backgroundInputColor}`}>
       <div className="relative bg-inherit">
         <input
           value={value}
@@ -76,7 +76,7 @@ const InputText = ({
         />
         <label
           htmlFor={nameId}
-          className={`peer-placeholder-shown:text-tp-typography ${error ? "text-tp-warning" : "text-tp-typography"} peer-focus:text-charcoal-200 absolute -top-3 left-1 mx-1 cursor-text bg-inherit px-1 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-1 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${labelClass}`}
+          className={`peer-placeholder-shown:text-tp-typography ${error ? "text-tp-warning" : "text-tp-typography"} peer-focus:text-charcoal-200 absolute -top-3 left-1 mx-1 cursor-text ${backgroundInputColor} px-1 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-1 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${labelClass}`}
         >
           {placeholder} {required ? "*" : ""}
         </label>
