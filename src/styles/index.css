@@ -22,6 +22,18 @@
   --color-tp-background: oklch(18.11% 0.002 197.01);
   --color-tp-main-background: oklch(18.11% 0.002 197.01);
   --color-tp-divider: oklch(66.48% 0.034 263.43);
+  --color-tp-input-back: #090909;
+  /* 
+  --color-google-text-gray: #3c4043;
+  --color-google-button-blue: #1a73e8;
+  --color-google-button-blue-hover: #5195ee;
+  --color-google-button-dark: #090909;
+  --color-google-button-dark-hover: #555658;
+  --color-google-button-border-light: #dadce0;
+  --color-google-logo-blue: #4285f4;
+  --color-google-logo-green: #34a853;
+  --color-google-logo-yellow: #fbbc05;
+  --color-google-logo-red: #ea4335; */
 
   /* 
     Loader color
@@ -262,7 +274,7 @@ input:-webkit-autofill:focus {
   -webkit-text-fill-color: #e5e5e6 !important;
   caret-color: #e5e5e6 !important;
 
-  box-shadow: 0 0 0px 1000px #111212 inset !important;
+  box-shadow: 0 0 0px 1000px #010101 inset !important;
   border: 1px solid #e5e5e6 !important;
   transition: background-color 9999s ease-in-out 0s;
 }
