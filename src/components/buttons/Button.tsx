@@ -3,7 +3,12 @@ import Loader from "@/components/loaders/Loader";
 // helper function to merge tailwind classes
 import { classNames } from "@/utils/common";
 
-export type ButtonThemeColor = "primary" | "secondary" | "tertiary" | "warning";
+export type ButtonThemeColor =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "warning"
+  | "blank";
 
 export type ButtonTypeAction = "button" | "submit" | "reset" | undefined;
 
@@ -34,6 +39,7 @@ export type ButtonProps = {
   backgroundLoaderColor?: string;
   loaderText?: string;
   uppercaseLabel?: boolean;
+  labelClass?: string;
   position?: string;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
@@ -49,12 +55,13 @@ const Button = ({
   fullWidth = false,
   isLoading = false,
   disabled = false,
-  position = "relative",
   loaderWithLabel = false,
   loaderColor = "",
   loaderText,
   backgroundLoaderColor = "",
   uppercaseLabel = false,
+  labelClass = "",
+  position = "relative",
   ...rest
 }: ButtonProps) => {
   // active scale and brightness classes simulate button click effect
@@ -151,7 +158,7 @@ const Button = ({
 
         {/* label will not be shown if button is in loading state and iconPosition is on the right */}
         <span
-          className={`${(isLoading && !loaderWithLabel) || (isLoading && loaderWithLabel && iconPosition === "right") ? "invisible" : ""} ${uppercaseLabel && "uppercase"}`}
+          className={`${(isLoading && !loaderWithLabel) || (isLoading && loaderWithLabel && iconPosition === "right") ? "invisible" : ""} ${uppercaseLabel && "uppercase"} ${labelClass}`}
         >
           {label}
         </span>
