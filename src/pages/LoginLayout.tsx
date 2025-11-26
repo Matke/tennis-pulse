@@ -82,7 +82,7 @@ const LoginLayout = () => {
               label="Sign up with Google"
               themeColor="blank"
               onClick={() => console.log("Na ovome kroku")}
-              className="bg-tp-background/10 hover:bg-tp-background/60 w-full scale-100 self-center rounded-full transition-all duration-500 hover:scale-103"
+              className="bg-tp-background/10 hover:bg-charcoal-900 w-full scale-100 self-center rounded-full transition-all duration-500 hover:scale-103"
               loaderWithLabel
               icon={
                 <div className="bg-pacific-blue-50 flex h-9 w-9 items-center justify-center rounded-full">
