@@ -22,18 +22,8 @@
   --color-tp-background: oklch(18.11% 0.002 197.01);
   --color-tp-main-background: oklch(18.11% 0.002 197.01);
   --color-tp-divider: oklch(66.48% 0.034 263.43);
-  --color-tp-input-back: #090909;
-
-  /* --color-google-text-gray: #3c4043;
-  --color-google-button-blue: #1a73e8;
-  --color-google-button-blue-hover: #5195ee;
-  --color-google-button-dark: #090909;
-  --color-google-button-dark-hover: #555658;
-  --color-google-button-border-light: #dadce0;
-  --color-google-logo-blue: #4285f4;
-  --color-google-logo-green: #34a853;
-  --color-google-logo-yellow: #fbbc05;
-  --color-google-logo-red: #ea4335; */
+  --color-tp-input-back: oklch(0.1398 0 0);
+  --color-tp-card-back: oklch(0.0672 0 0); /* #010101 */
 
   /* 
     Loader color
