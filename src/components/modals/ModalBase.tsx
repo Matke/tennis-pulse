@@ -1,8 +1,8 @@
-import Button, { type ButtonProps } from "@/components/buttons/Button";
-import Typography from "@/components/text/Typography";
 import { useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import Typography from "@/components/text/Typography";
+import Button, { type ButtonProps } from "@/components/buttons/Button";
 
 export type ModalBaseProps = {
   title: string;
