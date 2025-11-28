@@ -48,7 +48,7 @@ const LoginLayout = () => {
             </Typography>
 
             {/* main form for login/signup */}
-            <form className="space-y-9">
+            <form className="space-y-8">
               <InputText
                 value={email}
                 onChange={handleEmailChange}

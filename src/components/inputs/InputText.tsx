@@ -36,7 +36,7 @@ const InputText = ({
   placeholder,
   type = "text",
   name = "",
-  error = "Invalid email or password",
+  error = "",
   errorPlaceholderClass = "",
   errorIcon = null,
   successIcon = null,
@@ -96,7 +96,7 @@ const InputText = ({
         <div className={`absolute ${errorPlaceholderClass}`}>
           <Typography
             variant="label-small"
-            className={`text-tp-warning mt-1 ml-2.5`}
+            className={`text-tp-warning mt-0.5 ml-2.5`}
           >
             {error}
           </Typography>
