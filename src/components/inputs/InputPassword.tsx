@@ -67,9 +67,11 @@ const InputPassword = ({
         <div className="inline-flex items-center justify-center">
           <Chip
             // weak, fair , good ,strong
-            label="good"
-            themeColor="success"
+            label="weak"
+            themeColor="error"
             containerClass="absolute top-4 right-12 cursor-pointer"
+            tooltipId="password-check"
+            tooltipContent="Your password must use more letters sfdfsd sfds dfs dfs dfsdf dsfsdf "
           />
           <AnimatePresence mode="wait">
             <motion.div
