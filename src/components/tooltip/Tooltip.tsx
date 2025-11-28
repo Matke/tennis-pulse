@@ -32,12 +32,13 @@ const Tooltip = ({
       <ReactTooltip
         id={id}
         style={{
+          // color: "#222", controlled with variant
+          // backgroundColor: "var(--color-crimson-carrot-400)", controlled with variant
           padding: "6px",
-          color: "#222",
-          backgroundColor: "var(--color-crimson-carrot-400)",
-          maxWidth: "200px", // wrap long text
+          maxWidth: "250px", // to wrap long text
           whiteSpace: "normal",
           wordWrap: "break-word",
+          textAlign: "justify",
         }}
         variant={variant || "dark"}
         content={content}

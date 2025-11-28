@@ -91,7 +91,8 @@ const Chip = ({
   const classesVariants = handleVariants(variant);
 
   return (
-    <Tooltip id={tooltipId} content={tooltipContent}>
+    // TODO: Make Chip usable without the need for Tooltip
+    <Tooltip id={tooltipId} content={tooltipContent} variant="dark">
       <div
         className={classNames(
           defaultChipClass,
