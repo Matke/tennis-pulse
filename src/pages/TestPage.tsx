@@ -407,9 +407,7 @@ const TestPage = () => {
         <Typography variant="subtitle" as="h2" className="p-2 underline">
           Chips
         </Typography>
-        <div className="m-2 p-2">
-          <Chip label="success" icon={<BiCheck className="h-4 w-4" />} />
-        </div>
+        <div className="m-2 p-2"></div>
       </div>
     </div>
   );

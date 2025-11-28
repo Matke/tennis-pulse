@@ -1,4 +1,5 @@
 import Typography from "@/components/text/Typography";
+import Tooltip from "@/components/tooltip/Tooltip";
 import { classNames } from "@/utils/common";
 
 export type ChipThemeColor = "error" | "warning" | "success" | "success-strong";
@@ -14,6 +15,9 @@ export type ChipProps = {
   variant?: ChipVariant;
   containerClass?: string;
   labelClass?: string;
+  tooltipId: string;
+  tooltipContent: string;
+  tooltipPlacement?: string;
   icon?: React.ReactNode;
 };
 
@@ -25,6 +29,10 @@ const Chip = ({
   icon,
   containerClass,
   labelClass,
+  tooltipId,
+  tooltipContent,
+  tooltipPlacement,
+  ...rest
 }: ChipProps) => {
   const defaultChipClass =
     "inline-flex items-center justify-center gap-1 rounded-full ";
@@ -83,26 +91,31 @@ const Chip = ({
   const classesVariants = handleVariants(variant);
 
   return (
-    <div
-      className={classNames(
-        defaultChipClass,
-        ...(classesVariants || ""),
-        containerClass,
-        setChipSize() || "",
-      )}
-    >
-      <div className="flex items-center justify-center gap-1">
-        {icon && <span>{icon}</span>}
-        <Typography
-          variant="label-small"
-          as={"span"}
-          color={`${variant === "filled" ? "text-tp-typography-secondary" : "text-tp-typography"}`}
-          className={`font-medium ${labelClass}`}
-        >
-          {label}
-        </Typography>
+    // TODO: Make Chip usable without the need for Tooltip
+    <Tooltip id={tooltipId} content={tooltipContent} variant="dark">
+      <div
+        className={classNames(
+          defaultChipClass,
+          ...(classesVariants || ""),
+          containerClass,
+          setChipSize() || "",
+        )}
+        data-tooltip-id={tooltipId}
+        {...rest}
+      >
+        <div className="flex items-center justify-center gap-1">
+          {icon && <span>{icon}</span>}
+          <Typography
+            variant="label-small"
+            as={"span"}
+            color={`${variant === "filled" ? "text-tp-typography-secondary" : "text-tp-typography"}`}
+            className={`font-medium ${labelClass}`}
+          >
+            {label}
+          </Typography>
+        </div>
       </div>
-    </div>
+    </Tooltip>
   );
 };
 

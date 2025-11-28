@@ -15,29 +15,35 @@ const Tooltip = ({
   children,
   content,
   variant,
-  place,
+  place = "top",
   id,
 }: Tooltip) => {
-  // TODO: cloneElement must be replaced use not common
+  // cloneElement must be replaced use not common
   // render prop or pass data-tooltip-id to components
   // data-tooltip-id to component is better solution
   // must be cloned because parent div from tooltip will mess up design for all the component that incorporate Tooltip inside
-  const wrappedChild = React.cloneElement(children, {
-    "data-tooltip-id": id,
-  });
+  // const wrappedChild = React.cloneElement(children, {
+  //   "data-tooltip-id": id,
+  // });
 
   return (
     <>
-      {wrappedChild}
+      {children}
       <ReactTooltip
         id={id}
-        style={{ padding: "6px" }}
+        style={{
+          // color: "#222", controlled with variant
+          // backgroundColor: "var(--color-crimson-carrot-400)", controlled with variant
+          padding: "6px",
+          maxWidth: "250px", // to wrap long text
+          whiteSpace: "normal",
+          wordWrap: "break-word",
+          textAlign: "justify",
+        }}
         variant={variant || "dark"}
         content={content}
         delayShow={delay}
         place={place || "top"}
-        // TODO: styles are not working
-        className="bg-tp-typography z-100 text-xs text-white"
       />
     </>
   );
