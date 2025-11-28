@@ -5,7 +5,7 @@ import Typography from "@/components/text/Typography";
 
 // icons
 import { MdOutlineSportsTennis } from "react-icons/md";
-import { BiSolidTennisBall } from "react-icons/bi";
+import { BiCheck, BiSolidTennisBall } from "react-icons/bi";
 import { GiTennisCourt } from "react-icons/gi";
 import { FaTrash } from "react-icons/fa";
 import { FaHourglassStart } from "react-icons/fa";
@@ -17,6 +17,8 @@ import { useState } from "react";
 import ModalBase from "@/components/modals/ModalBase";
 import Input from "@/components/inputs/InputText";
 import Card from "@/components/ui/Card";
+import InputPassword from "@/components/inputs/InputPassword";
+import Chip from "@/components/ui/Chip";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
@@ -403,9 +405,11 @@ const TestPage = () => {
         />
 
         <Typography variant="subtitle" as="h2" className="p-2 underline">
-          Inputs
+          Chips
         </Typography>
-        <Card>siti sampion</Card>
+        <div className="m-2 p-2">
+          <Chip label="success" icon={<BiCheck className="h-4 w-4" />} />
+        </div>
       </div>
     </div>
   );

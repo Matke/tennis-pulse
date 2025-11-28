@@ -36,7 +36,7 @@ const InputText = ({
   placeholder,
   type = "text",
   name = "",
-  error = "",
+  error = "Invalid email or password",
   errorPlaceholderClass = "",
   errorIcon = null,
   successIcon = null,
@@ -61,7 +61,7 @@ const InputText = ({
   );
 
   return (
-    <div className={`${backgroundInputColor}`}>
+    <div className={`${backgroundInputColor} rounded-sm ${className}`}>
       <div className="relative bg-inherit">
         <input
           value={value}
@@ -70,13 +70,13 @@ const InputText = ({
           id={nameId}
           name={nameId}
           spellCheck={false}
-          className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 placeholder-transparent focus:outline-none ${className}`}
+          className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 placeholder-transparent focus:outline-none`}
           placeholder={placeholder}
           {...rest}
         />
         <label
           htmlFor={nameId}
-          className={`peer-placeholder-shown:text-tp-typography ${error ? "text-tp-warning" : "text-tp-typography"} peer-focus:text-charcoal-200 absolute -top-3 left-1 mx-1 cursor-text ${backgroundInputColor} px-1 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-1 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${labelClass}`}
+          className={`peer-placeholder-shown:text-tp-typography ${error ? "text-tp-warning" : "text-tp-typography"} peer-focus:text-charcoal-200 absolute -top-3 left-1 mx-1 cursor-text ${backgroundInputColor} px-1 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-1 peer-placeholder-shown:bg-none peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${labelClass}`}
         >
           {placeholder} {required ? "*" : ""}
         </label>
@@ -93,12 +93,14 @@ const InputText = ({
         </div>
       </div>
       {error && (
-        <Typography
-          variant="label-small"
-          className={`text-tp-warning mt-1.5 ml-2.5 ${errorPlaceholderClass}`}
-        >
-          {error}
-        </Typography>
+        <div className={`absolute ${errorPlaceholderClass}`}>
+          <Typography
+            variant="label-small"
+            className={`text-tp-warning mt-1 ml-2.5`}
+          >
+            {error}
+          </Typography>
+        </div>
       )}
     </div>
   );
