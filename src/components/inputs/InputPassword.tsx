@@ -10,11 +10,13 @@ import { motion, AnimatePresence } from "framer-motion";
 // Icons
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-import Chip from "@/components/ui/Chip";
+import Chip, { type ChipThemeColor } from "@/components/ui/Chip";
 
 export type InputPasswordProps = InputProps & {
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 };
+
+type ChipLabel = "weak" | "fair" | "good" | "strong";
 
 //! placeholder acts as id,name,and htmlFor in this version of Input Text Component
 const InputPassword = ({
@@ -23,7 +25,7 @@ const InputPassword = ({
   onKeyDown,
   placeholder,
   name = "",
-  error = "Invalid email or password",
+  error = "",
   errorPlaceholderClass = "",
   errorIcon = null,
   successIcon = null,
@@ -40,6 +42,44 @@ const InputPassword = ({
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
 
   const nameId = name || placeholder.toLocaleLowerCase("en-US");
+
+  const checkPasswordStrength = (): number => {
+    if (!value) return 0;
+
+    let passStr = 0;
+
+    if (value.length >= 8) passStr++;
+    // lowercase
+    if (/[a-z]/.test(value)) passStr++;
+    // uppercase
+    if (/[A-Z]/.test(value)) passStr++;
+    // number
+    if (/[0-9]/.test(value)) passStr++;
+    // special char
+    if (/[^A-Za-z0-9]/.test(value)) passStr++;
+
+    return passStr;
+  };
+
+  const setChipStyle = (
+    strength: number,
+  ): { themeColor: ChipThemeColor; label: ChipLabel } => {
+    switch (strength) {
+      case 1:
+      case 2:
+        return { themeColor: "error", label: "weak" };
+      case 3:
+        return { themeColor: "warning", label: "fair" };
+      case 4:
+        return { themeColor: "success", label: "good" };
+      case 5:
+        return { themeColor: "success-strong", label: "strong" };
+      default:
+        return { themeColor: "error", label: "strong" };
+    }
+  };
+
+  const chipStyle = setChipStyle(checkPasswordStrength());
 
   return (
     <div className={`${backgroundInputColor} rounded-sm ${className}`}>
@@ -65,14 +105,16 @@ const InputPassword = ({
         </label>
         {/* animated eye icon switch */}
         <div className="inline-flex items-center justify-center">
-          <Chip
-            // weak, fair , good ,strong
-            label="weak"
-            themeColor="error"
-            containerClass="absolute top-4 right-12 cursor-pointer"
-            tooltipId="password-check"
-            tooltipContent="Your password must be at least 8 characters. For a stronger password, use an uppercase letter,a lowercase letter, a number, and a special character."
-          />
+          {value && (
+            <Chip
+              // weak, fair , good ,strong
+              label={chipStyle.label}
+              themeColor={chipStyle.themeColor}
+              containerClass="absolute top-4 right-12 cursor-pointer"
+              tooltipId="password-check"
+              tooltipContent="Your password must be at least 8 characters. For a stronger password, use an uppercase letter,a lowercase letter, a number, and a special character."
+            />
+          )}
           <AnimatePresence mode="wait">
             <motion.div
               key={togglePassword ? "closed-eye" : "open-eye"}
@@ -102,7 +144,7 @@ const InputPassword = ({
         <div className={`absolute ${errorPlaceholderClass}`}>
           <Typography
             variant="label-small"
-            className={`text-tp-warning mt-1 ml-2.5`}
+            className={`text-tp-warning mt-0.5 ml-2.5`}
           >
             {error}
           </Typography>
