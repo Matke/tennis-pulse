@@ -1,10 +1,25 @@
-import React from "react";
-
-const Card = ({ children }: { children: React.ReactNode }) => {
+const Card = ({
+  children,
+  footerCardContent,
+  headerCardContent,
+  className,
+  parentContainerClass,
+}: {
+  children: React.ReactNode;
+  footerCardContent?: React.ReactNode;
+  headerCardContent?: React.ReactNode;
+  className?: string;
+  parentContainerClass?: string;
+}) => {
   return (
-    <div className="h-full">
+    <div className={`h-full ${parentContainerClass}`}>
       {/* Main div */}
-      <div className="hover:shadow-3xl via-tp-input-back from-tp-card-back to-tp-card-back relative z-10 min-h-full w-full overflow-hidden rounded-3xl border border-white/10 bg-linear-to-br text-white shadow-2xl backdrop-blur-xl duration-700 hover:border-white/20 hover:shadow-white/5">
+      <div
+        className={`hover:shadow-3xl via-tp-input-back from-tp-card-back to-tp-card-back relative z-10 h-full w-full overflow-hidden rounded-none border border-white/10 bg-linear-to-br text-white shadow-2xl backdrop-blur-xl duration-700 hover:border-white/20 hover:shadow-white/5 md:rounded-3xl ${className}`}
+      >
+        {/* top header */}
+        <div className="mt-18 block md:hidden">{headerCardContent}</div>
+
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 bg-linear-to-tr from-white/5 to-white/10 opacity-40 transition-opacity duration-500 group-hover:opacity-10"></div>
 
@@ -32,6 +47,11 @@ const Card = ({ children }: { children: React.ReactNode }) => {
           <div className="flex h-full flex-col items-center justify-center">
             {children}
           </div>
+        </div>
+
+        {/* only for mobile view - displaying welcome message */}
+        <div className="absolute inset-x-0 bottom-auto md:inset-x-0 md:bottom-0 md:hidden">
+          {footerCardContent}
         </div>
       </div>
     </div>

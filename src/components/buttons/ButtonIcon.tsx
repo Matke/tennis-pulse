@@ -101,7 +101,7 @@ const ButtonIcon = ({
     }
   };
 
-  const classesVariants: string[] | string = handleVariant();
+  const classesVariants: (string | undefined)[] | string = handleVariant();
 
   return (
     <div className="flex flex-col items-center justify-center">
