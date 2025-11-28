@@ -15,6 +15,9 @@ import PulseLogo from "@/components/ui/PulseLogo";
 import Video from "@/components/ui/Video";
 import WelcomeMessage from "@/components/ui/WelcomeMessage";
 
+// toast
+import { toast } from "react-hot-toast";
+
 const LoginLayout = () => {
   // wait for the video to load and then show text animation (motion)
   const [videoReady, setVideoReady] = useState(false);
@@ -89,7 +92,7 @@ const LoginLayout = () => {
             <Button
               label="Sign up with Google"
               themeColor="blank"
-              onClick={() => console.log("Na ovome kroku")}
+              onClick={() => toast.error("You successfully created account!")}
               className="bg-tp-background hover:bg-charcoal-800 mt-3 w-full scale-100 self-center rounded-full transition-all duration-500 hover:scale-103 md:mt-0"
               loaderWithLabel
               icon={<GLogo />}
