@@ -12,6 +12,7 @@ import { FaHourglassStart } from "react-icons/fa";
 import { RiAlertFill, RiSettings3Fill } from "react-icons/ri";
 import { PiSneakerMoveFill } from "react-icons/pi";
 import { MdDelete } from "react-icons/md";
+import { IoMdInformationCircle } from "react-icons/io";
 
 import { useState } from "react";
 import ModalBase from "@/components/modals/ModalBase";
@@ -19,6 +20,7 @@ import Input from "@/components/inputs/InputText";
 import Card from "@/components/ui/Card";
 import InputPassword from "@/components/inputs/InputPassword";
 import Chip from "@/components/ui/Chip";
+import ConfirmationModal from "@/components/modals/ConfirmationModal";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
@@ -380,7 +382,7 @@ const TestPage = () => {
           onClick={() => setOpen(true)}
           className="ml-2"
         />
-        <ModalBase
+        {/* <ModalBase
           title="Confirm delete"
           description="Are you sure you want to delete this?"
           open={open}
@@ -402,6 +404,13 @@ const TestPage = () => {
               buttonSize: "base",
             },
           ]}
+        /> */}
+        <ConfirmationModal
+          title="Confirm actions"
+          description="Are you sure you want to start?"
+          openModal={open}
+          onClose={() => setOpen(false)}
+          onConfirm={() => setOpen(false)}
         />
 
         <Typography variant="subtitle" as="h2" className="p-2 underline">
