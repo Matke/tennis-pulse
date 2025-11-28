@@ -1,7 +1,4 @@
-import { useRef, useState } from "react";
-
-// Framer motion
-import { AnimatePresence, motion, useInView } from "motion/react";
+import { useState } from "react";
 
 // components
 import Divider from "@/components/dividers/Divider";
@@ -19,10 +16,19 @@ import Video from "@/components/ui/Video";
 import WelcomeMessage from "@/components/ui/WelcomeMessage";
 
 const LoginLayout = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-
+  // wait for the video to load and then show text animation (motion)
   const [videoReady, setVideoReady] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
   return (
     <div className="flex h-screen">
@@ -44,12 +50,16 @@ const LoginLayout = () => {
             {/* main form for login/signup */}
             <form className="space-y-9">
               <InputText
+                value={email}
+                onChange={handleEmailChange}
                 placeholder="Email"
                 fullWidth
                 backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
                 labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
               />
               <InputPassword
+                value={password}
+                onChange={handlePasswordChange}
                 placeholder="Password"
                 fullWidth
                 backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
