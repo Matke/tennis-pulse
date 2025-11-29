@@ -273,3 +273,10 @@ input:-webkit-autofill:focus {
 input:-webkit-autofill::first-line {
   -webkit-text-fill-color: #e5e5e6 !important;
 }
+
+/* Country select custom style (react-flags-select) */
+.selected-country-button {
+  background-color: transparent;
+  color: var(--color-tp-typography);
+  border: 1px solid var(--color-tp-typography);
+}

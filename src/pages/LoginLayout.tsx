@@ -17,10 +17,12 @@ import WelcomeMessage from "@/components/ui/WelcomeMessage";
 
 // toast
 import { toast } from "react-hot-toast";
+import ReactFlagsSelect from "react-flags-select";
 
 const LoginLayout = () => {
   // wait for the video to load and then show text animation (motion)
   const [videoReady, setVideoReady] = useState(false);
+  const [selected, setSelected] = useState("RS");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,6 +69,16 @@ const LoginLayout = () => {
                 fullWidth
                 backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
                 labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
+              />
+              <ReactFlagsSelect
+                selected={selected}
+                onSelect={(code) => setSelected(code)}
+                placeholder="Select a language"
+                className={"text-tp-typography-secondary"}
+                searchable
+                selectedSize={17}
+                optionsSize={17}
+                selectButtonClassName="selected-country-button"
               />
               <Button
                 label="Sign up"

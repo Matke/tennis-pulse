@@ -22,9 +22,13 @@ import InputPassword from "@/components/inputs/InputPassword";
 import Chip from "@/components/ui/Chip";
 import ConfirmationModal from "@/components/modals/ConfirmationModal";
 
+// flags
+import ReactFlagsSelect from "react-flags-select";
+
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("RS");
   return (
     <div className="bg-charcoal-900 fixed flex h-screen w-screen flex-col">
       <div className="bg-tp-primary text-platinum-950 z-10 w-full p-2 tracking-wider">
@@ -416,7 +420,27 @@ const TestPage = () => {
         <Typography variant="subtitle" as="h2" className="p-2 underline">
           Chips
         </Typography>
-        <div className="m-2 p-2"></div>
+        <div className="bg-charcoal-900 h-50 w-100 p-10 blur-[0.5px] backdrop-blur-md">
+          <span
+            className={`fi fi-${selected.toLowerCase()}`}
+            style={{
+              backgroundSize: "contain",
+              backgroundPosition: "50%",
+              backgroundRepeat: "no-repeat",
+              width: "100%",
+              height: "100%",
+              marginBottom: "10px",
+            }}
+          ></span>
+
+          <ReactFlagsSelect
+            selected={selected}
+            onSelect={(code) => setSelected(code)}
+            placeholder="Select a language"
+            className=""
+            selectButtonClassName=""
+          />
+        </div>
       </div>
     </div>
   );
