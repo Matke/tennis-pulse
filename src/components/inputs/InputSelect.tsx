@@ -38,7 +38,7 @@ const InputSelect = ({
   const isFloating = value && value !== "";
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       {/* appearance none - default arrow will disappear and will be changed later */}
       <select
         id={id}
@@ -49,17 +49,16 @@ const InputSelect = ({
       >
         {/* hidden so that label can be moved */}
         <option value="" disabled hidden></option>
-        <div>
-          {options?.map((option: string | InputSelectOption, index: number) => (
-            <option
-              key={index}
-              value={typeof option === "string" ? option : option[valueKey]}
-              className="text-tp-typography-secondary bg-tp-typography"
-            >
-              {typeof option === "string" ? option : option[labelKey]}
-            </option>
-          ))}
-        </div>
+
+        {options?.map((option: string | InputSelectOption, index: number) => (
+          <option
+            key={index}
+            value={typeof option === "string" ? option : option[valueKey]}
+            className="text-tp-typography-secondary bg-tp-typography"
+          >
+            {typeof option === "string" ? option : option[labelKey]}
+          </option>
+        ))}
       </select>
 
       <label

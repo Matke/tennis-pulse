@@ -41,7 +41,7 @@ const LoginLayout = () => {
   return (
     <div className="flex h-screen">
       {/* LEFT — Form part */}
-      <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:w-1/2 md:p-8">
+      <div className="bg-charcoal-900 z-1000 w-auto select-none md:block md:w-1/2 md:p-8">
         <Card headerCardContent={<WelcomeMessage videoReady={videoReady} />}>
           <div className="w-full max-w-sm">
             <PulseLogo />
