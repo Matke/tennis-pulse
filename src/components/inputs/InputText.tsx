@@ -27,7 +27,7 @@ export type InputProps = {
   isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
-};
+} & React.ComponentProps<"input">;
 
 //! placeholder acts as id,name,and htmlFor in this version of Input Text Component
 const InputText = ({

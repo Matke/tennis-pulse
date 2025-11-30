@@ -74,9 +74,12 @@ const LoginLayout = () => {
                 labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
               />
               <InputSelect
+                id="backhand-type"
                 label="Backhand type"
                 value={fruit}
-                onChange={(e: any) => setFruit(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setFruit(e.target.value)
+                }
                 options={[
                   { value: "apple", label: "One-handed" },
                   { value: "banana", label: "Two-handed" },
