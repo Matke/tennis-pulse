@@ -18,11 +18,13 @@ import WelcomeMessage from "@/components/ui/WelcomeMessage";
 // toast
 import { toast } from "react-hot-toast";
 import ReactFlagsSelect from "react-flags-select";
+import InputSelect from "@/components/inputs/InputSelect";
 
 const LoginLayout = () => {
   // wait for the video to load and then show text animation (motion)
   const [videoReady, setVideoReady] = useState(false);
   const [selected, setSelected] = useState("RS");
+  const [fruit, setFruit] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -70,7 +72,7 @@ const LoginLayout = () => {
                 backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
                 labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
               />
-              <ReactFlagsSelect
+              {/* <ReactFlagsSelect
                 selected={selected}
                 onSelect={(code) => setSelected(code)}
                 placeholder="Select a language"
@@ -79,6 +81,22 @@ const LoginLayout = () => {
                 selectedSize={17}
                 optionsSize={17}
                 selectButtonClassName="selected-country-button"
+              /> */}
+              <InputSelect
+                id="backhand-type"
+                label="Backhand type"
+                value={fruit}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setFruit(e.target.value)
+                }
+                options={[
+                  { value: "apple", label: "One-handed" },
+                  { value: "banana", label: "Two-handed" },
+                  { value: "orange", label: "Only slice" },
+                ]}
+                floatingLabelBackground={
+                  "bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
+                }
               />
               <Button
                 label="Sign up"
