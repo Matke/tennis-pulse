@@ -53,22 +53,21 @@ const TestPage = () => {
       <div className="bg-tp-primary text-platinum-950 z-10 flex w-full items-center justify-between p-2 tracking-wider">
         Tennis Pulse App - Test Component Page
         <Dropdown
-          buttonImg={
+          buttonIcon={
             <HiDotsVertical className="text-tp-typography-secondary h-6 w-6" />
           }
           className="cursor-pointer rounded p-2"
-          menuClassName=""
           menuPosition="right"
           items={[
             {
               label: "Edit",
-              icon: <FaEdit />, // or any other icon
+              icon: <FaEdit className="text-tp-secondary" />, // or any other icon
               action: () => console.log("Edit clicked"),
             },
             {
               label: "Delete",
               borderTop: true,
-              icon: <FaTrash />,
+              icon: <FaTrash className="text-tp-warning" />,
               action: () => console.log("Delete clicked"),
             },
           ]}
@@ -415,6 +414,32 @@ const TestPage = () => {
             smallLabel="Delete"
             smallLabelColor="text-tp-typography tracking-wider"
           />
+          <Dropdown
+            buttonIcon={
+              <HiDotsVertical className="text-tp-typography h-6 w-6" />
+            }
+            className="cursor-pointer rounded"
+            menuPosition="right"
+            items={[
+              {
+                label: "Edit",
+                icon: <FaEdit className="text-tp-secondary" />, // or any other icon
+                action: () => console.log("Edit clicked"),
+              },
+              {
+                label: "Delete",
+                borderTop: true,
+                icon: <FaTrash className="text-tp-warning" />,
+                action: () => console.log("Delete clicked"),
+              },
+              {
+                label: "Delete",
+                borderTop: true,
+                icon: <FaTrash className="text-tp-warning" />,
+                action: () => console.log("Delete clicked"),
+              },
+            ]}
+          />
         </div>
 
         <Typography variant="subtitle" as="h2" className="p-2 underline">
@@ -482,27 +507,12 @@ const TestPage = () => {
           />
         </div>
         <div className="flex items-center justify-center">
-          <Accordion accordionData={faqs} />
+          <Accordion
+            accordionData={faqs}
+            accordionWidth={190}
+            accordionItemBackgroundColor="tp-secondary"
+          />
         </div>
-        <Dropdown
-          buttonImg={<HiDotsVertical className="h-6 w-6 text-gray-600" />}
-          className="rounded p-2 hover:bg-gray-200"
-          menuClassName=""
-          menuPosition="right"
-          items={[
-            {
-              label: "Edit",
-              icon: <HiDotsVertical />, // or any other icon
-              action: () => console.log("Edit clicked"),
-            },
-            {
-              label: "Delete",
-              borderTop: true,
-              icon: <HiDotsVertical />,
-              action: () => console.log("Delete clicked"),
-            },
-          ]}
-        />
       </div>
     </div>
   );

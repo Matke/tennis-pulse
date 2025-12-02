@@ -1,15 +1,36 @@
 import { useState, useRef, useEffect } from "react";
+
+// framer
 import { motion, AnimatePresence } from "framer-motion";
+import { HiDotsVertical } from "react-icons/hi";
+
+export type MenuItem = {
+  label: string;
+  icon: React.ReactNode;
+  action: () => void;
+  borderTop?: boolean;
+};
+
+export type DropdownProps = {
+  buttonIcon?: React.ReactNode;
+  label?: string;
+  items?: MenuItem[];
+  className?: string;
+  width?: string;
+  menuPosition?: "right" | "left";
+  menuClassName?: string;
+  borderTop?: boolean;
+};
 
 const Dropdown = ({
-  buttonImg,
+  buttonIcon,
   items,
   label,
   className,
   width = "max-w-[200px]",
   menuPosition = "right",
-  menuClassName,
-}: any) => {
+  menuClassName = "",
+}: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<any>(null);
 
@@ -25,7 +46,7 @@ const Dropdown = ({
   }, []);
 
   return (
-    <div ref={ref} className={`relative ${width} z-20`}>
+    <div ref={ref} className={`relative ${width} z-100`}>
       <button
         className={className}
         onClick={(e) => {
@@ -33,7 +54,7 @@ const Dropdown = ({
           setOpen((prev) => !prev);
         }}
       >
-        {buttonImg || label}
+        {buttonIcon || label || <HiDotsVertical className="h-6 w-6" />}
       </button>
 
       <AnimatePresence>
@@ -43,24 +64,32 @@ const Dropdown = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -5 }}
             transition={{ duration: 0.15 }}
-            className={`absolute ${menuPosition}-0 ring-opacity-5 bg-tp-primary mt-2 w-40 rounded-md py-1 shadow-lg ring-1 ring-black ${menuClassName}`}
+            className={`absolute ${menuPosition}-0 ring-opacity-5 bg-tp-card-back ring-tp-typography mt-2 w-40 rounded-md shadow-lg ring-1 ${menuClassName}`}
           >
-            {items?.map((item: any, i: number) => (
-              <div
-                key={i}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  item.action();
-                  setOpen(false); // close after action is selected
-                }}
-                className={`hover:bg-sunbeam-yellow-300 text-tp-typography-secondary flex cursor-pointer items-center px-3 py-2 text-sm ${
-                  item.borderTop ? "border-t" : ""
-                }`}
-              >
-                {item.icon && <div className="w-5">{item.icon}</div>}
-                <div className="ml-3 flex-1">{item.label}</div>
-              </div>
-            ))}
+            {items?.map((item: MenuItem, i: number) => {
+              const isFirst = i === 0;
+              const isLast = i === items.length - 1;
+
+              return (
+                <div
+                  key={i}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    item.action();
+                    setOpen(false); // close after action is selected
+                  }}
+                  className={`hover:bg-tp-primary hover:border-tp-primary ${isLast && "hover:rounded-b-md"} ${isFirst && "hover:rounded-t-md"} hover:text-tp-typography-secondary text-tp-typography flex cursor-pointer items-center px-3 py-2.5 text-sm ${
+                    item.borderTop ? "border-tp-typography/50 border-t" : ""
+                  }`}
+                >
+                  {/* icon item */}
+                  {item.icon && <div className="w-5">{item.icon}</div>}
+
+                  {/* label menu item */}
+                  <div className="ml-3 flex-1">{item.label}</div>
+                </div>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
