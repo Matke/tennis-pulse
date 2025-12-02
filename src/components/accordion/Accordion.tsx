@@ -14,7 +14,7 @@ const Accordion = ({ accordionData }: AccordionProps) => {
   const [currentTab, setCurrentTab] = useState<number>(-1);
 
   return (
-    <div className="">
+    <div className="border-tp-card-back/70 m-9 w-full border-3">
       {accordionData.map((data: AccordionItemData, index: number) => {
         return (
           <AccordionItem

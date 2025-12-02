@@ -458,8 +458,10 @@ const TestPage = () => {
             selectButtonClassName=""
           />
         </div>
+        <div className="flex items-center justify-center">
+          <Accordion accordionData={faqs} />
+        </div>
       </div>
-      <Accordion accordionData={faqs} />
     </div>
   );
 };
