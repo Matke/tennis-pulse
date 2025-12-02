@@ -32,7 +32,7 @@ const Accordion = ({
 
   return (
     <div
-      className={`border-${accordionBorderColor} w-${accordionWidth} border ${mainContainerClassName}`}
+      className={`border-${accordionBorderColor} w-${accordionWidth.toString()} border ${mainContainerClassName}`}
     >
       {accordionData.map((data: AccordionItemData, index: number) => {
         return (
