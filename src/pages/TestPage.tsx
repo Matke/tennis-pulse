@@ -24,11 +24,28 @@ import ConfirmationModal from "@/components/modals/ConfirmationModal";
 
 // flags
 import ReactFlagsSelect from "react-flags-select";
+import Accordion from "@/components/accordion/Accordion";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("RS");
+
+  const faqs = [
+    {
+      title: "What is Tennis Pulse?",
+      text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
+    },
+    {
+      title: "Are all features of Tennis Pulse free?",
+      text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
+    },
+    {
+      title: "How to create tournament?",
+      text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
+    },
+  ];
+
   return (
     <div className="bg-charcoal-900 fixed flex h-screen w-screen flex-col">
       <div className="bg-tp-primary text-platinum-950 z-10 w-full p-2 tracking-wider">
@@ -420,7 +437,7 @@ const TestPage = () => {
         <Typography variant="subtitle" as="h2" className="p-2 underline">
           Chips
         </Typography>
-        <div className="bg-charcoal-900 h-50 w-100 p-10 blur-[0.5px] backdrop-blur-md">
+        <div className="bg-charcoal-900 mb-9 h-50 w-100 p-10 blur-[0.5px] backdrop-blur-md">
           <span
             className={`fi fi-${selected.toLowerCase()}`}
             style={{
@@ -440,6 +457,9 @@ const TestPage = () => {
             className=""
             selectButtonClassName=""
           />
+        </div>
+        <div className="flex items-center justify-center">
+          <Accordion accordionData={faqs} />
         </div>
       </div>
     </div>
