@@ -7,12 +7,13 @@ import Typography from "@/components/text/Typography";
 import { MdOutlineSportsTennis } from "react-icons/md";
 import { BiCheck, BiSolidTennisBall } from "react-icons/bi";
 import { GiTennisCourt } from "react-icons/gi";
-import { FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { FaHourglassStart } from "react-icons/fa";
 import { RiAlertFill, RiSettings3Fill } from "react-icons/ri";
 import { PiSneakerMoveFill } from "react-icons/pi";
 import { MdDelete } from "react-icons/md";
 import { IoMdInformationCircle } from "react-icons/io";
+import { HiDotsVertical } from "react-icons/hi";
 
 import { useState } from "react";
 import ModalBase from "@/components/modals/ModalBase";
@@ -25,6 +26,7 @@ import ConfirmationModal from "@/components/modals/ConfirmationModal";
 // flags
 import ReactFlagsSelect from "react-flags-select";
 import Accordion from "@/components/accordion/Accordion";
+import Dropdown from "@/components/ui/Dropdown";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
@@ -48,8 +50,29 @@ const TestPage = () => {
 
   return (
     <div className="bg-charcoal-900 fixed flex h-screen w-screen flex-col">
-      <div className="bg-tp-primary text-platinum-950 z-10 w-full p-2 tracking-wider">
+      <div className="bg-tp-primary text-platinum-950 z-10 flex w-full items-center justify-between p-2 tracking-wider">
         Tennis Pulse App - Test Component Page
+        <Dropdown
+          buttonImg={
+            <HiDotsVertical className="text-tp-typography-secondary h-6 w-6" />
+          }
+          className="cursor-pointer rounded p-2"
+          menuClassName=""
+          menuPosition="right"
+          items={[
+            {
+              label: "Edit",
+              icon: <FaEdit />, // or any other icon
+              action: () => console.log("Edit clicked"),
+            },
+            {
+              label: "Delete",
+              borderTop: true,
+              icon: <FaTrash />,
+              action: () => console.log("Delete clicked"),
+            },
+          ]}
+        />
       </div>
       <div className="bg-charcoal-900 overflow-y-auto">
         <h1 className="text-tp-typography p-2 text-2xl underline">Buttons</h1>
@@ -461,6 +484,25 @@ const TestPage = () => {
         <div className="flex items-center justify-center">
           <Accordion accordionData={faqs} />
         </div>
+        <Dropdown
+          buttonImg={<HiDotsVertical className="h-6 w-6 text-gray-600" />}
+          className="rounded p-2 hover:bg-gray-200"
+          menuClassName=""
+          menuPosition="right"
+          items={[
+            {
+              label: "Edit",
+              icon: <HiDotsVertical />, // or any other icon
+              action: () => console.log("Edit clicked"),
+            },
+            {
+              label: "Delete",
+              borderTop: true,
+              icon: <HiDotsVertical />,
+              action: () => console.log("Delete clicked"),
+            },
+          ]}
+        />
       </div>
     </div>
   );
