@@ -34,20 +34,18 @@ const AccordionItem = ({
       >
         <p className="">{num < 9 ? `0${num + 1}` : num + 1}</p>
         <p className="flex-1">{title}</p>
-        <p className="">
-          <motion.div
-            initial={false}
-            animate={{ rotate: isOpen ? 0 : 180 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            // style={{ display: "inline-block" }} sometimes this makes problem fixed
-          >
-            <IoIosArrowUp className="h-5 w-5" />
-          </motion.div>
-        </p>
+        <motion.div
+          initial={false}
+          animate={{ rotate: isOpen ? 0 : 180 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          // style={{ display: "inline-block" }} sometimes this makes problem fixed
+        >
+          <IoIosArrowUp className="h-5 w-5" />
+        </motion.div>
       </div>
       <AnimatePresence mode="wait">
         <div
-          className={` ${isOpen ? "p-5" : "p-0"} bg-tp-secondary/70 w-full text-wrap`}
+          className={` ${isOpen ? "p-5" : "p-0"} bg-tp-secondary/70 w-full text-justify text-wrap`}
         >
           {isOpen && (
             <motion.div
