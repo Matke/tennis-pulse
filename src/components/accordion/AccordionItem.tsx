@@ -10,6 +10,10 @@ export type AccordionItemProps = {
   title: string;
   text: string;
   currentTab: number;
+  accordionItemBackgroundColor: string;
+  accordionItemHoverColor: string;
+  textContentClass: string;
+  accordionItemMainContainer: string;
   setCurrentTab: React.Dispatch<React.SetStateAction<number>>; // number is type of param for setCurrentTab
 };
 
@@ -18,6 +22,10 @@ const AccordionItem = ({
   title,
   text,
   currentTab,
+  accordionItemBackgroundColor,
+  accordionItemHoverColor,
+  textContentClass,
+  accordionItemMainContainer,
   setCurrentTab,
 }: AccordionItemProps) => {
   const isOpen = currentTab === num;
@@ -27,9 +35,9 @@ const AccordionItem = ({
   };
 
   return (
-    <div className={"w-full"}>
+    <div className={`w-full ${accordionItemMainContainer}`}>
       <div
-        className="bg-tp-primary border-b-tp-background/10 hover:bg-sunbeam-yellow-300 group flex items-center justify-center gap-9 border-b p-5 hover:cursor-pointer"
+        className={`bg-${accordionItemBackgroundColor} border-b-tp-background/10 hover:bg-${accordionItemHoverColor} group flex items-center justify-center gap-9 border-b p-5 hover:cursor-pointer`}
         onClick={() => handleToggle()}
       >
         <motion.p
@@ -50,7 +58,7 @@ const AccordionItem = ({
       </div>
       <AnimatePresence mode="wait">
         <div
-          className={` ${isOpen ? "p-5" : "p-0"} bg-tp-card-back/50 text-tp-typography w-full text-justify text-wrap`}
+          className={` ${isOpen ? "p-5" : "p-0"} bg-tp-card-back/50 text-tp-typography w-full text-justify text-wrap ${textContentClass}`}
         >
           {isOpen && (
             <motion.div

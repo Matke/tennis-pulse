@@ -8,13 +8,32 @@ export type AccordionItemData = {
 
 export type AccordionProps = {
   accordionData: AccordionItemData[];
+  accordionBorderColor?: string;
+  accordionWidth?: number;
+  mainContainerClassName?: string;
+  accordionItemColor?: string;
+  accordionItemBackgroundColor?: string;
+  accordionItemHoverColor?: string;
+  accordionItemMainContainer?: string;
+  textContentClass?: string;
 };
 
-const Accordion = ({ accordionData }: AccordionProps) => {
+const Accordion = ({
+  accordionData,
+  accordionBorderColor = "tp-card-back/70",
+  accordionWidth = 190,
+  mainContainerClassName = "",
+  accordionItemBackgroundColor = "tp-primary",
+  accordionItemHoverColor = "sunbeam-yellow-300",
+  accordionItemMainContainer = "",
+  textContentClass = "",
+}: AccordionProps) => {
   const [currentTab, setCurrentTab] = useState<number>(-1);
 
   return (
-    <div className="border-tp-card-back/70 m-9 w-190 border-3">
+    <div
+      className={`border-${accordionBorderColor} w-${accordionWidth} border ${mainContainerClassName}`}
+    >
       {accordionData.map((data: AccordionItemData, index: number) => {
         return (
           <AccordionItem
@@ -24,6 +43,10 @@ const Accordion = ({ accordionData }: AccordionProps) => {
             title={data.title}
             text={data.text}
             key={index}
+            accordionItemBackgroundColor={accordionItemBackgroundColor}
+            accordionItemHoverColor={accordionItemHoverColor}
+            textContentClass={textContentClass}
+            accordionItemMainContainer={accordionItemMainContainer}
           />
         );
       })}

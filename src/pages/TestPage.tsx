@@ -33,15 +33,15 @@ const TestPage = () => {
 
   const faqs = [
     {
-      title: "Where are these chairs assembled?",
+      title: "What is Tennis Pulse?",
       text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
     },
     {
-      title: "How long do I have to return my chair?",
+      title: "Are all features of Tennis Pulse free?",
       text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
     },
     {
-      title: "Do you ship to countries outside the EU?",
+      title: "How to create tournament?",
       text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
     },
   ];
@@ -437,7 +437,7 @@ const TestPage = () => {
         <Typography variant="subtitle" as="h2" className="p-2 underline">
           Chips
         </Typography>
-        <div className="bg-charcoal-900 h-50 w-100 p-10 blur-[0.5px] backdrop-blur-md">
+        <div className="bg-charcoal-900 mb-9 h-50 w-100 p-10 blur-[0.5px] backdrop-blur-md">
           <span
             className={`fi fi-${selected.toLowerCase()}`}
             style={{
