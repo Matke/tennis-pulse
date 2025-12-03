@@ -10,8 +10,8 @@ import { IoIosCloseCircle } from "react-icons/io";
 // import { FaRegEye } from "react-icons/fa";
 
 export type InputProps = {
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   placeholder: string;
 
   type?: string;

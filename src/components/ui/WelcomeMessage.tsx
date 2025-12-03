@@ -5,11 +5,9 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 const WelcomeMessage = ({
   name = "Tennis Pulse",
   message = "Welcome to",
-  videoReady,
 }: {
   name?: string;
   message?: string;
-  videoReady: boolean;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -37,20 +35,19 @@ const WelcomeMessage = ({
           {name.toLowerCase()} tenis
         </motion.div>
         <AnimatePresence>
-          {videoReady &&
-            name.split("").map((char, i) => (
-              <motion.p
-                ref={ref}
-                key={i}
-                initial={{ opacity: 0, x: -18 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                exit="hidden"
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="relative flex h-auto animate-pulse items-center justify-center bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text py-1 text-center text-5xl font-extrabold text-transparent select-auto md:text-6xl"
-              >
-                {char === " " ? <span>&nbsp;</span> : char}
-              </motion.p>
-            ))}
+          {name.split("").map((char, i) => (
+            <motion.p
+              ref={ref}
+              key={i}
+              initial={{ opacity: 0, x: -18 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              exit="hidden"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="relative flex h-auto animate-pulse items-center justify-center bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text py-1 text-center text-5xl font-extrabold text-transparent select-auto md:text-6xl"
+            >
+              {char === " " ? <span>&nbsp;</span> : char}
+            </motion.p>
+          ))}
         </AnimatePresence>
       </div>
     </div>

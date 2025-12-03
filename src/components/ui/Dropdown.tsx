@@ -48,13 +48,15 @@ const Dropdown = ({
   return (
     <div ref={ref} className={`relative ${width} z-100`}>
       <button
-        className={className}
+        className={`p-1 hover:rounded-full ${className}`}
         onClick={(e) => {
           e.stopPropagation();
           setOpen((prev) => !prev);
         }}
       >
-        {buttonIcon || label || <HiDotsVertical className="h-6 w-6" />}
+        {buttonIcon || label || (
+          <HiDotsVertical className="hover:text-tp-typography-secondary h-6 w-6" />
+        )}
       </button>
 
       <AnimatePresence>
