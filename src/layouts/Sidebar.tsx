@@ -10,6 +10,10 @@ import { RiSidebarFoldFill } from "react-icons/ri";
 import { RiSidebarUnfoldFill } from "react-icons/ri";
 import PulseLogo from "@/components/ui/PulseLogo";
 import Typography from "@/components/text/Typography";
+import { NavLink } from "react-router";
+import { classNames } from "@/utils/common";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
+import { CgLogOut } from "react-icons/cg";
 
 // SubMenu types
 type SubMenuKeys =
@@ -34,7 +38,7 @@ type NavigationItem = {
 const navigation: NavigationItem[] = [
   {
     title: "Home",
-    key: "matches",
+    key: "home",
     icon: <AiFillHome className="h-6 w-6" />,
   },
   {
@@ -51,6 +55,7 @@ const navigation: NavigationItem[] = [
   {
     title: "Tournaments",
     key: "tournaments",
+    subMenu: ["TK Palilula", "Court Hub", "OTT"],
     icon: <FaTrophy className="h-6 w-6" />,
   },
   {
@@ -87,23 +92,24 @@ const Sidebar = () => {
   };
 
   return (
-    <div
-      className={`${open ? "w-72 p-5" : "w-20 p-3"} bg-tp-main-background relative h-screen pt-8 duration-300 ease-in-out`}
+    <aside
+      className={`${open ? "w-72 p-5" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5 duration-300 ease-in-out`}
     >
       {/* Sidebar section for toggling open/close state */}
-      <div
-        className={`border-tp-divider bg-tp-card-back absolute -right-4 bottom-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0.5 text-xl ${!open && "rotate-360"} z-100 transition-all duration-300 ease-in-out`}
+      {/* z-100 - to be above logo when button is at the top */}
+      <section
+        className={`bg-tp-card-back absolute -right-4 ${!open ? "bottom-4.5" : "bottom-6"} flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0.5 text-xl ${!open && "rotate-360"} transition-all duration-300 ease-in-out`}
         onClick={() => setOpen(!open)}
       >
         {open ? (
-          <RiSidebarFoldFill className="text-tp-primary h-5 w-5" />
+          <RiSidebarFoldFill className="text-tp-typography h-5 w-5" />
         ) : (
-          <RiSidebarUnfoldFill className="text-tp-primary h-5 w-5" />
+          <RiSidebarUnfoldFill className="text-tp-typography h-5 w-5" />
         )}
-      </div>
+      </section>
 
       {/* Logo and title section */}
-      <div className="flex items-center gap-x-4">
+      <section className="flex items-center gap-x-4">
         <PulseLogo isInSidebar />
 
         <Typography
@@ -111,20 +117,29 @@ const Sidebar = () => {
         >
           Tennis Pulse
         </Typography>
-      </div>
+      </section>
 
-      {/* Sidebar Navbar Items section */}
-      <ul className="space-y-0.5 pt-6">
-        {navigation.map((item: NavigationItem, index: number) => (
-          <li
-            key={index}
-            className={`flex cursor-pointer flex-col rounded-md px-4 py-3 text-zinc-50 transition-all duration-300 ease-in-out hover:bg-zinc-800/50 hover:text-white ${item.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-zinc-800/40"}`}
+      {/* Sidebar Items section */}
+      <div className="scrollbar-hide flex-1 space-y-0.5 overflow-y-auto pt-6">
+        {navigation.map((item: NavigationItem) => (
+          <NavLink
+            key={item.key}
+            to={item.key}
+            className={({ isActive }) =>
+              classNames(
+                "text-tp-typography flex cursor-pointer flex-col rounded-md px-4 py-3 transition-all duration-300 ease-in-out",
+                isActive
+                  ? "text-charcoal-950! bg-tp-primary/85"
+                  : "hover:bg-zinc-800/50",
+                item.gap ? "mt-9" : "mt-2",
+              )
+            }
           >
             <div
-              className="flex items-center justify-between gap-x-4"
+              className="flex items-center justify-between"
               onClick={() => toggleSubMenu(item.key)}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-7.5">
                 <span className="text-lg">{item.icon}</span>
                 <span
                   className={`${!open && "hidden"} origin-left duration-300 ease-in-out`}
@@ -142,26 +157,33 @@ const Sidebar = () => {
               )}
             </div>
 
-            {/* Sidebar submenus NAvbar ITems */}
+            {/* Sidebar submenus items */}
             {item.subMenu && subMenus[item.key] && (
-              <ul className="pt-4 pl-3 text-zinc-300">
+              <ul className={`${open ? "block pt-4 pl-3" : "hidden"}`}>
                 {item.subMenu.map((subMenu, subIndex) => (
                   <li
                     key={subIndex}
-                    className="flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm hover:bg-zinc-800"
+                    className={`hover:bg-tp-primary/60 flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
                   >
-                    <span className="text-zinc-4">
-                      <FaChevronRight className="text-xs" />
-                    </span>
+                    <FaChevronRight className="text-xs" />
                     {subMenu}
                   </li>
                 ))}
               </ul>
             )}
-          </li>
+          </NavLink>
         ))}
-      </ul>
-    </div>
+      </div>
+
+      {/* Profile section - profile image, player name or username, logout */}
+      <div className="flex items-center gap-5 pt-5">
+        {/* <Typography
+          className={`${!open ? "hidden" : ""} flex-1 whitespace-nowrap`}
+        >
+          Matija Milojkovic
+        </Typography> */}
+      </div>
+    </aside>
   );
 };
 
