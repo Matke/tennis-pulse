@@ -1,5 +1,11 @@
+import Typography from "@/components/text/Typography";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <Typography variant="subtitle" className="p-10">
+      Welcome to Tennis Pulse
+    </Typography>
+  );
 };
 
 export default Home;
