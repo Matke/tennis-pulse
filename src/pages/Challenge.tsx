@@ -1,5 +1,7 @@
+import Typography from "@/components/text/Typography";
+
 const Challenge = () => {
-  return <div>Challenge</div>;
+  return <Typography variant="subtitle">Challenge</Typography>;
 };
 
 export default Challenge;

@@ -1,5 +1,7 @@
+import Typography from "@/components/text/Typography";
+
 const Matches = () => {
-  return <div>Matches</div>;
+  return <Typography variant="subtitle">Your matches</Typography>;
 };
 
 export default Matches;

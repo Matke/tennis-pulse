@@ -46,8 +46,7 @@ const ButtonIcon = ({
 }: ButtonIconProps) => {
   const defaultClass = ` flex items-center justify-center rounded-${rounded ? "full" : "md"} border p-2 ${variant !== "flat" && "shadow-sm"} focus:outline-none not-disabled:active:scale-96 not-disabled:active:brightness-98 duration-100`;
 
-  const hoverState =
-    " hover:not-disabled:opacity-90 transition-all duration-200 ";
+  const hoverState = ` hover:not-disabled:opacity-90 transition-all duration-200 `;
 
   const setBorder = () => {
     switch (themeColor) {
@@ -82,7 +81,7 @@ const ButtonIcon = ({
       case "secondary":
         return " text-tp-typography-secondary ";
       case "tertiary":
-        return " text-tp-tertiary ";
+        return " text-tp-typography-secondary ";
       case "warning":
         return " text-tp-typography ";
     }
@@ -93,7 +92,14 @@ const ButtonIcon = ({
       case "flat":
         return ["shadow-none border-none", setTextColor()];
       case "outlined":
-        return ["bg-transparent", "text-tp-typography", setBorder()];
+        return [
+          "bg-transparent",
+          "text-tp-typography",
+          setBorder(),
+          hoverClass
+            ? "hover:bg-tp-primary hover:text-tp-typography-secondary"
+            : "",
+        ];
       case "filled":
         return [setBackgroundColor(), setTextColor(), setBorder()];
       default:

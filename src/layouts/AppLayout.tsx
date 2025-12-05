@@ -1,30 +1,22 @@
+// components
+import Sidebar from "@/layouts/Sidebar";
+
+// router
 import { Outlet } from "react-router";
 
 const AppLayout = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex w-full">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-900 p-4 text-white">
-        <h2 className="mb-4 text-xl font-semibold">Sidebar</h2>
-        <ul className="space-y-2">
-          <li className="cursor-pointer hover:text-gray-300">Menu 1</li>
-          <li className="cursor-pointer hover:text-gray-300">Menu 2</li>
-          <li className="cursor-pointer hover:text-gray-300">Menu 3</li>
-        </ul>
-      </aside>
+      <Sidebar />
 
-      {/* Main area */}
-      <div className="flex flex-1 flex-col">
-        {/* Top Navbar */}
-        <nav className="flex h-16 items-center bg-white px-6 shadow">
-          <h1 className="text-xl font-semibold">Top Navbar</h1>
-        </nav>
-
-        {/* Content area */}
-        <main className="flex-1 overflow-auto bg-gray-100 p-6">
+      {/* Main layout section */}
+      <main className="bg-tp-card-back h-screen flex-1 space-y-6">
+        {/* Dashboard contents - padding here will move page content from sidebar */}
+        <div className="w-full p-7">
           <Outlet />
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 };
