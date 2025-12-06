@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // icons
 import { AiFillHome } from "react-icons/ai";
@@ -22,6 +22,7 @@ import PulseLogo from "@/components/ui/PulseLogo";
 
 // utils
 import { classNames } from "@/utils/common";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 // SubMenu types
 type SubMenuKeys =
@@ -92,18 +93,21 @@ const navigation: NavigationItem[] = [
   },
 ];
 
-const Sidebar = () => {
-  // whethere sidebar is in open or closed state
-  const [open, setOpen] = useState<boolean>(true);
+const defaultSubMenuState = {
+  home: false,
+  challenge: false,
+  matches: false,
+  head2head: false,
+  tournaments: false,
+  settings: false,
+};
 
-  const [subMenus, setSubMenus] = useState<SubMenu>({
-    home: false,
-    challenge: false,
-    matches: false,
-    head2head: false,
-    tournaments: false,
-    settings: false,
-  });
+const Sidebar = () => {
+  // persist state on refresh
+  // whethere sidebar is in open or closed state
+  const [open, setOpen] = useLocalStorage("sidebarOpen", false);
+
+  const [subMenus, setSubMenus] = useState<SubMenu>(defaultSubMenuState);
 
   // which sidemenu should be visible, it wont close other ones that are open
   const toggleSubMenu = (menu: SubMenuKeys) => {
@@ -120,7 +124,7 @@ const Sidebar = () => {
       {/* Sidebar section for toggling open/close state */}
       {/* z-100 - to be above logo when button is at the top */}
       <section
-        className={`bg-tp-card-back absolute -right-4 ${!open ? "bottom-4.5" : "bottom-6"} flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0.5 text-xl ${!open && "rotate-360"} transition-all duration-300 ease-in-out`}
+        className={`bg-tp-card-back absolute -right-4 ${!open ? "bottom-4.5" : "bottom-6"} flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0.5 text-xl ${!open && "rotate-360"} hover:bg-tp-main-background/90 transition-all duration-300 ease-in-out`}
         onClick={() => setOpen(!open)}
       >
         {open ? (
@@ -151,45 +155,59 @@ const Sidebar = () => {
               classNames(
                 "text-tp-typography group flex cursor-pointer flex-col rounded-md px-4 py-3 transition-all duration-300 ease-in-out",
                 isActive
-                  ? "text-charcoal-950! bg-tp-primary/85"
+                  ? "text-charcoal-950 bg-tp-primary/85"
                   : "hover:bg-zinc-800/50",
                 item.gap ? "mt-9" : "mt-2",
               )
             }
+            // onClick={() => !item.subMenu && setSubMenus(defaultSubMenuState)}
           >
-            <div className="relative flex h-full items-center justify-between">
-              <div className="flex items-center gap-7">
-                <span className="text-lg">{item.icon}</span>
-                <span
-                  className={`${!open && "hidden"} origin-left duration-300 ease-in-out`}
+            {({ isActive }) => (
+              <>
+                <div
+                  className={`relative flex h-full items-center justify-between ${isActive && "text-charcoal-950"}`}
                 >
-                  {item.title}
-                </span>
-              </div>
+                  <div className="flex items-center gap-7">
+                    <span className="text-lg">{item.icon}</span>
+                    <span
+                      className={`${!open && "hidden"} origin-left duration-300 ease-in-out`}
+                    >
+                      {item.title}
+                    </span>
+                  </div>
 
-              {item.subMenu && (
-                <span
-                  className={`py-full group-hover:border-tp-divider/5 absolute -right-4 flex cursor-pointer items-center justify-center rounded-r-md px-4 py-4 text-sm group-hover:border-2 group-hover:shadow-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
-                  onClick={() => toggleSubMenu(item.key)}
-                >
-                  {subMenus[item.key] ? <FaChevronDown /> : <FaChevronRight />}
-                </span>
-              )}
-            </div>
+                  {item.subMenu && (
+                    <span
+                      className={`py-full group-hover:border-tp-divider/5 absolute -right-4 flex cursor-pointer items-center justify-center rounded-r-md px-4 py-4 text-sm group-hover:border-2 group-hover:shadow-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
+                      onClick={() => toggleSubMenu(item.key)}
+                    >
+                      {subMenus[item.key] ? (
+                        <FaChevronDown />
+                      ) : (
+                        <FaChevronRight />
+                      )}
+                    </span>
+                  )}
+                </div>
 
-            {/* Sidebar submenus items */}
-            {item.subMenu && subMenus[item.key] && (
-              <ul className={`${open ? "block pt-4 pl-3" : "hidden"}`}>
-                {item.subMenu.map((subMenu: SubMenuItem) => (
-                  <li
-                    key={subMenu.key}
-                    className={`hover:bg-tp-primary/60 flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
+                {/* Sidebar submenus items */}
+                {item.subMenu && subMenus[item.key] && (
+                  <ul
+                    className={`${open && isActive ? "text-charcoal-950 block pt-4 pl-3" : "hidden"}`}
                   >
-                    <span>{subMenu.icon}</span>
-                    {subMenu.key.charAt(0).toUpperCase() + subMenu.key.slice(1)}
-                  </li>
-                ))}
-              </ul>
+                    {item.subMenu.map((subMenu: SubMenuItem) => (
+                      <li
+                        key={subMenu.key}
+                        className={`${isActive && "hover:bg-tp-primary/60"} flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
+                      >
+                        <span>{subMenu.icon}</span>
+                        {subMenu.key.charAt(0).toUpperCase() +
+                          subMenu.key.slice(1)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
             )}
           </NavLink>
         ))}
