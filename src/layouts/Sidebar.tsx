@@ -14,6 +14,11 @@ import { NavLink } from "react-router";
 import { classNames } from "@/utils/common";
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import { CgLogOut } from "react-icons/cg";
+import { MdUpcoming } from "react-icons/md";
+
+// import { FaClipboardList } from "react-icons/fa";
+import { BsClipboard2HeartFill } from "react-icons/bs";
+// import { FaClipboardCheck } from "react-icons/fa";
 
 // SubMenu types
 type SubMenuKeys =
@@ -127,7 +132,7 @@ const Sidebar = () => {
             to={item.key}
             className={({ isActive }) =>
               classNames(
-                "text-tp-typography flex cursor-pointer flex-col rounded-md px-4 py-3 transition-all duration-300 ease-in-out",
+                "text-tp-typography group flex cursor-pointer flex-col rounded-md px-4 py-3 transition-all duration-300 ease-in-out",
                 isActive
                   ? "text-charcoal-950! bg-tp-primary/85"
                   : "hover:bg-zinc-800/50",
@@ -135,11 +140,8 @@ const Sidebar = () => {
               )
             }
           >
-            <div
-              className="flex items-center justify-between"
-              onClick={() => toggleSubMenu(item.key)}
-            >
-              <div className="flex items-center gap-7.5">
+            <div className="relative flex h-full items-center justify-between">
+              <div className="flex items-center gap-7">
                 <span className="text-lg">{item.icon}</span>
                 <span
                   className={`${!open && "hidden"} origin-left duration-300 ease-in-out`}
@@ -150,7 +152,8 @@ const Sidebar = () => {
 
               {item.subMenu && (
                 <span
-                  className={`ml-auto cursor-pointer text-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
+                  className={`py-full group-hover:border-tp-divider/5 absolute -right-4 flex cursor-pointer items-center justify-center rounded-r-md px-4 py-4 text-sm group-hover:border-2 group-hover:shadow-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
+                  onClick={() => toggleSubMenu(item.key)}
                 >
                   {subMenus[item.key] ? <FaChevronDown /> : <FaChevronRight />}
                 </span>
@@ -165,7 +168,7 @@ const Sidebar = () => {
                     key={subIndex}
                     className={`hover:bg-tp-primary/60 flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
                   >
-                    <FaChevronRight className="text-xs" />
+                    <MdUpcoming className="text-xl" />
                     {subMenu}
                   </li>
                 ))}
