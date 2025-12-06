@@ -1,24 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
+// icons
 import { AiFillHome } from "react-icons/ai";
 import { MdSportsTennis } from "react-icons/md";
-import { GiTennisCourt } from "react-icons/gi";
 import { FaChevronDown, FaChevronRight, FaTrophy } from "react-icons/fa";
 import { FaPeopleArrows } from "react-icons/fa";
 import { IoTennisball } from "react-icons/io5";
 import { RiSidebarFoldFill } from "react-icons/ri";
 import { RiSidebarUnfoldFill } from "react-icons/ri";
-import PulseLogo from "@/components/ui/PulseLogo";
-import Typography from "@/components/text/Typography";
-import { NavLink } from "react-router";
-import { classNames } from "@/utils/common";
-import ButtonIcon from "@/components/buttons/ButtonIcon";
-import { CgLogOut } from "react-icons/cg";
 import { MdUpcoming } from "react-icons/md";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { FaHeart } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 
-// import { FaClipboardList } from "react-icons/fa";
-import { BsClipboard2HeartFill } from "react-icons/bs";
-// import { FaClipboardCheck } from "react-icons/fa";
+// router
+import { NavLink } from "react-router";
+
+// components
+import Typography from "@/components/text/Typography";
+import PulseLogo from "@/components/ui/PulseLogo";
+
+// utils
+import { classNames } from "@/utils/common";
 
 // SubMenu types
 type SubMenuKeys =
@@ -32,10 +35,15 @@ type SubMenuKeys =
 type SubMenu = Record<SubMenuKeys, boolean>;
 
 // Navigation type
+type SubMenuItem = {
+  key: string;
+  icon: React.ReactNode;
+};
+
 type NavigationItem = {
   title: string;
   key: SubMenuKeys;
-  subMenu?: string[];
+  subMenu?: SubMenuItem[];
   icon: React.ReactNode;
   gap?: boolean;
 };
@@ -54,13 +62,22 @@ const navigation: NavigationItem[] = [
   {
     title: "Matches",
     key: "matches",
-    subMenu: ["Upcoming", "Completed", "Favorite"],
+    subMenu: [
+      { key: "upcoming", icon: <MdUpcoming className="text-xl" /> },
+      {
+        key: "completed",
+        icon: <IoCheckmarkDoneCircle className="text-xl" />,
+      },
+      {
+        key: "favorite",
+        icon: <FaHeart className="text-xl" />,
+      },
+    ],
     icon: <MdSportsTennis className="h-6 w-6" />,
   },
   {
     title: "Tournaments",
     key: "tournaments",
-    subMenu: ["TK Palilula", "Court Hub", "OTT"],
     icon: <FaTrophy className="h-6 w-6" />,
   },
   {
@@ -71,7 +88,7 @@ const navigation: NavigationItem[] = [
   {
     title: "Settings",
     key: "settings",
-    icon: <GiTennisCourt className="h-6 w-6" />,
+    icon: <IoMdSettings className="h-6 w-6" />,
   },
 ];
 
@@ -163,13 +180,13 @@ const Sidebar = () => {
             {/* Sidebar submenus items */}
             {item.subMenu && subMenus[item.key] && (
               <ul className={`${open ? "block pt-4 pl-3" : "hidden"}`}>
-                {item.subMenu.map((subMenu, subIndex) => (
+                {item.subMenu.map((subMenu: SubMenuItem) => (
                   <li
-                    key={subIndex}
+                    key={subMenu.key}
                     className={`hover:bg-tp-primary/60 flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
                   >
-                    <MdUpcoming className="text-xl" />
-                    {subMenu}
+                    <span>{subMenu.icon}</span>
+                    {subMenu.key.charAt(0).toUpperCase() + subMenu.key.slice(1)}
                   </li>
                 ))}
               </ul>
@@ -179,13 +196,7 @@ const Sidebar = () => {
       </div>
 
       {/* Profile section - profile image, player name or username, logout */}
-      <div className="flex items-center gap-5 pt-5">
-        {/* <Typography
-          className={`${!open ? "hidden" : ""} flex-1 whitespace-nowrap`}
-        >
-          Matija Milojkovic
-        </Typography> */}
-      </div>
+      <div className="flex items-center gap-5 pt-5"></div>
     </aside>
   );
 };
