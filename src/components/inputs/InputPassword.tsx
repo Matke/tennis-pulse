@@ -94,7 +94,7 @@ const InputPassword = ({
           spellCheck={false}
           className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-28 placeholder-transparent focus:outline-none`}
           placeholder={placeholder}
-          autoComplete="on"
+          autoComplete="current-password"
           {...rest}
         />
         <label
