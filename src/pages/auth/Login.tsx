@@ -10,6 +10,7 @@ import Card from "@/components/ui/Card";
 import GLogo from "@/components/ui/GLogo";
 import PulseLogo from "@/components/ui/PulseLogo";
 import WelcomeMessage from "@/components/ui/WelcomeMessage";
+import LoginForm from "@/features/auth/LoginForm";
 
 // toaster
 import { toast } from "react-hot-toast";
@@ -32,30 +33,7 @@ const Login = () => {
           Welcome back!
         </Typography>
 
-        {/* main form for login/signup */}
-        <form className="space-y-8">
-          <InputText
-            placeholder="Email"
-            fullWidth
-            backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
-            labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
-          />
-          <InputPassword
-            placeholder="Password"
-            fullWidth
-            backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
-            labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
-          />
-          <Button
-            label="Login"
-            themeColor="primary"
-            onClick={() => console.log("Na ovome kroku")}
-            className="mb-3.5 w-full self-center"
-            loaderWithLabel
-            buttonSize="base"
-            labelClass=""
-          />
-        </form>
+        <LoginForm />
 
         {/* dividers with or */}
         <div className="mt-12 flex items-center justify-between md:mt-0">
