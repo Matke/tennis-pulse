@@ -8,7 +8,7 @@ const ToastProvider = () => {
       containerStyle={{ margin: "8px" }}
       toastOptions={{
         success: {
-          duration: 3000,
+          duration: 4000,
           iconTheme: {
             primary: "var(--color-tp-tertiary)",
             secondary: "",

@@ -27,6 +27,7 @@ export type InputProps = {
   isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
+  ref?: React.Ref<HTMLInputElement>; // react 19, refs can be passed directly as a prop
 };
 
 //! placeholder acts as id,name,and htmlFor in this version of Input Text Component
@@ -47,6 +48,7 @@ const InputText = ({
   isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
+  ref,
   ...rest
 }: InputProps) => {
   // TODO: isValidField should relay on error, change code later
@@ -64,6 +66,7 @@ const InputText = ({
     <div className={`${backgroundInputColor} rounded-sm ${className}`}>
       <div className="relative bg-inherit">
         <input
+          ref={ref}
           value={value}
           onChange={onChange}
           type={type}
@@ -72,6 +75,7 @@ const InputText = ({
           spellCheck={false}
           className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 placeholder-transparent focus:outline-none`}
           placeholder={placeholder}
+          autoComplete={type === "email" ? "email" : "on"}
           {...rest}
         />
         <label

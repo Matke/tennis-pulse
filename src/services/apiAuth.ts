@@ -1,13 +1,28 @@
-// import supabase from "@/services/supabase";
+import supabase from "@/services/supabase";
 
-// export async function login({ email, password }: any) {
-//   const { data, error } = await supabase.auth.signInWithPassword({
-//     email,
-//     password,
-//   });
+// types
+import type { LoginData, SignupData } from "@/types/authTypes";
 
-//   if (error) throw new Error(error.message);
+// SignUp
+export const signup = async ({ email, password }: SignupData) => {
+  let { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
 
-//   console.log(data);
-//   return data;
-// }
+  if (error) throw new Error(error.message);
+
+  return data;
+};
+
+// Login
+export const login = async ({ email, password }: LoginData) => {
+  let { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+};
