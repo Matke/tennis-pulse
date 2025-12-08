@@ -18,6 +18,7 @@ import { toast } from "react-hot-toast";
 // react router
 import { Link } from "react-router";
 
+// TODO: extract card to authLayout to remove code duplications between login and singup
 const Login = () => {
   return (
     <Card headerCardContent={<WelcomeMessage />}>
