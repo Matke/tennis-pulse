@@ -13,6 +13,9 @@ import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+// signup hook
+import { useSignup } from "@/features/auth/useSignup";
+
 // TODO: extract schemas in separate folder
 const schema = yup.object({
   email: yup
@@ -27,22 +30,26 @@ const schema = yup.object({
 });
 
 const SignupForm = () => {
+  const { signup, isPending } = useSignup();
+
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SignupData>({
     resolver: yupResolver(schema),
   });
 
-  const onFormSubmit: SubmitHandler<SignupData> = (values) => {
-    console.log(values);
+  const onFormSubmit: SubmitHandler<SignupData> = ({ email, password }) => {
+    signup({ email, password }, { onSettled: () => reset() });
   };
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onFormSubmit)}>
       <InputText
+        type="email"
         placeholder="Email"
         fullWidth
         backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
@@ -75,6 +82,8 @@ const SignupForm = () => {
         className="mb-3.5 w-full self-center"
         loaderWithLabel
         buttonSize="base"
+        disabled={isPending}
+        isLoading={isPending}
       />
     </form>
   );
