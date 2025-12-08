@@ -33,6 +33,7 @@ const Signup = () => {
           Create an account
         </Typography>
 
+        {/* main form for signup */}
         <SignupForm />
 
         {/* dividers with or */}

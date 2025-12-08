@@ -47,7 +47,11 @@ const SignupForm = () => {
   };
 
   return (
-    <form className="space-y-8" onSubmit={handleSubmit(onFormSubmit)}>
+    <form
+      className="space-y-8"
+      onSubmit={handleSubmit(onFormSubmit)}
+      noValidate
+    >
       <InputText
         type="email"
         placeholder="Email"
