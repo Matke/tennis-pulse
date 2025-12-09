@@ -21,6 +21,7 @@ type ChipLabel = "weak" | "fair" | "good" | "strong";
 //! placeholder acts as id,name,and htmlFor in this version of Input Text Component
 const InputPassword = ({
   value,
+  type,
   onChange,
   onKeyDown,
   placeholder,

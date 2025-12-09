@@ -68,6 +68,7 @@ const SignupForm = () => {
         defaultValue="" // to avoid error component is changing uncontrolled input to be controlled there must be a default value
         render={({ field }) => (
           <InputPassword
+            type="password"
             value={field.value}
             onChange={field.onChange}
             placeholder="Password"
