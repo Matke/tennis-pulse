@@ -1,7 +1,7 @@
 import supabase from "@/services/supabase";
 
-// types
-import type { LoginData, SignupData } from "@/types/authTypes";
+// Types
+import type { ForgotPassword, LoginData, SignupData } from "@/types/authTypes";
 
 // SignUp
 export const signup = async ({ email, password }: SignupData) => {
@@ -25,4 +25,16 @@ export const login = async ({ email, password }: LoginData) => {
   if (error) throw new Error(error.message);
 
   return data;
+};
+
+// Redirect password
+export const redirectPasswordReset = async ({
+  email,
+  redirectURL,
+}: ForgotPassword) => {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: redirectURL,
+  });
+
+  return { error };
 };
