@@ -3,23 +3,22 @@ import Typography from "@/components/text/Typography";
 
 // framer motion
 import { motion } from "framer-motion";
+import type React from "react";
 
 // Icons
 import { GoCheckCircleFill } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
-// import { FaRegEye } from "react-icons/fa";
 
 export type InputProps = {
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  clearValueOnError?: (value: string) => void; // only without react hook form
   placeholder: string;
 
   type?: string;
   name?: string;
   error?: string;
   errorPlaceholderClass?: string;
-  errorIcon?: React.ReactNode | null;
-  successIcon?: React.ReactNode | null;
   isValidField?: boolean;
   className?: string;
   labelClass?: string;
@@ -34,13 +33,12 @@ export type InputProps = {
 const InputText = ({
   value,
   onChange,
+  clearValueOnError,
   placeholder,
   type = "text",
   name = "",
   error = "",
   errorPlaceholderClass = "",
-  errorIcon = null,
-  successIcon = null,
   isValidField = false,
   className,
   labelClass = "",
@@ -55,10 +53,18 @@ const InputText = ({
 
   const nameId = name || placeholder.toLocaleLowerCase("en-US");
 
-  const iconError = errorIcon || (
-    <IoIosCloseCircle className="text-tp-warning absolute top-3.5 right-3 ml-3 h-5 w-5" />
+  const iconError: React.ReactNode = (
+    <IoIosCloseCircle
+      className="text-tp-warning absolute top-3.5 right-3 ml-3 h-5 w-5 cursor-pointer transition-all duration-300 hover:scale-110"
+      onMouseDown={(e) => {
+        if (clearValueOnError) {
+          e.preventDefault();
+          clearValueOnError("");
+        }
+      }}
+    />
   );
-  const iconSuccess = successIcon || (
+  const iconSuccess: React.ReactNode = (
     <GoCheckCircleFill className="text-tp-tertiary absolute top-3.5 right-3 ml-3 h-5 w-5" />
   );
 

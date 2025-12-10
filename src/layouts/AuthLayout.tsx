@@ -2,13 +2,16 @@ import Video from "@/components/ui/Video";
 import WelcomeMessage from "@/components/ui/WelcomeMessage";
 import { Outlet } from "react-router";
 import tennisBallsComp from "@/assets/tennisBallsComp.mp4";
+import Card from "@/components/ui/Card";
 
 const AuthLayout = () => {
   return (
     <div className="flex h-screen">
       {/* LEFT — Form part */}
       <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:w-1/2 md:p-8">
-        <Outlet />
+        <Card headerCardContent={<WelcomeMessage />}>
+          <Outlet />
+        </Card>
       </div>
 
       {/* RIGHT — Video and Title part */}
