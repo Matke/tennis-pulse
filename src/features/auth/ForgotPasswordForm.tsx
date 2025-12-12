@@ -6,8 +6,13 @@ import InputText from "@/components/inputs/InputText";
 import Typography from "@/components/text/Typography";
 import TickIcon from "@/components/ui/TickIcon";
 
+// yup validation
 import * as yup from "yup";
+
+// router
 import { Link } from "react-router";
+
+//api
 import { redirectPasswordReset } from "@/services/apiAuth";
 
 const redirectURL =
@@ -58,7 +63,7 @@ const ForgotPasswordForm = () => {
   // return successfull email sent state
   if (isSuccess)
     return (
-      <div>
+      <>
         <TickIcon />
         <Typography
           variant="paragraph"
@@ -68,11 +73,11 @@ const ForgotPasswordForm = () => {
         >
           A password reset link has been sent to your email.
         </Typography>
-      </div>
+      </>
     );
 
   return (
-    <div>
+    <>
       <Typography
         variant="label"
         as={"p"}
@@ -118,7 +123,7 @@ const ForgotPasswordForm = () => {
           Login
         </Link>
       </div>
-    </div>
+    </>
   );
 };
 

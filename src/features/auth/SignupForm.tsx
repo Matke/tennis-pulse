@@ -17,7 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useSignup } from "@/features/auth/useSignup";
 
 // TODO: extract schemas in separate folder
-const schema = yup.object({
+const schema: yup.ObjectSchema<SignupData> = yup.object({
   email: yup
     .string()
     .required("Email is required")
@@ -76,6 +76,7 @@ const SignupForm = () => {
             backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
             labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
             error={errors?.password?.message}
+            removePasswordCheck
           />
         )}
       />

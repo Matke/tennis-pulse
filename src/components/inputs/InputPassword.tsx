@@ -14,6 +14,7 @@ import Chip, { type ChipThemeColor } from "@/components/ui/Chip";
 
 export type InputPasswordProps = InputProps & {
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  removePasswordCheck?: boolean; // for login only
 };
 
 type ChipLabel = "weak" | "fair" | "good" | "strong";
@@ -28,8 +29,6 @@ const InputPassword = ({
   name = "",
   error = "",
   errorPlaceholderClass = "",
-  errorIcon = null,
-  successIcon = null,
   isValidField = false,
   className,
   labelClass = "",
@@ -37,6 +36,7 @@ const InputPassword = ({
   isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
+  removePasswordCheck = false,
   ...rest
 }: InputPasswordProps) => {
   // toggle eye icon and type of input to reveal password
@@ -106,7 +106,7 @@ const InputPassword = ({
         </label>
         {/* animated eye icon switch */}
         <div className="inline-flex items-center justify-center">
-          {value && (
+          {value && !removePasswordCheck && (
             <Chip
               // weak, fair , good ,strong
               label={chipStyle.label}

@@ -38,3 +38,13 @@ export const redirectPasswordReset = async ({
 
   return { error };
 };
+
+export const updatePassword = async (newPassword: string) => {
+  const { data, error } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (error) throw new Error(error?.message);
+
+  return { data };
+};
