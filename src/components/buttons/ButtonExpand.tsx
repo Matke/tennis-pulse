@@ -34,7 +34,7 @@ const labelVariants = {
   },
 };
 
-const ButtonExpand = ({ label, icon, className }: ButtonExpand) => {
+const ButtonExpand = ({ label, icon = true, className }: ButtonExpand) => {
   return (
     <motion.button
       initial="rest"
@@ -42,7 +42,9 @@ const ButtonExpand = ({ label, icon, className }: ButtonExpand) => {
       variants={buttonVariants}
       className={`group bg-tp-background hover:bg-charcoal-800 text-tp-typography flex h-[50px] cursor-pointer items-center overflow-hidden rounded-full select-none ${className}`}
     >
-      <FaGoogle className="text-tp-typography z-100 ml-2.5 min-h-full min-w-[30px] cursor-pointer" />
+      <div className="text-tp-typography z-100 ml-2.5 flex min-h-full min-w-[30px] cursor-pointer items-center justify-center">
+        {icon && <FaGoogle className="h-6 w-6" />}
+      </div>
 
       <motion.div
         variants={labelVariants}

@@ -18,7 +18,7 @@ import ButtonExpand from "@/components/buttons/ButtonExpand";
 
 const Signup = () => {
   return (
-    <div className="w-full px-12">
+    <div className="w-full px-0 md:px-12">
       <PulseLogo />
 
       <Typography
@@ -43,7 +43,7 @@ const Signup = () => {
       </div>
 
       {/* Google Sign up link */}
-      <div className="flex w-full flex-col items-center justify-center gap-2 md:flex md:flex-row">
+      <div className="flex w-full items-center justify-center gap-2">
         {/* <Button
           label="Sign up with Google"
           themeColor="blank"
