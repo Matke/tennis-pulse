@@ -10,7 +10,9 @@ const AuthLayout = () => {
       {/* LEFT — Form part */}
       <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:w-1/2 md:p-8">
         <Card headerCardContent={<WelcomeMessage />}>
-          <Outlet />
+          <div className="w-full px-0 md:px-12">
+            <Outlet />
+          </div>
         </Card>
       </div>
 

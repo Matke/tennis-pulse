@@ -17,7 +17,7 @@ import type { LoginData } from "@/types/authTypes";
 import { Link } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-export const schema: yup.ObjectSchema<LoginData> = yup.object({
+const schema: yup.ObjectSchema<LoginData> = yup.object({
   email: yup
     .string()
     .required("Email is required")
@@ -81,7 +81,7 @@ const LoginForm = () => {
         )}
       />
 
-      <div className="flex w-full items-center justify-end text-right md:mb-5">
+      <div className="mb-8 flex w-full items-center justify-end text-right md:mb-5">
         <Link
           to="/forgot-password"
           className="text-tp-typography/85 z-100 ml-3 cursor-pointer text-xs hover:underline"

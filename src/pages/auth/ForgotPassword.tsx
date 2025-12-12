@@ -5,7 +5,7 @@ import ForgotPasswordForm from "@/features/auth/ForgotPasswordForm";
 
 const ForgotPassword = () => {
   return (
-    <div className="w-full max-w-sm">
+    <>
       <PulseLogo />
 
       <Typography
@@ -19,7 +19,7 @@ const ForgotPassword = () => {
 
       {/* main form functionality */}
       <ForgotPasswordForm />
-    </div>
+    </>
   );
 };
 

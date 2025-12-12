@@ -1,13 +1,16 @@
-import GLogo from "@/components/ui/GLogo";
 import { motion } from "framer-motion";
-import { HiLink } from "react-icons/hi";
-import { FcGoogle } from "react-icons/fc";
-import { FaGoogle } from "react-icons/fa6";
 
-export type ButtonExpand = {
+import { Link } from "react-router";
+
+export type ButtonExpandProps = {
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+
   label: string;
   icon: React.ReactNode;
+  href?: string;
   className?: string;
+  disabled?: boolean;
+  labelClass?: string;
 };
 
 const buttonVariants = {
@@ -24,7 +27,7 @@ const buttonVariants = {
 const labelVariants = {
   rest: {
     opacity: 0,
-    x: -10,
+    x: 0, // here -10 might work better
     transition: { duration: 0.1 },
   },
   hover: {
@@ -34,26 +37,43 @@ const labelVariants = {
   },
 };
 
-const ButtonExpand = ({ label, icon = true, className }: ButtonExpand) => {
-  return (
+const ButtonExpand = ({
+  label,
+  onClick,
+  icon = true,
+  href = "",
+  disabled = false,
+  className,
+  labelClass = "",
+  ...rest
+}: ButtonExpandProps) => {
+  const btnBasic = (
     <motion.button
+      type="button"
+      onClick={onClick}
+      variants={buttonVariants}
       initial="rest"
       whileHover="hover"
-      variants={buttonVariants}
-      className={`group bg-tp-background hover:bg-charcoal-800 text-tp-typography flex h-[50px] cursor-pointer items-center overflow-hidden rounded-full select-none ${className}`}
+      disabled={disabled}
+      className={`group ${!disabled ? "bg-tp-background" : "bg-tp-background/50"} hover:bg-charcoal-800 text-tp-typography flex h-[50px] cursor-pointer items-center overflow-hidden rounded-full select-none not-disabled:active:scale-96 not-disabled:active:brightness-98 ${className}`}
+      {...rest}
     >
-      <div className="text-tp-typography z-100 ml-2.5 flex min-h-full min-w-[30px] cursor-pointer items-center justify-center">
-        {icon && <FaGoogle className="h-6 w-6" />}
+      <div
+        className={`text-tp-typography z-100 ml-2.5 flex min-h-full min-w-[30px] cursor-pointer items-center justify-center ${disabled && "opacity-50"}`}
+      >
+        {icon}
       </div>
 
       <motion.div
         variants={labelVariants}
-        className="text-tp-typography z-100 flex h-full w-full shrink-0 items-center justify-start pl-3 text-center whitespace-nowrap"
+        className={`text-tp-typography z-100 flex h-full w-full shrink-0 items-center justify-start text-center whitespace-nowrap ${labelClass}`}
       >
-        Continue with Google
+        {label}
       </motion.div>
     </motion.button>
   );
+
+  return href ? <Link to={href}>{btnBasic}</Link> : btnBasic;
 };
 
 export default ButtonExpand;
