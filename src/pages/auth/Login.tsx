@@ -1,28 +1,29 @@
 // components
-import Button from "@/components/buttons/Button";
 import Divider from "@/components/dividers/Divider";
 import LoginForm from "@/features/auth/LoginForm";
 
 // utils components
 import Typography from "@/components/text/Typography";
-import GLogo from "@/components/ui/GLogo";
 import PulseLogo from "@/components/ui/PulseLogo";
-
-// toaster
-import { toast } from "react-hot-toast";
 
 // react router
 import { Link } from "react-router";
 
+// provider links
+import { alternativeSignUpButtons } from "@/pages/auth/Signup";
+import ButtonExpand, {
+  type ButtonExpandProps,
+} from "@/components/buttons/ButtonExpand";
+
 const Login = () => {
   return (
-    <div className="w-full max-w-sm">
+    <>
       <PulseLogo />
 
       <Typography
         variant="title"
         as={"h1"}
-        className="mb-6 text-center font-bold"
+        className="mb-9.5 text-center font-bold"
         color="text-white"
       >
         Welcome back!
@@ -31,23 +32,28 @@ const Login = () => {
       <LoginForm />
 
       {/* dividers with or */}
-      <div className="mt-12 flex items-center justify-between md:mt-0">
-        <Divider className="mt-4 w-45" />
-        <Typography variant="label" as={"span"} className="mx-1 md:mx-0">
+      <div className="mt-5 flex items-center justify-between md:mt-0">
+        <Divider className="mt-4 min-w-0 flex-1" />
+        <Typography variant="label" as={"span"} className="smd:mx-0 mx-1">
           or
         </Typography>
-        <Divider className="mt-4 w-45" />
+        <Divider className="mt-4 min-w-0 flex-1" />
       </div>
 
       {/* Google Sign up link */}
-      <Button
-        label="Sign up with Google"
-        themeColor="blank"
-        onClick={() => toast.error("You successfully created account!")}
-        className="bg-tp-background hover:bg-charcoal-800 mt-3 w-full scale-100 self-center rounded-full transition-all duration-500 hover:scale-103 md:mt-0"
-        loaderWithLabel
-        icon={<GLogo />}
-      />
+      {/* Auth provider links */}
+      <div className="flex w-full items-center justify-center gap-2">
+        {alternativeSignUpButtons.map((button: ButtonExpandProps) => (
+          <ButtonExpand
+            label={button.label}
+            icon={button.icon}
+            href={button.href}
+            onClick={button.onClick}
+            labelClass={button.labelClass}
+            className={button.className}
+          />
+        ))}
+      </div>
 
       <div className="mt-6 flex h-full items-center justify-center text-center md:mt-2">
         <Typography variant="label" as={"p"} color="text-tp-typography/80">
@@ -60,7 +66,7 @@ const Login = () => {
           Sign up
         </Link>
       </div>
-    </div>
+    </>
   );
 };
 

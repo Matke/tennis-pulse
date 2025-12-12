@@ -4,7 +4,7 @@ import ResetPasswordForm from "@/features/auth/ResetPasswordForm";
 
 const ResetPassword = () => {
   return (
-    <div className="w-full max-w-sm">
+    <>
       <PulseLogo />
 
       <Typography
@@ -18,7 +18,7 @@ const ResetPassword = () => {
 
       {/* main form */}
       <ResetPasswordForm />
-    </div>
+    </>
   );
 };
 
