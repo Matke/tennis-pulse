@@ -7,3 +7,8 @@ export type LoginData = {
   email: string;
   password: string;
 };
+
+export type ForgotPassword = {
+  email: string;
+  redirectURL: string;
+};
