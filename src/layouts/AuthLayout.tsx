@@ -17,7 +17,7 @@ const AuthLayout = () => {
       </div>
 
       {/* RIGHT — Video and Title part */}
-      <div className="relative hidden h-full md:block md:w-1/2">
+      <div className="relative hidden h-full sm:hidden md:block md:w-1/2">
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center select-none">
           <WelcomeMessage />
         </div>
