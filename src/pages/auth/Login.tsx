@@ -1,19 +1,15 @@
 // components
 import Divider from "@/components/dividers/Divider";
 import LoginForm from "@/features/auth/LoginForm";
-
-// utils components
+import ButtonExpand, {
+  type ButtonExpandProps,
+} from "@/components/buttons/ButtonExpand";
 import Typography from "@/components/text/Typography";
 import PulseLogo from "@/components/ui/PulseLogo";
 
 // react router
 import { Link } from "react-router";
-
-// provider links
-import { alternativeSignUpButtons } from "@/pages/auth/Signup";
-import ButtonExpand, {
-  type ButtonExpandProps,
-} from "@/components/buttons/ButtonExpand";
+import { alternativeSignUpProviders } from "@/utils/ProviderMenuItems";
 
 const Login = () => {
   return (
@@ -43,16 +39,19 @@ const Login = () => {
       {/* Google Sign up link */}
       {/* Auth provider links */}
       <div className="flex w-full items-center justify-center gap-2">
-        {alternativeSignUpButtons.map((button: ButtonExpandProps) => (
-          <ButtonExpand
-            label={button.label}
-            icon={button.icon}
-            href={button.href}
-            onClick={button.onClick}
-            labelClass={button.labelClass}
-            className={button.className}
-          />
-        ))}
+        {alternativeSignUpProviders.map(
+          (button: ButtonExpandProps, index: number) => (
+            <ButtonExpand
+              key={index}
+              label={button.label}
+              icon={button.icon}
+              href={button.href}
+              onClick={button.onClick}
+              labelClass={button.labelClass}
+              className={button.className}
+            />
+          ),
+        )}
       </div>
 
       <div className="mt-6 flex h-full items-center justify-center text-center md:mt-2">

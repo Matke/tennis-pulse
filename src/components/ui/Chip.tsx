@@ -1,5 +1,5 @@
 import Typography from "@/components/text/Typography";
-import Tooltip from "@/components/tooltip/Tooltip";
+import Tooltip, { type TooltipPlacement } from "@/components/tooltip/Tooltip";
 import { classNames } from "@/utils/common";
 
 export type ChipThemeColor = "error" | "warning" | "success" | "success-strong";
@@ -17,7 +17,7 @@ export type ChipProps = {
   labelClass?: string;
   tooltipId: string;
   tooltipContent: string;
-  tooltipPlacement?: string;
+  tooltipPlacement?: TooltipPlacement;
   icon?: React.ReactNode;
 };
 
@@ -31,7 +31,7 @@ const Chip = ({
   labelClass,
   tooltipId,
   tooltipContent,
-  tooltipPlacement,
+  tooltipPlacement = "top",
   ...rest
 }: ChipProps) => {
   const defaultChipClass =
@@ -92,7 +92,12 @@ const Chip = ({
 
   return (
     // TODO: Make Chip usable without the need for Tooltip
-    <Tooltip id={tooltipId} content={tooltipContent} variant="dark">
+    <Tooltip
+      id={tooltipId}
+      content={tooltipContent}
+      place={tooltipPlacement}
+      variant="dark"
+    >
       <div
         className={classNames(
           defaultChipClass,

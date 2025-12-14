@@ -23,7 +23,7 @@ export type InputProps = {
   className?: string;
   labelClass?: string;
   fullWidth?: boolean;
-  isIconVisible?: boolean;
+  // isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
   ref?: React.Ref<HTMLInputElement>; // react 19, refs can be passed directly as a prop
@@ -43,7 +43,7 @@ const InputText = ({
   className,
   labelClass = "",
   fullWidth = false,
-  isIconVisible = true,
+  // isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
   ref,

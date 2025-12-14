@@ -1,51 +1,15 @@
 // components
 import Divider from "@/components/dividers/Divider";
 import SignupForm from "@/features/auth/SignupForm";
-
-// ui components
-import Typography from "@/components/text/Typography";
-import PulseLogo from "@/components/ui/PulseLogo";
-
-// icons
-import { FaFacebookF } from "react-icons/fa6";
-import { HiLink } from "react-icons/hi";
-import { FaGoogle } from "react-icons/fa6";
-import { FaDiscord } from "react-icons/fa6";
-
-// toaster
-import { toast } from "react-hot-toast";
-
-// router
-import { Link } from "react-router";
 import ButtonExpand, {
   type ButtonExpandProps,
 } from "@/components/buttons/ButtonExpand";
+import Typography from "@/components/text/Typography";
+import PulseLogo from "@/components/ui/PulseLogo";
 
-export const alternativeSignUpButtons: ButtonExpandProps[] = [
-  {
-    label: "Continue with Google",
-    icon: <FaGoogle className="h-6 w-6" />,
-    onClick: () => toast.success("Sign up with Google"),
-    labelClass: "pl-3",
-  },
-  {
-    label: "Continue with Facebook",
-    icon: <FaFacebookF className="h-6 w-6" />,
-    onClick: () => toast.success("Sign up with Facebook"),
-  },
-  {
-    label: "Continue with Discord",
-    icon: <FaDiscord className="h-6 w-6" />,
-    onClick: () => toast.success("Sign up with Discord"),
-    labelClass: "pl-3",
-  },
-  {
-    label: "Try with magic link",
-    icon: <HiLink className="h-6 w-6" />,
-    onClick: () => toast.success("Sign up with magic link"),
-    labelClass: "pl-3",
-  },
-];
+// router
+import { Link } from "react-router";
+import { alternativeSignUpProviders } from "@/utils/ProviderMenuItems";
 
 const Signup = () => {
   return (
@@ -75,16 +39,19 @@ const Signup = () => {
 
       {/* Auth provider links */}
       <div className="flex w-full items-center justify-center gap-2">
-        {alternativeSignUpButtons.map((button: ButtonExpandProps) => (
-          <ButtonExpand
-            label={button.label}
-            icon={button.icon}
-            href={button.href}
-            onClick={button.onClick}
-            labelClass={button.labelClass}
-            className={button.className}
-          />
-        ))}
+        {alternativeSignUpProviders.map(
+          (button: ButtonExpandProps, index: number) => (
+            <ButtonExpand
+              key={index}
+              label={button.label}
+              icon={button.icon}
+              href={button.href}
+              onClick={button.onClick}
+              labelClass={button.labelClass}
+              className={button.className}
+            />
+          ),
+        )}
       </div>
 
       <div className="mt-6 flex h-full items-center justify-center text-center md:mt-2">

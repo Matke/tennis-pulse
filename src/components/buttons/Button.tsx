@@ -141,6 +141,7 @@ const Button = ({
               size={20}
               borderSize={2}
               loaderColor={loaderColor || setLoaderColor(themeColor)}
+              backgroundLoaderColor={backgroundLoaderColor}
               className="loading-container"
             >
               {/* without loaderText only simple loader will be displayed */}

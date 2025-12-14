@@ -3,6 +3,7 @@
  * @param classes strings of tailwind classes
  * @returns concatenated classes
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const classNames = (...classes: any) =>
   classes.filter(Boolean).join(" ");
 

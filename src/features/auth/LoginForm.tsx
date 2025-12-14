@@ -70,7 +70,6 @@ const LoginForm = () => {
           <InputPassword
             value={field.value}
             onChange={field.onChange}
-            type="password"
             placeholder="Password"
             fullWidth
             backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"

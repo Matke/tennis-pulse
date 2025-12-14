@@ -19,6 +19,8 @@ import Settings from "@/pages/Settings";
 import Profile from "@/pages/Profile";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
+import CheckEmail from "@/pages/auth/CheckEmail";
+import VerifyEmail from "@/pages/auth/VerifyEmail";
 
 const AppRouter = () => {
   return (
@@ -29,6 +31,8 @@ const AppRouter = () => {
           <Route path="login" element={<Login />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="email-confirmation" element={<CheckEmail />} />
+          <Route path="verify-email" element={<VerifyEmail />} />
         </Route>
 
         <Route element={<AppLayout />}>

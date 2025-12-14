@@ -13,13 +13,13 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      pluginQuery.configs["flat/recommended"],
+      reactHooks.configs.flat.recommended,
     ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-    ...pluginQuery.configs["flat/recommended"],
   },
 ]);

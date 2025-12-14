@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // icons
 import { AiFillHome } from "react-icons/ai";

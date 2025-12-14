@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // components
 import Button from "@/components/buttons/Button";
 import InputPassword from "@/components/inputs/InputPassword";
+import Typography from "@/components/text/Typography";
 
 import * as yup from "yup";
-import supabase from "@/services/supabase";
 import { updatePassword } from "@/services/apiAuth";
 import { toast } from "react-hot-toast";
-import Typography from "@/components/text/Typography";
 import TickIcon from "@/components/ui/TickIcon";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router";
@@ -45,14 +44,6 @@ const ResetPasswordForm = () => {
   const [error, setError] = useState<PartialResetPassword>(defaultErrorState);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" && session) {
-        console.log("Recovery session:", session);
-      }
-    });
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -125,7 +116,6 @@ const ResetPasswordForm = () => {
   return (
     <form className="space-y-9.5" noValidate onSubmit={handleSubmit}>
       <InputPassword
-        type="password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
         placeholder="New password"
@@ -135,7 +125,6 @@ const ResetPasswordForm = () => {
         labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
       />
       <InputPassword
-        type="password"
         value={confirmNewPassword}
         onChange={(e) => {
           setConfirmNewPassword(e.target.value);

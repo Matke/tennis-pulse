@@ -1,11 +1,13 @@
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
+export type TooltipPlacement = "top" | "right" | "bottom" | "left";
+
 export type Tooltip = {
   id: string;
   content: string;
   delay?: number;
-  place?: "top" | "right" | "bottom" | "left";
+  place?: TooltipPlacement;
   variant?: "dark" | "light" | "success" | "warning" | "error" | "info";
   children: React.ReactElement<React.HTMLAttributes<HTMLElement>>;
 };

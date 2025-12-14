@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 // framer
 import { motion, AnimatePresence } from "framer-motion";
@@ -32,12 +32,12 @@ const Dropdown = ({
   menuClassName = "",
 }: DropdownProps) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   // close dropdown when clicking outside
   useEffect(() => {
-    const handleClick = (e: any) => {
-      if (ref.current && !ref.current.contains(e.target)) {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
