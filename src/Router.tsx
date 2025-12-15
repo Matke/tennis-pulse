@@ -21,6 +21,8 @@ import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import CheckEmail from "@/pages/auth/CheckEmail";
 import VerifyEmail from "@/pages/auth/VerifyEmail";
+import OnboardLayout from "@/layouts/OnboardLayout";
+import Welcome from "@/pages/onboarding/Welcome";
 
 const AppRouter = () => {
   return (
@@ -33,6 +35,10 @@ const AppRouter = () => {
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="email-confirmation" element={<CheckEmail />} />
           <Route path="verify-email" element={<VerifyEmail />} />
+        </Route>
+
+        <Route element={<OnboardLayout />}>
+          <Route path="welcome" element={<Welcome />} />
         </Route>
 
         <Route element={<AppLayout />}>

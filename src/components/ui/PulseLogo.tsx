@@ -5,7 +5,7 @@ const PulseLogo = ({ isInSidebar = false }: { isInSidebar?: boolean }) => {
     <div
       className={`${isInSidebar ? "mb-0" : "mb-6"} flex items-center justify-center`}
     >
-      <div className={`relative ${isInSidebar ? "h-14 w-14" : "h-24 w-24"} `}>
+      <div className={`relative ${isInSidebar ? "h-14 w-14" : "h-24 w-24"}`}>
         {/* big animation for pulse around logo */}
         <div
           className={`absolute ${isInSidebar ? "inset-2" : "inset-0"} animate-ping rounded-full border-2 border-white/20`}

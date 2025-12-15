@@ -57,7 +57,7 @@ const CheckEmail = () => {
         variant="title"
         as={"h1"}
         className="mb-10 text-center font-bold"
-        color="text"
+        color="text-white"
       >
         Please verify your account
       </Typography>
