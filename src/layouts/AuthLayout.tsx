@@ -9,7 +9,7 @@ const AuthLayout = () => {
   return (
     <div className="flex h-screen">
       {/* LEFT — Form part */}
-      <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:w-1/2 md:p-8">
+      <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:p-8 lg:w-1/2">
         <Card headerCardContent={<WelcomeMessage />}>
           <div className="w-full px-0 sm:px-0 md:px-12">
             <Outlet />
@@ -18,7 +18,7 @@ const AuthLayout = () => {
       </div>
 
       {/* RIGHT — Video and Title part */}
-      <div className="relative hidden h-full sm:hidden md:block md:w-1/2">
+      <div className="relative hidden h-full sm:hidden md:hidden lg:block lg:w-1/2">
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center select-none">
           <WelcomeMessage />
           {/* blur behind the app name creating grafitti effect */}
