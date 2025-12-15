@@ -4,6 +4,7 @@ import { FaDiscord, FaFacebookF, FaGoogle } from "react-icons/fa6";
 import { HiLink } from "react-icons/hi";
 
 // to avoid fast refresh eslint error menu items are isolated in this component
+// two components use this data
 export const alternativeSignUpProviders: ButtonExpandProps[] = [
   {
     label: "Continue with Google",

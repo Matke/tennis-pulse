@@ -5,28 +5,28 @@ import Typography from "@/components/text/Typography";
 
 // icons
 import { MdOutlineSportsTennis } from "react-icons/md";
-import { BiCheck, BiSolidTennisBall } from "react-icons/bi";
+import { BiSolidTennisBall } from "react-icons/bi";
 import { GiTennisCourt } from "react-icons/gi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FaHourglassStart } from "react-icons/fa";
-import { RiAlertFill, RiSettings3Fill } from "react-icons/ri";
+import { RiSettings3Fill } from "react-icons/ri";
 import { PiSneakerMoveFill } from "react-icons/pi";
 import { MdDelete } from "react-icons/md";
-import { IoMdInformationCircle } from "react-icons/io";
+// import { IoMdInformationCircle } from "react-icons/io";
 import { HiDotsVertical } from "react-icons/hi";
 
 import { useState } from "react";
-import ModalBase from "@/components/modals/ModalBase";
-import Input from "@/components/inputs/InputText";
-import Card from "@/components/ui/Card";
-import InputPassword from "@/components/inputs/InputPassword";
-import Chip from "@/components/ui/Chip";
+// import ModalBase from "@/components/modals/ModalBase";
+// import Input from "@/components/inputs/InputText";
+// import Card from "@/components/ui/Card";
+// import InputPassword from "@/components/inputs/InputPassword";
+// import Chip from "@/components/ui/Chip";
 import ConfirmationModal from "@/components/modals/ConfirmationModal";
 
 // flags
 import ReactFlagsSelect from "react-flags-select";
 import Accordion from "@/components/accordion/Accordion";
-import Dropdown from "@/components/ui/Dropdown";
+import Dropdown from "@/components/dropdown/Dropdown";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
