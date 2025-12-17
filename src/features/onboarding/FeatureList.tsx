@@ -36,8 +36,9 @@ const FeatureList = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="flex h-full flex-col items-center gap-3 px-6"
     >
-      {features.map((singleFeature: FeatureItemProps) => (
+      {features.map((singleFeature: FeatureItemProps, index: number) => (
         <FeatureItem
+          key={index}
           icon={singleFeature.icon}
           title={singleFeature.title}
           description={singleFeature.description}

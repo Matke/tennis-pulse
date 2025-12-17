@@ -1,9 +1,14 @@
 import Button from "@/components/buttons/Button";
+import Loader from "@/components/loaders/Loader";
 import Typography from "@/components/text/Typography";
-import PulseLogo from "@/components/ui/PulseLogo";
+import { useAuth } from "@/store/useAuth";
 import { motion } from "framer-motion";
 
 const Welcome = () => {
+  const { user, userProfile, isLoading } = useAuth();
+
+  if (isLoading) return <Loader size={190} borderSize={190} />;
+
   return (
     <>
       <motion.div
@@ -14,55 +19,6 @@ const Welcome = () => {
           scale: { type: "spring", visualDuration: 0.1, bounce: 0.02 },
         }}
       >
-        <PulseLogo />
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
         <Typography
           variant="title"
           as={"h1"}
@@ -72,8 +28,17 @@ const Welcome = () => {
           Welcome tennis player!
         </Typography>
 
+        <Typography
+          variant="title"
+          as={"h1"}
+          className="z-100 mb-10 text-center font-bold"
+          color="text-white"
+        >
+          {user?.id}
+        </Typography>
+
         <div className="flex justify-center">
-          <Button label="Continue" fullWidth />
+          <Button label="Continue" buttonSize="large" />
         </div>
       </motion.div>
     </>

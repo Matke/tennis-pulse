@@ -65,3 +65,23 @@ export const resendEmailConfirmation = async (email: string) => {
 
   if (error) throw new Error(error?.message);
 };
+
+// get currently logged in user
+export const getCurrentUser = async () => {
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) throw new Error(error.message);
+
+  return data?.user;
+};
+
+export const getUserProfile = async (id: string) => {
+  const { data: profiles, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw new Error(error.message);
+
+  return profiles;
+};
