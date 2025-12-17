@@ -9,14 +9,15 @@ import type React from "react";
 import { GoCheckCircleFill } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
 
-export type InputProps = {
+export type TextareaProps = {
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   clearValueOnError?: (value: string) => void; // only without react hook form
   placeholder: string;
-
-  type?: string;
   name?: string;
+  disableResize?: boolean;
+  rows?: number;
+  cols?: number;
   error?: string;
   errorPlaceholderClass?: string;
   isValidField?: boolean;
@@ -29,14 +30,16 @@ export type InputProps = {
   ref?: React.Ref<HTMLTextAreaElement>; // react 19, refs can be passed directly as a prop
 };
 
-//! placeholder acts as id,name,and htmlFor in this version of Input Text Component
-const InputTextarea = ({
+//! placeholder acts as id,name,and htmlFor in this version of Textarea
+const Textarea = ({
   value,
   onChange,
   clearValueOnError,
   placeholder,
-  type = "text",
   name = "",
+  disableResize = false,
+  rows = 5,
+  cols = 33,
   error = "",
   errorPlaceholderClass = "",
   isValidField = false,
@@ -48,7 +51,7 @@ const InputTextarea = ({
   required = false,
   ref,
   ...rest
-}: InputProps) => {
+}: TextareaProps) => {
   // TODO: isValidField should relay on error, change code later
 
   const nameId = name || placeholder.toLocaleLowerCase("en-US");
@@ -76,15 +79,13 @@ const InputTextarea = ({
           value={value}
           onChange={onChange}
           id={nameId}
-          rows={5}
-          cols={33}
+          rows={rows}
+          cols={cols}
           name={nameId}
           spellCheck={false}
-          className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 placeholder-transparent focus:outline-none`}
+          className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 ${fullWidth ? "w-full" : "w-1/2"} scrollbar-hide rounded-sm border bg-transparent px-3 py-4 pr-3 placeholder-transparent focus:outline-none ${disableResize && "resize-none"} text-left whitespace-normal`}
           placeholder={placeholder}
-          autoComplete={type === "email" ? "email" : "on"}
           {...rest}
-          style={{ width: "100%", height: "100px" }}
         />
         <label
           htmlFor={nameId}
@@ -118,4 +119,4 @@ const InputTextarea = ({
   );
 };
 
-export default InputTextarea;
+export default Textarea;

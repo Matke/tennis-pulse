@@ -1,4 +1,5 @@
 import Button from "@/components/buttons/Button";
+import Textarea from "@/components/inputs/Textarea";
 import Loader from "@/components/loaders/Loader";
 import Typography from "@/components/text/Typography";
 import { useAuth } from "@/store/useAuth";
@@ -28,6 +29,13 @@ const Welcome = () => {
           Welcome tennis player!
         </Typography>
 
+        <Textarea
+          placeholder="Biography"
+          backgroundInputColor="bg-tp-card-back"
+          fullWidth
+          disableResize
+        />
+
         <Typography
           variant="title"
           as={"h1"}
@@ -38,7 +46,7 @@ const Welcome = () => {
         </Typography>
 
         <div className="flex justify-center">
-          <Button label="Continue" buttonSize="large" />
+          <Button label="Continue" buttonSize="large" fullWidth />
         </div>
       </motion.div>
     </>
