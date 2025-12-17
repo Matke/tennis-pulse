@@ -9,7 +9,7 @@ const OnboardLayout = () => {
       <BackgroundImage />
       <div className="h-full w-full sm:px-1 sm:py-1 md:w-1/2 md:px-2 md:py-2 lg:px-12 lg:py-4">
         <SimpleCard parentContainerClass="h-full">
-          <div className="h-full">
+          <div className="h-full w-full">
             <Outlet />
           </div>
         </SimpleCard>
