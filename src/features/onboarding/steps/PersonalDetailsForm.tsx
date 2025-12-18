@@ -1,23 +1,25 @@
 import InputText from "@/components/inputs/InputText";
-import PulseLogo from "@/components/ui/PulseLogo";
+import { BsPersonCircle } from "react-icons/bs";
 
 const PersonalDetailsForm = () => {
+  // add react hook form
   return (
-    <div className="grid grid-cols-2 gap-10">
+    <form className="grid grid-cols-2 gap-10">
       <InputText
         placeholder="First name"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
       />
+      {/* TODO: Change with input profile  */}
+      {/* upload image component */}
       <div className="text-tp-typography row-span-2 flex items-center justify-center">
-        Profile Image
+        <BsPersonCircle className="text-charcoal-800 h-30 w-30" />
       </div>
       <InputText
         placeholder="Last Name"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
       />
-      {/* upload image component */}
       <InputText
         placeholder="Username"
         className="col-span-2"
@@ -30,7 +32,7 @@ const PersonalDetailsForm = () => {
         fullWidth
         backgroundInputColor="bg-tp-card-back"
       />
-    </div>
+    </form>
   );
 };
 

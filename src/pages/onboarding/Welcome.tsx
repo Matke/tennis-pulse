@@ -1,20 +1,17 @@
 // components
 import Button from "@/components/buttons/Button";
-import Loader from "@/components/loaders/Loader";
+import PulseLogo from "@/components/ui/PulseLogo";
+import ProgressStepsBar from "@/features/onboarding/ProgressStepsBar";
 import PersonalDetailsForm from "@/features/onboarding/steps/PersonalDetailsForm";
-// hooks
-import { useAuth } from "@/store/useAuth";
+
 // framer
 import { motion } from "framer-motion";
 // icons
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
 const Welcome = () => {
-  const { user, userProfile, isLoading } = useAuth();
-
-  if (isLoading) return <Loader size={190} borderSize={190} />;
-
   return (
+    // TODO: Switch motion.div with regular and do AnimatePresence with form steps
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -24,9 +21,12 @@ const Welcome = () => {
       }}
       className="flex h-full w-full flex-col items-center justify-between"
     >
+      {/* for mobile view */}
+      <PulseLogo className="block py-4 sm:hidden md:hidden" />
+
       {/* Form current progress */}
-      <header className="text-tp-typography flex w-full flex-1 items-center justify-center">
-        Progress steps bar
+      <header className="text-tp-typography flex w-full flex-1 items-start justify-center">
+        <ProgressStepsBar />
       </header>
 
       {/* Form section */}
