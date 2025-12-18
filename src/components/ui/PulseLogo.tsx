@@ -1,9 +1,15 @@
 import newLogo from "@/assets/newLogo.png";
 
-const PulseLogo = ({ isInSidebar = false }: { isInSidebar?: boolean }) => {
+const PulseLogo = ({
+  isInSidebar = false,
+  className,
+}: {
+  isInSidebar?: boolean;
+  className?: string;
+}) => {
   return (
     <div
-      className={`${isInSidebar ? "mb-0" : "mb-6"} flex items-center justify-center`}
+      className={`${isInSidebar ? "mb-0" : "mb-6"} flex items-center justify-center ${className}`}
     >
       <div className={`relative ${isInSidebar ? "h-14 w-14" : "h-24 w-24"}`}>
         {/* big animation for pulse around logo */}

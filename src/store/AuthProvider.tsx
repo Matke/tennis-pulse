@@ -1,26 +1,29 @@
-import { getCurrentUser, getUserProfile } from "@/services/apiAuth";
-import type { User } from "@supabase/supabase-js";
 import { createContext, useEffect, useState } from "react";
+// api func
+import { getCurrentUser, getUserProfile } from "@/services/apiAuth";
+// types
+import type { User } from "@supabase/supabase-js";
+import type { UserProfileData } from "@/types/authTypes";
 
-type AuthContext = {
+type AuthContextData = {
   user: Partial<User> | null;
-  userProfile: object | null;
+  userProfile: Partial<UserProfileData>;
   isLoading: boolean;
   error: string;
 };
 
-const contextInitialValue = {
+const authContextInitialValue = {
   user: null,
-  userProfile: null,
+  userProfile: {},
   isLoading: false,
   error: "",
 };
 
-const AuthContext = createContext<AuthContext>(contextInitialValue);
+const AuthContext = createContext<AuthContextData>(authContextInitialValue);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<Partial<User> | null>(null);
-  const [userProfile, setUserProfile] = useState<object>({});
+  const [userProfile, setUserProfile] = useState<Partial<UserProfileData>>({}); // all are optional when Partial
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
