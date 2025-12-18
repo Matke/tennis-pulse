@@ -1,4 +1,7 @@
+// components
+import InputDate from "@/components/inputs/InputDate";
 import InputText from "@/components/inputs/InputText";
+// icons
 import { BsPersonCircle } from "react-icons/bs";
 
 const PersonalDetailsForm = () => {
@@ -6,6 +9,7 @@ const PersonalDetailsForm = () => {
   return (
     <form className="grid grid-cols-2 gap-10">
       <InputText
+        type="text"
         placeholder="First name"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
@@ -16,20 +20,23 @@ const PersonalDetailsForm = () => {
         <BsPersonCircle className="text-charcoal-800 h-30 w-30" />
       </div>
       <InputText
+        type="text"
         placeholder="Last Name"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
       />
       <InputText
+        type="text"
         placeholder="Username"
-        className="col-span-2"
         fullWidth
+        className="col-span-2"
         backgroundInputColor="bg-tp-card-back"
       />
-      <InputText
+      <InputDate
+        type="date"
         placeholder="Date of birth"
-        className="col-span-2"
         fullWidth
+        className="col-span-2"
         backgroundInputColor="bg-tp-card-back"
       />
     </form>

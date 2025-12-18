@@ -53,7 +53,8 @@ const InputText = ({
 }: InputProps) => {
   // TODO: isValidField should relay on error, change code later
 
-  const nameId = name || placeholder.toLocaleLowerCase("en-US");
+  const nameId =
+    name || placeholder.toLocaleLowerCase("en-US").replace(/\s+/g, "-");
 
   const iconError: React.ReactNode = (
     <IoIosCloseCircle
