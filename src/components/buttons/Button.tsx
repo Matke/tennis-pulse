@@ -71,7 +71,7 @@ const Button = ({
   const setThemeButtons = (themeColor: ButtonThemeColor) => {
     switch (themeColor) {
       case "primary":
-        return " bg-tp-primary hover:not-disabled:bg-sunbeam-yellow-300 text-charcoal-950 shadow-tp-primary hover:not-disabled:shadow-sunbeam-yellow-300";
+        return " bg-tp-primary hover:not-disabled:bg-sunbeam-yellow-300 text-charcoal-950 shadow-tp-primary border border-tp-primary hover:not-disabled:shadow-sunbeam-yellow-300";
       case "secondary":
         return ` border border-tp-primary ${!isLoading && "hover:not-disabled:bg-tp-primary hover:not-disabled:text-charcoal-950"} shadow-tp-primary text-charcoal-200 transition-colors  `;
       case "warning":

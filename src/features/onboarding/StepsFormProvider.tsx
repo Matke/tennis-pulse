@@ -10,7 +10,9 @@ type StepsFormContextData = {
   setFormData: Dispatch<SetStateAction<any>>;
   handleBack: () => void;
   handleNext: () => void;
+  switchCurrentStep: (newStep: number) => void;
   currentStep: number;
+  // setCurrentStep: Dispatch<SetStateAction<number>>;
 };
 
 const stepsFormInitialValue = {
@@ -18,7 +20,9 @@ const stepsFormInitialValue = {
   setFormData: () => {},
   handleBack: () => {},
   handleNext: () => {},
+  switchCurrentStep: () => {},
   currentStep: 1,
+  // setCurrentStep: () => {},
 };
 
 const StepsFormContext = createContext<StepsFormContextData>(
@@ -37,9 +41,20 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentStep((prev) => prev - 1);
   };
 
+  const switchCurrentStep = (newStep: number) => {
+    setCurrentStep(newStep);
+  };
+
   return (
     <StepsFormContext
-      value={{ formData, setFormData, handleBack, handleNext, currentStep }}
+      value={{
+        formData,
+        setFormData,
+        handleBack,
+        handleNext,
+        currentStep,
+        switchCurrentStep,
+      }}
     >
       {children}
     </StepsFormContext>

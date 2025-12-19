@@ -47,6 +47,7 @@ const Welcome = () => {
             />
           )}
           <Button
+            type="submit"
             onClick={handleNext}
             label="Next"
             buttonSize="base"
