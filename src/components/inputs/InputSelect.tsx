@@ -19,6 +19,7 @@ export type InputSelectProps = {
   floatingLabelBackground?: string;
   error?: string;
   errorPlaceholderClass?: string;
+  className?: string;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
@@ -33,19 +34,20 @@ const InputSelect = ({
   floatingLabelBackground,
   error = "",
   errorPlaceholderClass,
+  className = "",
   onChange,
 }: InputSelectProps) => {
   const isFloating = value && value !== "";
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {/* appearance none - default arrow will disappear and will be changed later */}
       <select
         id={id}
         name={name || label}
         value={value}
         onChange={onChange}
-        className={`${!error ? "border-tp-typography" : "border-tp-warning"} text-tp-typography w-full appearance-none rounded-md border bg-transparent py-3 pl-2.5 focus:outline-none`}
+        className={`${!error ? "border-charcoal-600" : "border-tp-warning"} text-tp-typography focus:border-tp-typography w-full appearance-none rounded-md border bg-transparent py-3 pl-3 focus:outline-none`}
       >
         {/* hidden so that label can be moved */}
         <option value="" disabled hidden></option>
