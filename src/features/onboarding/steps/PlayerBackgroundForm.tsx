@@ -23,6 +23,8 @@ const PlayerBackgroundForm = () => {
         placeholder="Height"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
+        // removes default input type number spin button
+        inputClass="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none appearance-none"
       />
       <InputText
         type="number"
@@ -30,6 +32,8 @@ const PlayerBackgroundForm = () => {
         className=""
         fullWidth
         backgroundInputColor="bg-tp-card-back"
+        // removes default input type number spin button
+        inputClass="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none appearance-none"
       />
       <Textarea
         placeholder="Biography"
