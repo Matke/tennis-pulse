@@ -39,7 +39,9 @@ const ProgressStepsBarItem = ({
         backgroundCondition ? "after:bg-tp-primary" : "after:bg-charcoal-800"
       } text-tp-typography-secondary relative flex w-full after:absolute after:top-3 after:left-4 after:inline-block after:h-0.5 after:w-full after:content-[''] lg:after:top-5`}
     >
-      <div className="z-10">
+      <div
+        className={`z-10 ${position !== 0 || lastStep ? "flex flex-col items-center justify-center" : ""}`}
+      >
         <span
           className={`${
             position < currentStep ? "bg-tp-primary" : "bg-charcoal-800"
