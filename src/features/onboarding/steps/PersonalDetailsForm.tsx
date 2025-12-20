@@ -1,4 +1,5 @@
 // components
+import InputDate from "@/components/inputs/InputDate";
 import InputRadio from "@/components/inputs/InputRadio";
 import InputText from "@/components/inputs/InputText";
 import { useState } from "react";
@@ -25,19 +26,29 @@ const PersonalDetailsForm = () => {
       <InputText
         type="text"
         placeholder="Username"
-        className=""
+        className="self-center"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
       />
       {/* TODO: Change with input profile  */}
       {/* upload image component */}
-      <div className="text-tp-typography row-span-2 flex items-center justify-center">
-        <BsPersonCircle className="text-charcoal-800 h-30 w-30" />
+      <div className="text-tp-typography flex items-center justify-center">
+        <BsPersonCircle className="text-charcoal-800 h-20 w-20 scale-130" />
       </div>
+      <InputDate
+        type="date"
+        placeholder="Date of birth"
+        fullWidth
+        className=""
+        backgroundInputColor="bg-tp-card-back"
+      />
       <InputRadio
         data={genderOptions}
         value={selectedRadio}
         onChange={setSelectedRadio}
+        className="self-end"
+        optionsContainer="justify-center border-none"
+        direction="horizontal"
       />
       <InputText
         type="text"

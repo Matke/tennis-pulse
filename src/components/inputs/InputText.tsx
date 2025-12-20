@@ -24,6 +24,7 @@ export type InputProps = {
   labelClass?: string;
   fullWidth?: boolean;
   inputClass?: string;
+  inputFieldText?: string;
   // isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
@@ -42,6 +43,7 @@ const InputText = ({
   errorPlaceholderClass = "",
   isValidField = false,
   className,
+  inputFieldText = "",
   labelClass = "",
   fullWidth = false,
   inputClass = "",
@@ -69,6 +71,12 @@ const InputText = ({
   );
   const iconSuccess: React.ReactNode = (
     <GoCheckCircleFill className="text-tp-tertiary absolute top-3.5 right-3 ml-3 h-5 w-5" />
+  );
+
+  const inputFieldExp = (
+    <span className="text-tp-typography absolute top-3 right-3 ml-3 h-5 w-5 tracking-wider">
+      {inputFieldText}
+    </span>
   );
 
   return (
@@ -102,6 +110,7 @@ const InputText = ({
           >
             {error && iconError}
             {isValidField && iconSuccess}
+            {inputFieldText && inputFieldExp}
           </motion.div>
         </div>
       </div>

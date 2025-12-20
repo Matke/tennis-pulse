@@ -3,7 +3,6 @@ import { useState } from "react";
 import InputText from "@/components/inputs/InputText";
 import Textarea from "@/components/inputs/Textarea";
 import ReactFlagsSelect from "react-flags-select";
-import InputDate from "@/components/inputs/InputDate";
 
 const PlayerBackgroundForm = () => {
   const [selected, setSelected] = useState("RS");
@@ -14,23 +13,17 @@ const PlayerBackgroundForm = () => {
         selected={selected}
         onSelect={(code) => setSelected(code)}
         placeholder="Select a language"
-        className="col-span-2 mt-6"
+        className="col-span-2"
         selectButtonClassName="!text-white !border !border-charcoal-600 !ring-charcoal-600 !outline-none"
         searchPlaceholder="Search your country"
         searchable
-      />
-      <InputDate
-        type="date"
-        placeholder="Date of birth"
-        fullWidth
-        className="col-span-2"
-        backgroundInputColor="bg-tp-card-back"
       />
       <InputText
         type="number"
         placeholder="Height"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
+        inputFieldText="cm"
         // removes default input type number spin button
         inputClass="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none appearance-none"
       />
@@ -40,6 +33,7 @@ const PlayerBackgroundForm = () => {
         className=""
         fullWidth
         backgroundInputColor="bg-tp-card-back"
+        inputFieldText="kg"
         // removes default input type number spin button
         inputClass="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none appearance-none"
       />
@@ -48,8 +42,6 @@ const PlayerBackgroundForm = () => {
         className="col-span-2"
         fullWidth
         disableResize
-        cols={3}
-        rows={3}
         backgroundInputColor="bg-tp-card-back"
       />
     </form>
