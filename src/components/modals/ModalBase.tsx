@@ -92,7 +92,10 @@ const ModalBase = ({
               </Typography>
 
               {/* Description */}
-              <Typography variant="paragraph" className="text-tp-typography/80">
+              <Typography
+                variant="paragraph"
+                className="text-tp-typography/80 text-justify"
+              >
                 {description}
               </Typography>
             </div>
