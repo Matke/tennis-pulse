@@ -13,6 +13,7 @@ type InputRadioProps = {
   className?: string;
   labelContainer?: string;
   optionsContainer?: string;
+  radioGroupTitle?: string;
 };
 
 const InputRadio = ({
@@ -24,6 +25,7 @@ const InputRadio = ({
   className = "",
   labelContainer = "",
   optionsContainer = "",
+  radioGroupTitle = "",
 }: InputRadioProps) => {
   return (
     <div className={`${className} w-full`}>
@@ -31,6 +33,10 @@ const InputRadio = ({
         {/* for accessibility, not visible on screen */}
         <legend className="sr-only">{legend}</legend>
 
+        {/* label for whole radio group */}
+        <span className="text-tp-typography text-[15px]">
+          {radioGroupTitle}
+        </span>
         <div
           className={`flex ${direction === "horizontal" ? "space-x-8" : "flex-col space-y-5"} border-charcoal-600 h-full rounded-md border px-3 py-3.5 ${optionsContainer}`}
         >
@@ -45,7 +51,7 @@ const InputRadio = ({
                   // defaultChecked={item.id === "small"} will be controlled with state
                   checked={value === item.id}
                   onChange={() => onChange(item.id)}
-                  className="checked:border-tp-typography focus:ring-typography-600 h-5.5 w-5.5 cursor-pointer appearance-none rounded-full border border-gray-400 checked:border-[5px] focus:ring-2 focus:outline-none"
+                  className="checked:border-tp-typography focus:ring-typography-600 h-5.5 w-5.5 cursor-pointer appearance-none rounded-full border border-gray-400 checked:border-[6px] focus:ring-1 focus:outline-none"
                 />
               </div>
               <div

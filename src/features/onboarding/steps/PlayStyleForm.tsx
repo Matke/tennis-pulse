@@ -1,9 +1,13 @@
+import { useState } from "react";
+// components
 import InputRadio from "@/components/inputs/InputRadio";
 import InputSelect, {
   type InputSelectOption,
 } from "@/components/inputs/InputSelect";
+import Tooltip from "@/components/tooltip/Tooltip";
 import InputText from "@/components/inputs/InputText";
-import { useState } from "react";
+// icons
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const skillLevelOptions: InputSelectOption[] = [
   { label: "1.0", value: 1.0 },
@@ -30,73 +34,91 @@ const dominantHandOptions = [
   },
 ];
 
-const backhandTypeOptions: InputSelectOption[] = [
-  { label: "One-handed", value: "one-h" },
-  { label: "Two-handed", value: "two-h" },
-  { label: "Slice", value: "slice" },
+const backhandTypeOptions = [
+  { id: "one-handed", name: "One-handed" },
+  { id: "two-handed", name: "Two-handed" },
+  { id: "slice", name: "Slice" },
 ];
 
-const forehandTypeOptions: InputSelectOption[] = [
-  { label: "Flat", value: "flat" },
-  { label: "Topspin", value: "topspin" },
-  { label: "Moonball", value: "moonball" },
+const forehandTypeOptions = [
+  { id: "flat", name: "Flat" },
+  { id: "topspin", name: "Topspin" },
+  { id: "moonball", name: "Moonball" },
 ];
 
 const PlayStyleForm = () => {
-  const [backhandType, setBackhandType] = useState<string | "">("");
-  const [forehandType, setForehandType] = useState<string | "">("");
+  const [backhandType, setBackhandType] = useState<string | "">("one-handed");
+  const [forehandType, setForehandType] = useState<string | "">("flat");
   const [skillLevel, setSkillLevel] = useState<number | "">("");
   const [selectedRadio, setSelectedRadio] = useState("right");
 
   return (
-    <form className="grid grid-cols-2 gap-8">
+    <form className="grid grid-cols-3 gap-8">
       <InputRadio
         data={dominantHandOptions}
         value={selectedRadio}
         onChange={setSelectedRadio}
         optionsContainer="border-none"
         direction="vertical"
+        radioGroupTitle="Dominant Hand"
+      />
+      <InputRadio
+        data={backhandTypeOptions}
+        value={backhandType}
+        onChange={setBackhandType}
+        optionsContainer="border-none"
+        direction="vertical"
+        radioGroupTitle="Backhand Type"
+      />
+      <InputRadio
+        data={forehandTypeOptions}
+        value={forehandType}
+        onChange={setForehandType}
+        optionsContainer="border-none"
+        direction="vertical"
+        radioGroupTitle="Forehand Type"
       />
       <InputText
         type="text"
         placeholder="Racket"
-        className="col-span-1"
+        className="col-span-3"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
       />
-      <InputSelect
-        id="backhandType"
-        name="backhandType"
-        label="Backhand type"
-        options={backhandTypeOptions}
-        value={backhandType}
-        className="col-span-1 w-full"
-        onChange={(e) => setBackhandType(e.target.value)}
-        floatingLabelBackground="bg-tp-card-back"
-        error=""
-      />
-      <InputSelect
-        id="forehandType"
-        name="forehandType"
-        label="Forehand type"
-        options={forehandTypeOptions}
-        value={forehandType}
-        className="col-span-1 w-full"
-        onChange={(e) => setForehandType(e.target.value)}
-        floatingLabelBackground="bg-tp-card-back"
-        error=""
-      />
-      <InputSelect
-        id="skillLevel"
-        name="skillLevel"
-        label="Skill Level"
-        options={skillLevelOptions}
-        value={skillLevel}
-        className="col-span-2 w-full"
-        onChange={(e) => setSkillLevel(Number(e.target.value))}
-        floatingLabelBackground="bg-tp-card-back"
-        error=""
-      />
+      <div className="relative col-span-3 flex w-full items-center gap-2">
+        <InputSelect
+          id="skillLevel"
+          name="skillLevel"
+          label="UTR Skill Level"
+          options={skillLevelOptions}
+          value={skillLevel}
+          className="flex-1"
+          onChange={(e) => setSkillLevel(Number(e.target.value))}
+          floatingLabelBackground="bg-tp-card-back"
+          error=""
+        />
+        <Tooltip
+          id="skill-level-tooltip"
+          content={
+            "UTR is a global rating that measures tennis skill based on real match results. Scale meaning: |1.0 - 2.0 Beginner| >> |3.0 - 4.0 Recreational| >> |5.0 - 6.0 Strong Club Player| >> |7.0 - 8.0 Advanced| >> |9.0 - 10.0 College Level| >> |11.0+ Professional / Elite|"
+          }
+          place="top"
+          variant="dark"
+        >
+          <div
+            data-tooltip-id="skill-level-tooltip"
+            className="absolute right-7 z-10"
+          >
+            <IoIosInformationCircleOutline
+              className="text-charcoal-600 h-7 w-7 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("SIti");
+              }}
+            />
+          </div>
+        </Tooltip>
+      </div>
     </form>
   );
 };

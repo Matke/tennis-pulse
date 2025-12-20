@@ -18,6 +18,8 @@ const ProgressStepsBarItem = ({
 
   const isActive = position < currentStep;
   const isCompleted = currentStep - 1 > position;
+  // for step label
+  const isHighlighted = position === currentStep - 1;
 
   if (lastStep)
     return (
@@ -28,7 +30,11 @@ const ProgressStepsBarItem = ({
           >
             {icon}
           </span>
-          <span className="text-tp-typography/50">{stepTitle}</span>
+          <span
+            className={`${isHighlighted ? "text-tp-typography" : "text-tp-typography/50"}`}
+          >
+            {stepTitle}
+          </span>
         </div>
       </li>
     );
@@ -57,7 +63,11 @@ const ProgressStepsBarItem = ({
             icon
           )}
         </span>
-        <span className="text-tp-typography">{stepTitle}</span>
+        <span
+          className={`${isHighlighted ? "text-tp-typography" : "text-tp-typography/50"}`}
+        >
+          {stepTitle}
+        </span>
       </div>
     </li>
   );
