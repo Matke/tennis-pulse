@@ -41,6 +41,7 @@ export type ButtonProps = {
   uppercaseLabel?: boolean;
   labelClass?: string;
   position?: string;
+  formId?: string; // if we are submitting form but button is not in the same file
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -62,6 +63,7 @@ const Button = ({
   uppercaseLabel = false,
   labelClass = "",
   position = "relative",
+  formId,
   ...rest
 }: ButtonProps) => {
   // active scale and brightness classes simulate button click effect
@@ -118,6 +120,7 @@ const Button = ({
     <button
       type={type}
       disabled={disabled}
+      form={formId}
       className={classNames(
         defaultClass,
         setThemeButtons(themeColor),

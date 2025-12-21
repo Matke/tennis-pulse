@@ -21,8 +21,9 @@ export type DateInputProps = {
   backgroundInputColor?: string;
   calendarIconColor?: string;
   required?: boolean;
-  min?: string;
-  max?: string;
+  min?: string | number;
+  max?: string | number;
+  defaultValue?: string | number;
   ref?: React.Ref<HTMLInputElement>;
 };
 
@@ -43,6 +44,7 @@ const InputDate = ({
   required = false,
   min,
   max,
+  defaultValue,
   ref,
   ...rest
 }: DateInputProps) => {
@@ -56,7 +58,7 @@ const InputDate = ({
           value={value}
           onChange={onChange}
           type={type}
-          defaultValue="2000-01-01"
+          defaultValue={defaultValue}
           id={nameId}
           name={nameId}
           min={min}

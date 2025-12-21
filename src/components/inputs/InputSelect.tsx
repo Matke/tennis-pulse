@@ -51,7 +51,7 @@ const InputSelect = ({
       >
         {/* hidden so that label can be moved */}
         <option value="" disabled hidden></option>
-        <div>
+        <optgroup>
           {options?.map((option: string | InputSelectOption, index: number) => (
             <option
               key={index}
@@ -61,7 +61,7 @@ const InputSelect = ({
               {typeof option === "string" ? option : option[labelKey]}
             </option>
           ))}
-        </div>
+        </optgroup>
       </select>
 
       <label

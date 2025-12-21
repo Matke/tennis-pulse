@@ -12,7 +12,7 @@ import ConfirmationModal from "@/components/modals/ConfirmationModal";
 import { useNavigate } from "react-router";
 
 const Welcome = () => {
-  const { currentStep, handleBack, handleNext } = useStepsForm();
+  const { currentStep, handleBack } = useStepsForm();
 
   // control modal
   const [skipModal, setSkipModal] = useState<boolean>(false);
@@ -57,12 +57,13 @@ const Welcome = () => {
           )}
           <Button
             type="submit"
-            onClick={handleNext}
+            // onClick={handleNext}
             label="Next"
             buttonSize="base"
             fullWidth
             icon={<FaCircleArrowRight className="h-5 w-5" />}
             iconPosition="right"
+            formId="onboarding-form"
           />
         </div>
       </footer>

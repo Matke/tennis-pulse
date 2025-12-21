@@ -8,7 +8,7 @@ const PlayerBackgroundForm = () => {
   const [selected, setSelected] = useState("RS");
 
   return (
-    <form className="grid grid-cols-2 gap-8">
+    <form id="onboarding-form" className="grid grid-cols-2 gap-8">
       <ReactFlagsSelect
         selected={selected}
         onSelect={(code) => setSelected(code)}

@@ -2,7 +2,14 @@
 import InputDate from "@/components/inputs/InputDate";
 import InputRadio from "@/components/inputs/InputRadio";
 import InputText from "@/components/inputs/InputText";
-import { useState } from "react";
+// hooks
+import { useStepsForm } from "@/features/onboarding/useStepsForm";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+// types
+import {
+  userProfileInitialData,
+  type UserProfileData,
+} from "@/types/authTypes";
 // icons
 import { BsPersonCircle } from "react-icons/bs";
 
@@ -18,17 +25,33 @@ const genderOptions = [
 ];
 
 const PersonalDetailsForm = () => {
-  const [selectedRadio, setSelectedRadio] = useState("male");
+  const { handleNext, setFormData, formData } = useStepsForm();
+  const { register, handleSubmit, control } = useForm();
 
-  // add react hook form
+  const onPersonalDetailsFormSubmit: SubmitHandler<Partial<UserProfileData>> = (
+    data: Partial<UserProfileData>,
+  ) => {
+    // gather data from previous step form and append new data
+    console.log(data);
+    setFormData((prevStepFormData) => ({ ...prevStepFormData, ...data }));
+
+    handleNext();
+  };
+
   return (
-    <form className="grid grid-cols-2 gap-9">
+    <form
+      id="onboarding-form"
+      className="grid grid-cols-2 gap-9"
+      onSubmit={handleSubmit(onPersonalDetailsFormSubmit)}
+    >
       <InputText
         type="text"
         placeholder="Username"
         className="self-center"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
+        defaultValue={formData.username}
+        {...register("username")}
       />
       {/* TODO: Change with input profile  */}
       {/* upload image component */}
@@ -41,14 +64,25 @@ const PersonalDetailsForm = () => {
         fullWidth
         className=""
         backgroundInputColor="bg-tp-card-back"
+        defaultValue={
+          formData.dateOfBirth || userProfileInitialData.dateOfBirth
+        }
+        {...register("dateOfBirth")}
       />
-      <InputRadio
-        data={genderOptions}
-        value={selectedRadio}
-        onChange={setSelectedRadio}
-        className="self-end"
-        optionsContainer="justify-center border-none"
-        direction="horizontal"
+      <Controller
+        control={control}
+        name="gender"
+        defaultValue={formData.gender || userProfileInitialData.gender} // to avoid error component is changing uncontrolled input to be controlled there must be a default value
+        render={({ field }) => (
+          <InputRadio
+            data={genderOptions}
+            value={field.value}
+            onChange={field.onChange}
+            className="self-end"
+            optionsContainer="justify-center border-none"
+            direction="horizontal"
+          />
+        )}
       />
       <InputText
         type="text"
@@ -56,6 +90,8 @@ const PersonalDetailsForm = () => {
         fullWidth
         className="col-span-2"
         backgroundInputColor="bg-tp-card-back"
+        defaultValue={formData.firstName}
+        {...register("firstName")}
       />
       <InputText
         type="text"
@@ -63,6 +99,8 @@ const PersonalDetailsForm = () => {
         fullWidth
         className="col-span-2"
         backgroundInputColor="bg-tp-card-back"
+        defaultValue={formData.lastName}
+        {...register("lastName")}
       />
     </form>
   );

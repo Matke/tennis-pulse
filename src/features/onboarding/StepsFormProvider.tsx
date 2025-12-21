@@ -1,4 +1,8 @@
 import {
+  userProfileInitialData,
+  type UserProfileData,
+} from "@/types/authTypes";
+import {
   createContext,
   useState,
   type Dispatch,
@@ -6,8 +10,8 @@ import {
 } from "react";
 
 type StepsFormContextData = {
-  formData: any; // any will be replaced with fully typed out form data
-  setFormData: Dispatch<SetStateAction<any>>;
+  formData: UserProfileData;
+  setFormData: Dispatch<SetStateAction<UserProfileData>>;
   handleBack: () => void;
   handleNext: () => void;
   switchCurrentStep: (newStep: number) => void;
@@ -16,7 +20,7 @@ type StepsFormContextData = {
 };
 
 const stepsFormInitialValue = {
-  formData: {},
+  formData: userProfileInitialData,
   setFormData: () => {},
   handleBack: () => {},
   handleNext: () => {},
@@ -30,7 +34,7 @@ const StepsFormContext = createContext<StepsFormContextData>(
 );
 
 const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState(userProfileInitialData);
   const [currentStep, setCurrentStep] = useState<number>(1);
 
   const handleNext = () => {

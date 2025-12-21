@@ -14,6 +14,7 @@ type InputRadioProps = {
   labelContainer?: string;
   optionsContainer?: string;
   radioGroupTitle?: string;
+  ref?: React.Ref<HTMLInputElement>;
 };
 
 const InputRadio = ({
@@ -26,6 +27,7 @@ const InputRadio = ({
   labelContainer = "",
   optionsContainer = "",
   radioGroupTitle = "",
+  ref,
 }: InputRadioProps) => {
   return (
     <div className={`${className} w-full`}>
@@ -48,6 +50,7 @@ const InputRadio = ({
                   aria-describedby={`${item.id}-name`}
                   name={item.name}
                   type="radio"
+                  ref={ref}
                   // defaultChecked={item.id === "small"} will be controlled with state
                   checked={value === item.id}
                   onChange={() => onChange(item.id)}
