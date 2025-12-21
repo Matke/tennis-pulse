@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // components
 import InputRadio from "@/components/inputs/InputRadio";
 import InputSelect, {
@@ -8,6 +8,7 @@ import Tooltip from "@/components/tooltip/Tooltip";
 import InputText from "@/components/inputs/InputText";
 // icons
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { useStepsForm } from "@/features/onboarding/useStepsForm";
 
 const skillLevelOptions: InputSelectOption[] = [
   { label: "1.0", value: 1.0 },
@@ -47,10 +48,15 @@ const forehandTypeOptions = [
 ];
 
 const PlayStyleForm = () => {
+  const { formData } = useStepsForm();
   const [backhandType, setBackhandType] = useState<string | "">("one-handed");
   const [forehandType, setForehandType] = useState<string | "">("flat");
   const [skillLevel, setSkillLevel] = useState<number | "">("");
   const [selectedRadio, setSelectedRadio] = useState("right");
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   return (
     <form className="grid grid-cols-3 gap-8">

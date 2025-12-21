@@ -27,6 +27,7 @@ export type TextareaProps = {
   // isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
+  defaultValue?: string;
   ref?: React.Ref<HTMLTextAreaElement>; // react 19, refs can be passed directly as a prop
 };
 
@@ -49,6 +50,7 @@ const Textarea = ({
   // isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
+  defaultValue,
   ref,
   ...rest
 }: TextareaProps) => {
@@ -84,6 +86,7 @@ const Textarea = ({
           cols={cols}
           name={nameId}
           spellCheck={false}
+          defaultValue={defaultValue}
           className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-charcoal-600"} focus:border-tp-typography ${fullWidth ? "w-full" : "w-1/2"} scrollbar-hide rounded-sm border bg-transparent px-3 py-4 pr-3 placeholder-transparent focus:outline-none ${disableResize && "resize-none"} text-left whitespace-normal`}
           placeholder={placeholder}
           {...rest}

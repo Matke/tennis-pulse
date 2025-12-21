@@ -26,7 +26,7 @@ export const userProfileInitialData: UserProfileData = {
   gender: "male",
   profileImage: "",
   dateOfBirth: "2020-01-01",
-  nationality: "",
+  nationality: "RS",
   skillLevel: 0,
   backhandType: "",
   forehandType: "",

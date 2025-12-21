@@ -5,7 +5,8 @@ import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { AnimatePresence, motion } from "framer-motion";
 
 const ActiveForm = () => {
-  const { currentStep } = useStepsForm();
+  // direction for animation whether it should slide from left or right
+  const { currentStep, direction } = useStepsForm();
 
   const renderCurrentForm = () => {
     switch (currentStep) {
@@ -16,28 +17,30 @@ const ActiveForm = () => {
       case 3:
         return <PlayStyleForm />;
       default:
-        return null; // should be replaced with error style form
+        return null; //TODO: should be replaced with error style form
     }
   };
 
-  // animation on exit and enter
   return (
-    <AnimatePresence mode="popLayout">
-      <motion.div
-        key={currentStep} // Important: triggers animation on step change
-        initial={{ x: "100%", opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: "-100%", opacity: 0 }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 40,
-        }}
-        className="w-full"
-      >
-        {renderCurrentForm()}
-      </motion.div>
-    </AnimatePresence>
+    // upper div will remove overflow-scroll which may appear when animation is running
+    <div className="relative">
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={currentStep} // triggers animation on step change
+          initial={{ x: direction > 0 ? "100%" : "-100%", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: direction > 0 ? "-100%" : "100%", opacity: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 40,
+          }}
+          className="w-full"
+        >
+          {renderCurrentForm()}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 

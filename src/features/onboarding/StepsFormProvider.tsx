@@ -16,6 +16,7 @@ type StepsFormContextData = {
   handleNext: () => void;
   switchCurrentStep: (newStep: number) => void;
   currentStep: number;
+  direction: number;
   // setCurrentStep: Dispatch<SetStateAction<number>>;
 };
 
@@ -26,6 +27,7 @@ const stepsFormInitialValue = {
   handleNext: () => {},
   switchCurrentStep: () => {},
   currentStep: 1,
+  direction: 1, // used for controlling animation if we are going back or forward
   // setCurrentStep: () => {},
 };
 
@@ -36,12 +38,15 @@ const StepsFormContext = createContext<StepsFormContextData>(
 const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
   const [formData, setFormData] = useState(userProfileInitialData);
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [direction, setDirection] = useState<number>(1);
 
   const handleNext = () => {
+    setDirection(1);
     setCurrentStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
+    setDirection(-1);
     setCurrentStep((prev) => prev - 1);
   };
 
@@ -57,6 +62,7 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
         handleBack,
         handleNext,
         currentStep,
+        direction,
         switchCurrentStep,
       }}
     >
