@@ -23,7 +23,7 @@ const PlayerBackgroundForm = () => {
   return (
     <form
       id="onboarding-form"
-      className="grid grid-cols-2 gap-8"
+      className="grid h-full grid-cols-2 gap-8"
       onSubmit={handleSubmit(onPlayerBackgroundFormSubmit)}
     >
       <Controller
@@ -54,7 +54,9 @@ const PlayerBackgroundForm = () => {
         defaultValue={formData.height || userProfileInitialData.height || ""}
         // removes default input type number spin button
         inputClass="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none appearance-none"
-        {...register("height")}
+        {...register("height", {
+          setValueAs: (value) => (value === "" ? 0 : Number(value)),
+        })} // by default all values are strings when using react hook form but here we need to ba a number in order not to convert it later
       />
       <InputText
         type="number"
@@ -66,7 +68,9 @@ const PlayerBackgroundForm = () => {
         defaultValue={formData.weight || userProfileInitialData.weight || ""}
         // removes default input type number spin button
         inputClass="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none appearance-none"
-        {...register("weight")}
+        {...register("weight", {
+          setValueAs: (value) => (value === "" ? 0 : Number(value)),
+        })}
       />
       <Textarea
         placeholder="Biography"

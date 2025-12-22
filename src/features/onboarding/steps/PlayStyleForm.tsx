@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 // components
 import InputRadio from "@/components/inputs/InputRadio";
 import InputSelect, {
@@ -9,12 +8,20 @@ import InputText from "@/components/inputs/InputText";
 // icons
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import {
+  userProfileInitialData,
+  type UserProfileData,
+} from "@/types/authTypes";
 
 const skillLevelOptions: InputSelectOption[] = [
   { label: "1.0", value: 1.0 },
   { label: "2.0", value: 2.0 },
+  { label: "2.5", value: 2.5 },
   { label: "3.0", value: 3.0 },
+  { label: "3.5", value: 3.5 },
   { label: "4.0", value: 4.0 },
+  { label: "4.5", value: 4.5 },
   { label: "5.0", value: 5.0 },
   { label: "6.0", value: 6.0 },
   { label: "7.0", value: 7.0 },
@@ -48,60 +55,118 @@ const forehandTypeOptions = [
 ];
 
 const PlayStyleForm = () => {
-  const { formData } = useStepsForm();
-  const [backhandType, setBackhandType] = useState<string | "">("one-handed");
-  const [forehandType, setForehandType] = useState<string | "">("flat");
-  const [skillLevel, setSkillLevel] = useState<number | "">("");
-  const [selectedRadio, setSelectedRadio] = useState("right");
+  const { handleNext, setFormData, formData } = useStepsForm();
+  const { register, handleSubmit, control } = useForm();
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const onPlayStyleFormSubmit: SubmitHandler<Partial<UserProfileData>> = (
+    data: Partial<UserProfileData>,
+  ) => {
+    // gather data from previous step form and append new data
+    setFormData((prevStepFormData) => ({ ...prevStepFormData, ...data }));
+
+    handleNext();
+  };
+
+  // const [backhandType, setBackhandType] = useState<string | "">("one-handed");
+  // const [forehandType, setForehandType] = useState<string | "">("flat");
+  // const [skillLevel, setSkillLevel] = useState<number | "">("");
+  // const [selectedRadio, setSelectedRadio] = useState("right");
 
   return (
-    <form className="grid grid-cols-3 gap-8">
-      <InputRadio
-        data={dominantHandOptions}
-        value={selectedRadio}
-        onChange={setSelectedRadio}
-        optionsContainer="border-none"
-        direction="vertical"
-        radioGroupTitle="Dominant Hand"
+    <form
+      id="onboarding-form"
+      className="grid grid-cols-3 gap-8"
+      onSubmit={handleSubmit(onPlayStyleFormSubmit)}
+    >
+      {/* Dominant hand */}
+      <Controller
+        control={control}
+        name="dominantHand"
+        defaultValue={
+          formData.dominantHand || userProfileInitialData.dominantHand
+        } // to avoid error component is changing uncontrolled input to be controlled there must be a default value
+        render={({ field }) => (
+          <InputRadio
+            data={dominantHandOptions}
+            value={field.value}
+            onChange={field.onChange}
+            optionsContainer="border-none"
+            direction="vertical"
+            radioGroupTitle="Dominant Hand"
+          />
+        )}
       />
-      <InputRadio
-        data={backhandTypeOptions}
-        value={backhandType}
-        onChange={setBackhandType}
-        optionsContainer="border-none"
-        direction="vertical"
-        radioGroupTitle="Backhand Type"
+
+      {/* Backhand type */}
+      <Controller
+        control={control}
+        name="backhandType"
+        defaultValue={
+          formData.backhandType || userProfileInitialData.backhandType
+        } // to avoid error component is changing uncontrolled input to be controlled there must be a default value
+        render={({ field }) => (
+          <InputRadio
+            data={backhandTypeOptions}
+            value={field.value}
+            onChange={field.onChange}
+            optionsContainer="border-none"
+            direction="vertical"
+            radioGroupTitle="Backhand Type"
+          />
+        )}
       />
-      <InputRadio
-        data={forehandTypeOptions}
-        value={forehandType}
-        onChange={setForehandType}
-        optionsContainer="border-none"
-        direction="vertical"
-        radioGroupTitle="Forehand Type"
+
+      {/* Forehand type */}
+      <Controller
+        control={control}
+        name="forehandType"
+        defaultValue={
+          formData.forehandType || userProfileInitialData.forehandType
+        } // to avoid error component is changing uncontrolled input to be controlled there must be a default value
+        render={({ field }) => (
+          <InputRadio
+            data={forehandTypeOptions}
+            value={field.value}
+            onChange={field.onChange}
+            optionsContainer="border-none"
+            direction="vertical"
+            radioGroupTitle="Forehand Type"
+          />
+        )}
       />
+
+      {/* Racket */}
       <InputText
         type="text"
         placeholder="Racket"
         className="col-span-3"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
+        {...register("racket")}
       />
+
+      {/* Skill Level */}
       <div className="relative col-span-3 flex w-full items-center gap-2">
-        <InputSelect
-          id="skillLevel"
+        <Controller
+          control={control}
           name="skillLevel"
-          label="UTR Skill Level"
-          options={skillLevelOptions}
-          value={skillLevel}
-          className="flex-1"
-          onChange={(e) => setSkillLevel(Number(e.target.value))}
-          floatingLabelBackground="bg-tp-card-back"
-          error=""
+          defaultValue={
+            formData.skillLevel || userProfileInitialData.skillLevel || ""
+          } // to avoid error component is changing uncontrolled input to be controlled there must be a default value
+          render={({ field }) => (
+            <InputSelect
+              id="skillLevel"
+              name="skillLevel"
+              label="UTR Skill Level"
+              value={field.value}
+              onChange={(e) => field.onChange(Number(e.target.value))}
+              options={skillLevelOptions}
+              className="flex-1"
+              floatingLabelBackground="bg-tp-card-back"
+              optGroupLabel="UTR Skill Level"
+              error=""
+            />
+          )}
         />
         <Tooltip
           id="skill-level-tooltip"
@@ -115,13 +180,7 @@ const PlayStyleForm = () => {
             data-tooltip-id="skill-level-tooltip"
             className="absolute right-7 z-10"
           >
-            <IoIosInformationCircleOutline
-              className="text-charcoal-600 h-7 w-7 cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                console.log("SIti");
-              }}
-            />
+            <IoIosInformationCircleOutline className="text-charcoal-600 h-7 w-7 cursor-pointer" />
           </div>
         </Tooltip>
       </div>

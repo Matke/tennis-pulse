@@ -396,6 +396,8 @@ input:-webkit-autofill::first-line {
   }
 }
 
+/* Settings for datepicker on chrome = enabled to use custom icon */
+/* Hide custom icon on firefox because it is not supported */
 @layer components {
   .hide-datepicker-indicator {
     @apply relative flex items-center;

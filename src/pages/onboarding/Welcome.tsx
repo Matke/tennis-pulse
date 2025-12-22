@@ -30,7 +30,7 @@ const Welcome = () => {
       </header>
 
       {/* Form section */}
-      <section className="flex-1">
+      <section className="h-full w-full flex-1">
         <ActiveForm />
       </section>
 
@@ -55,10 +55,11 @@ const Welcome = () => {
               icon={<FaCircleArrowLeft className="h-5 w-5" />}
             />
           )}
+
           <Button
             type="submit"
             // onClick={handleNext}
-            label="Next"
+            label={currentStep === 4 ? "Finish" : "Next"}
             buttonSize="base"
             fullWidth
             icon={<FaCircleArrowRight className="h-5 w-5" />}

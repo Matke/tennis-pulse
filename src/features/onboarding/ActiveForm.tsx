@@ -1,3 +1,4 @@
+import FinalStepForm from "@/features/onboarding/steps/FinalStepForm";
 import PersonalDetailsForm from "@/features/onboarding/steps/PersonalDetailsForm";
 import PlayerBackgroundForm from "@/features/onboarding/steps/PlayerBackgroundForm";
 import PlayStyleForm from "@/features/onboarding/steps/PlayStyleForm";
@@ -16,6 +17,8 @@ const ActiveForm = () => {
         return <PlayerBackgroundForm />;
       case 3:
         return <PlayStyleForm />;
+      case 4:
+        return <FinalStepForm />;
       default:
         return null; //TODO: should be replaced with error style form
     }

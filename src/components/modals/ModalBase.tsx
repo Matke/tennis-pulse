@@ -111,8 +111,9 @@ const ModalBase = ({
 
             {/* Buttons */}
             <div className="mt-4 flex flex-row items-center justify-around gap-2 md:w-full md:gap-x-3">
-              {buttons.map((buttonData) => (
+              {buttons.map((buttonData: ButtonProps, index: number) => (
                 <Button
+                  key={index}
                   label={buttonData.label}
                   themeColor={buttonData.themeColor}
                   onClick={buttonData.onClick}

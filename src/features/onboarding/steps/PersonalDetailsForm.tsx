@@ -32,7 +32,6 @@ const PersonalDetailsForm = () => {
     data: Partial<UserProfileData>,
   ) => {
     // gather data from previous step form and append new data
-    console.log(data);
     setFormData((prevStepFormData) => ({ ...prevStepFormData, ...data }));
 
     handleNext();

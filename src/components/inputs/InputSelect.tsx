@@ -4,7 +4,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 export type InputSelectOption = {
   [index: string]: string | number;
-  label: string;
+  label: string | number;
   value: string | number;
 };
 
@@ -17,9 +17,11 @@ export type InputSelectProps = {
   labelKey?: string;
   valueKey?: string;
   floatingLabelBackground?: string;
+  optGroupLabel?: string;
   error?: string;
   errorPlaceholderClass?: string;
   className?: string;
+  defaultValue?: string | number;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
@@ -35,6 +37,8 @@ const InputSelect = ({
   error = "",
   errorPlaceholderClass,
   className = "",
+  defaultValue,
+  optGroupLabel,
   onChange,
 }: InputSelectProps) => {
   const isFloating = value && value !== "";
@@ -46,17 +50,21 @@ const InputSelect = ({
         id={id}
         name={name || label}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         className={`${!error ? "border-charcoal-600" : "border-tp-warning"} text-tp-typography focus:border-tp-typography w-full appearance-none rounded-md border bg-transparent py-3 pl-3 focus:outline-none`}
       >
         {/* hidden so that label can be moved */}
         <option value="" disabled hidden></option>
-        <optgroup>
+        <optgroup
+          label={optGroupLabel}
+          className="text-tp-typography-secondary bg-white"
+        >
           {options?.map((option: string | InputSelectOption, index: number) => (
             <option
               key={index}
               value={typeof option === "string" ? option : option[valueKey]}
-              className="text-tp-typography-secondary bg-tp-typography"
+              className="text-tp-typography-secondary bg-white"
             >
               {typeof option === "string" ? option : option[labelKey]}
             </option>

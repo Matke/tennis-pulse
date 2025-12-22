@@ -21,7 +21,7 @@ export type AccordionProps = {
 const Accordion = ({
   accordionData,
   accordionBorderColor = "tp-card-back/70",
-  accordionWidth = 190,
+  // accordionWidth = 190,
   mainContainerClassName = "",
   accordionItemBackgroundColor = "tp-primary",
   accordionItemHoverColor = "sunbeam-yellow-300",
@@ -32,7 +32,7 @@ const Accordion = ({
 
   return (
     <div
-      className={`border-${accordionBorderColor} w-${accordionWidth.toString()} border ${mainContainerClassName}`}
+      className={`border-${accordionBorderColor} border ${mainContainerClassName}`}
     >
       {accordionData.map((data: AccordionItemData, index: number) => {
         return (

@@ -2,11 +2,12 @@
 import type { ButtonThemeColor } from "@/components/buttons/Button";
 import Loader from "@/components/loaders/Loader";
 import Typography from "@/components/text/Typography";
+import Tooltip, { type TooltipPlacement } from "@/components/tooltip/Tooltip";
 
 // helpers
 import { classNames } from "@/utils/common";
 
-export type ButtonVariant = "filled" | "outlined" | "flat";
+export type ButtonVariant = "filled" | "outlined" | "flat" | "blank";
 
 export type ButtonIconSize = "small" | "big";
 
@@ -25,6 +26,9 @@ export type ButtonIconProps = {
   smallLabel?: string;
   smallLabelColor?: string;
   className?: string;
+  tooltipId?: string;
+  tooltipContent?: string;
+  tooltipPlacement?: TooltipPlacement;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -42,6 +46,9 @@ const ButtonIcon = ({
   smallLabel,
   smallLabelColor = "",
   className,
+  tooltipId = "",
+  tooltipContent = "",
+  tooltipPlacement = "top",
   onClick,
 }: ButtonIconProps) => {
   const defaultClass = ` flex items-center justify-center rounded-${rounded ? "full" : "md"} border p-2 ${variant !== "flat" && "shadow-sm"} focus:outline-none not-disabled:active:scale-96 not-disabled:active:brightness-98 duration-100`;
@@ -109,12 +116,15 @@ const ButtonIcon = ({
 
   const classesVariants: (string | undefined)[] | string = handleVariant();
 
-  return (
+  const hasTooltip = Boolean(tooltipId && tooltipContent);
+
+  const commonButtonIcon = (
     <div className="flex flex-col items-center justify-center">
       <button
         type="button"
         onClick={onClick}
         disabled={disabled}
+        data-tooltip-id={tooltipId}
         className={classNames(
           defaultClass,
           ...(classesVariants || ""),
@@ -142,6 +152,14 @@ const ButtonIcon = ({
         </Typography>
       )}
     </div>
+  );
+
+  return hasTooltip ? (
+    <Tooltip id={tooltipId} content={tooltipContent} place={tooltipPlacement}>
+      {commonButtonIcon}
+    </Tooltip>
+  ) : (
+    commonButtonIcon
   );
 };
 
