@@ -27,7 +27,7 @@ export const userProfileInitialData: UserProfileData = {
   profileImage: "",
   dateOfBirth: "2000-01-01",
   nationality: "RS",
-  skillLevel: 0,
+  skillLevel: 1,
   backhandType: "one-handed",
   forehandType: "flat",
   height: 0,
