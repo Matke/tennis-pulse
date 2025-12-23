@@ -15,10 +15,12 @@ export type ChipProps = {
   variant?: ChipVariant;
   containerClass?: string;
   labelClass?: string;
-  tooltipId: string;
-  tooltipContent: string;
+  tooltipId?: string;
+  tooltipContent?: string;
   tooltipPlacement?: TooltipPlacement;
   icon?: React.ReactNode;
+  customBackgroundColor?: string;
+  customTextColor?: string;
 };
 
 const Chip = ({
@@ -29,9 +31,11 @@ const Chip = ({
   icon,
   containerClass,
   labelClass,
-  tooltipId,
-  tooltipContent,
+  tooltipId = "",
+  tooltipContent = "",
   tooltipPlacement = "top",
+  customBackgroundColor = "",
+  customTextColor = "",
   ...rest
 }: ChipProps) => {
   const defaultChipClass =
@@ -69,7 +73,7 @@ const Chip = ({
       case "filled":
         return [setBackgroundColor(), "border-none", "shadow-sm"];
       case "outline":
-        return [setBorderColor(), "border", "bg-none", "shadow-md   "];
+        return [setBorderColor(), "border", "bg-none", "shadow-md "];
       default:
         return [];
     }
@@ -90,37 +94,46 @@ const Chip = ({
 
   const classesVariants = handleVariants(variant);
 
-  return (
-    // TODO: Make Chip usable without the need for Tooltip
+  const hasTooltip = Boolean(tooltipId && tooltipContent);
+
+  const commonChip = (
+    <div
+      className={classNames(
+        defaultChipClass,
+        ...(classesVariants || ""),
+        containerClass,
+        setChipSize() || "",
+        customBackgroundColor,
+        customTextColor,
+      )}
+      data-tooltip-id={tooltipId}
+      {...rest}
+    >
+      <div className="flex items-center justify-center gap-1">
+        {icon && <span>{icon}</span>}
+        <Typography
+          variant="label-small"
+          as={"span"}
+          color={`${variant === "filled" ? "text-tp-typography-secondary" : "text-tp-typography"}`}
+          className={`font-medium ${labelClass}`}
+        >
+          {label}
+        </Typography>
+      </div>
+    </div>
+  );
+
+  return hasTooltip ? (
     <Tooltip
       id={tooltipId}
       content={tooltipContent}
       place={tooltipPlacement}
       variant="dark"
     >
-      <div
-        className={classNames(
-          defaultChipClass,
-          ...(classesVariants || ""),
-          containerClass,
-          setChipSize() || "",
-        )}
-        data-tooltip-id={tooltipId}
-        {...rest}
-      >
-        <div className="flex items-center justify-center gap-1">
-          {icon && <span>{icon}</span>}
-          <Typography
-            variant="label-small"
-            as={"span"}
-            color={`${variant === "filled" ? "text-tp-typography-secondary" : "text-tp-typography"}`}
-            className={`font-medium ${labelClass}`}
-          >
-            {label}
-          </Typography>
-        </div>
-      </div>
+      {commonChip}
     </Tooltip>
+  ) : (
+    commonChip
   );
 };
 

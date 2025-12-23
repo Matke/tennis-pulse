@@ -1,9 +1,11 @@
+type Gender = "male" | "female";
+
 export type UserProfileData = {
   userId: string;
   username: string;
   firstName: string;
   lastName: string;
-  gender: string;
+  gender: Gender;
   profileImage: string;
   dateOfBirth: string;
   nationality: string;

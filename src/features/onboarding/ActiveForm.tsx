@@ -34,9 +34,10 @@ const ActiveForm = () => {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: direction > 0 ? "-100%" : "100%", opacity: 0 }}
           transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 40,
+            type: "tween",
+            duration: 0.3,
+            // stiffness: 10,
+            // damping: 150,
           }}
           className="w-full"
         >

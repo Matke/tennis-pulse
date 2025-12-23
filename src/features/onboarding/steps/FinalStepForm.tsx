@@ -24,12 +24,42 @@ const valueLookupTable: Record<keyof Keys, string> = {
   left: "Left-handed",
   right: "Right-handed",
   "one-handed": "One-handed backhand",
-  "two-handed": "Two-handed backhands",
+  "two-handed": "Two-handed backhand",
   slice: "Slice master",
   flat: "Flat forehand",
   topspin: "Topspin forehand",
   moonball: "Proud moonballer",
-  4: "Strong club player",
+  1: "Total beginner",
+  1.5: "Net is scary",
+  2: "It's a plane It's a bird It's a moonball",
+  2.5: "Moonball maestro",
+  3: "Can hit the net",
+  3.5: "Struggling beginner",
+  4: "Double faulting specialist",
+  4.5: "Want to rally?",
+  5: "Ball control maniac",
+  5.5: "Power and spin, behold!",
+  6: "All in footwork",
+  6.5: "Consistent serve king",
+  7: "Strong club player",
+  7.5: "Strategy king",
+  8: "Tactically dangerous",
+  8.5: "Pressure point king",
+  9: "Ace Ace Ace",
+  9.5: "Enhanced footwork",
+  10: "College ready",
+  10.5: "Master of spin and power!",
+  11: "Master of technique",
+  11.5: "High level player",
+  12: "All-court player",
+  12.5: "Mind-game King",
+  13: "Big game",
+  13.5: "Anticipation king",
+  14: "World class player",
+  14.5: "Elite player",
+  15: "Elite pro",
+  15.5: "Legendary player",
+  16: "I am Novak Djokovic!",
 };
 
 const FinalStepForm = () => {
@@ -65,7 +95,7 @@ const FinalStepForm = () => {
           tooltipPlacement="right"
         />
       </div>
-      <FinalProfileOverview chips={chipsArray} />
+      <FinalProfileOverview formData={formData} chips={chipsArray} />
     </div>
   );
 };
