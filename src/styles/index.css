@@ -389,3 +389,25 @@ input:-webkit-autofill::first-line {
     background-position: -200% 0;
   }
 }
+
+@-moz-document url-prefix() {
+  .firefox-hidden {
+    display: none !important;
+  }
+}
+
+/* Settings for datepicker on chrome = enabled to use custom icon */
+/* Hide custom icon on firefox because it is not supported */
+@layer components {
+  .hide-datepicker-indicator {
+    @apply relative flex items-center;
+  }
+
+  .hide-datepicker-indicator::-moz-calendar-picker-indicator {
+    @apply opacity-0;
+  }
+
+  .hide-datepicker-indicator::-webkit-calendar-picker-indicator {
+    @apply absolute top-0 right-0 z-20 m-0 h-full w-10 cursor-pointer opacity-0;
+  }
+}

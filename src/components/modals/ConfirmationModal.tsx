@@ -9,6 +9,7 @@ export type ConfirmationProps = {
   openModal: boolean;
   isLoading?: boolean;
   icon?: React.ReactNode;
+  divider?: boolean;
   onClose: () => void;
   onConfirm: () => void;
 };
@@ -19,6 +20,7 @@ const ConfirmationModal = ({
   openModal,
   isLoading,
   icon = <IoMdInformationCircle className="h-10 w-10" />,
+  divider = false,
   onClose,
   onConfirm, // pass it from parent
 }: ConfirmationProps) => {
@@ -29,6 +31,7 @@ const ConfirmationModal = ({
       open={openModal}
       onClose={onClose}
       icon={icon}
+      divider={divider}
       buttons={[
         {
           label: "Yes",

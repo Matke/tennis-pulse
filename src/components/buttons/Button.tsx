@@ -41,6 +41,7 @@ export type ButtonProps = {
   uppercaseLabel?: boolean;
   labelClass?: string;
   position?: string;
+  formId?: string; // if we are submitting form but button is not in the same file
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -62,6 +63,7 @@ const Button = ({
   uppercaseLabel = false,
   labelClass = "",
   position = "relative",
+  formId,
   ...rest
 }: ButtonProps) => {
   // active scale and brightness classes simulate button click effect
@@ -71,9 +73,9 @@ const Button = ({
   const setThemeButtons = (themeColor: ButtonThemeColor) => {
     switch (themeColor) {
       case "primary":
-        return " bg-tp-primary hover:not-disabled:bg-sunbeam-yellow-300 text-charcoal-950 shadow-tp-primary hover:not-disabled:shadow-sunbeam-yellow-300";
+        return " bg-tp-primary hover:not-disabled:bg-sunbeam-yellow-300 text-charcoal-950 shadow-tp-primary border border-tp-primary hover:not-disabled:shadow-sunbeam-yellow-300";
       case "secondary":
-        return ` border-2 border-tp-primary ${!isLoading && "hover:not-disabled:bg-tp-primary hover:not-disabled:text-charcoal-950"} text-charcoal-200 transition-colors  `;
+        return ` border border-tp-primary ${!isLoading && "hover:not-disabled:bg-tp-primary hover:not-disabled:text-charcoal-950"} shadow-tp-primary text-charcoal-200 transition-colors  `;
       case "warning":
         return " bg-tp-warning not-disabled:opacity-90 transiton-opacity duration-300 hover:not-disabled:opacity-100 text-pacific-blue-50 shadow-tp-warning ";
       case "tertiary":
@@ -118,6 +120,7 @@ const Button = ({
     <button
       type={type}
       disabled={disabled}
+      form={formId}
       className={classNames(
         defaultClass,
         setThemeButtons(themeColor),

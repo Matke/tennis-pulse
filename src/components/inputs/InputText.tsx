@@ -23,9 +23,12 @@ export type InputProps = {
   className?: string;
   labelClass?: string;
   fullWidth?: boolean;
+  inputClass?: string;
+  inputFieldText?: string;
   // isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
+  defaultValue?: string | number;
   ref?: React.Ref<HTMLInputElement>; // react 19, refs can be passed directly as a prop
 };
 
@@ -41,17 +44,21 @@ const InputText = ({
   errorPlaceholderClass = "",
   isValidField = false,
   className,
+  inputFieldText = "",
   labelClass = "",
   fullWidth = false,
+  inputClass = "",
   // isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
+  defaultValue,
   ref,
   ...rest
 }: InputProps) => {
   // TODO: isValidField should relay on error, change code later
 
-  const nameId = name || placeholder.toLocaleLowerCase("en-US");
+  const nameId =
+    name || placeholder.toLocaleLowerCase("en-US").replace(/\s+/g, "-");
 
   const iconError: React.ReactNode = (
     <IoIosCloseCircle
@@ -68,6 +75,12 @@ const InputText = ({
     <GoCheckCircleFill className="text-tp-tertiary absolute top-3.5 right-3 ml-3 h-5 w-5" />
   );
 
+  const inputFieldExp = (
+    <span className="text-tp-typography absolute top-3 right-3 ml-3 h-5 w-5 tracking-wider">
+      {inputFieldText}
+    </span>
+  );
+
   return (
     <div className={`${backgroundInputColor} rounded-sm ${className}`}>
       <div className="relative bg-inherit">
@@ -78,8 +91,9 @@ const InputText = ({
           type={type}
           id={nameId}
           name={nameId}
+          defaultValue={defaultValue}
           spellCheck={false}
-          className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-tp-typography"} focus:border-charcoal-600 h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 placeholder-transparent focus:outline-none`}
+          className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-charcoal-600"} focus:border-tp-typography h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 placeholder-transparent focus:outline-none ${inputClass}`}
           placeholder={placeholder}
           autoComplete={type === "email" ? "email" : "on"}
           {...rest}
@@ -99,6 +113,7 @@ const InputText = ({
           >
             {error && iconError}
             {isValidField && iconSuccess}
+            {inputFieldText && inputFieldExp}
           </motion.div>
         </div>
       </div>

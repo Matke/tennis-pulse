@@ -1,55 +1,85 @@
+import { useState } from "react";
+// components
 import Button from "@/components/buttons/Button";
-import Textarea from "@/components/inputs/Textarea";
-import Loader from "@/components/loaders/Loader";
-import Typography from "@/components/text/Typography";
-import { useAuth } from "@/store/useAuth";
-import { motion } from "framer-motion";
+import PulseLogo from "@/components/ui/PulseLogo";
+import ActiveForm from "@/features/onboarding/ActiveForm";
+import ProgressStepsBar from "@/features/onboarding/ProgressStepsBar";
+// context
+import { useStepsForm } from "@/features/onboarding/useStepsForm";
+// icons
+import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
+import ConfirmationModal from "@/components/modals/ConfirmationModal";
+import { useNavigate } from "react-router";
 
 const Welcome = () => {
-  const { user, userProfile, isLoading } = useAuth();
+  const { currentStep, handleBack } = useStepsForm();
 
-  if (isLoading) return <Loader size={190} borderSize={190} />;
+  // control modal
+  const [skipModal, setSkipModal] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   return (
-    <>
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 3,
-          scale: { type: "spring", visualDuration: 0.1, bounce: 0.02 },
-        }}
-      >
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          Welcome tennis player!
-        </Typography>
+    <div className="flex h-full w-full flex-col items-center justify-between">
+      {/* for mobile view */}
+      <PulseLogo className="block py-4 sm:hidden md:hidden" />
 
-        <Textarea
-          placeholder="Biography"
-          backgroundInputColor="bg-tp-card-back"
-          fullWidth
-          disableResize
+      {/* Form current progress */}
+      <header className="text-tp-typography flex w-full flex-1 items-start justify-center">
+        <ProgressStepsBar />
+      </header>
+
+      {/* Form section */}
+      <section className="h-full w-full flex-1">
+        <ActiveForm />
+      </section>
+
+      {/* Form control */}
+      <footer className="flex w-full flex-1 items-end justify-between">
+        <Button
+          onClick={() => setSkipModal(true)}
+          label="Skip"
+          buttonSize="base"
+          themeColor="blank"
+          className="bg-charcoal-800 hover:bg-charcoal-500 mt-3 scale-100 rounded-full transition-all duration-500 hover:scale-103 md:mt-0"
         />
+        <div className="flex gap-2">
+          {currentStep !== 1 && (
+            <Button
+              onClick={handleBack}
+              label="Back"
+              buttonSize="base"
+              themeColor="secondary"
+              fullWidth
+              disabled={currentStep === 1}
+              icon={<FaCircleArrowLeft className="h-5 w-5" />}
+            />
+          )}
 
-        <Typography
-          variant="title"
-          as={"h1"}
-          className="z-100 mb-10 text-center font-bold"
-          color="text-white"
-        >
-          {user?.id}
-        </Typography>
-
-        <div className="flex justify-center">
-          <Button label="Continue" buttonSize="large" fullWidth />
+          <Button
+            type="submit"
+            // onClick={handleNext}
+            label={currentStep === 4 ? "Finish" : "Next"}
+            buttonSize="base"
+            fullWidth
+            icon={<FaCircleArrowRight className="h-5 w-5" />}
+            iconPosition="right"
+            formId="onboarding-form"
+          />
         </div>
-      </motion.div>
-    </>
+      </footer>
+
+      {/* modals, rendered with createPortal */}
+      {skipModal && (
+        <ConfirmationModal
+          title="Confirm skip"
+          description="Your profile helps us tailor things just for you. Skipping is okay - but completing it means a better experience from the start."
+          openModal={skipModal}
+          onClose={() => setSkipModal(false)}
+          onConfirm={() => navigate("/home")}
+        />
+      )}
+    </div>
   );
 };
 

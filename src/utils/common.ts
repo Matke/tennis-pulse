@@ -50,3 +50,18 @@ export function getRelativeTimeFuture(input: string | Date): string {
 
   return "just now";
 }
+
+// calculate age
+export const calculateAge = (dateOfBirth: string) => {
+  const today = new Date();
+  const birthDate = new Date(dateOfBirth);
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDif = today.getMonth() - birthDate.getMonth();
+  const dayDif = today.getDate() - birthDate.getDate();
+
+  if (monthDif < 0 || (monthDif === 0 && dayDif < 0)) {
+    age--;
+  }
+  return age;
+};
