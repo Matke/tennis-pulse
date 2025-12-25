@@ -46,12 +46,12 @@ const ProgressStepsBarItem = ({
       } text-tp-typography-secondary relative flex w-full after:absolute after:top-3 after:left-4 after:inline-block after:h-0.5 after:w-full after:content-[''] lg:after:top-5`}
     >
       <div
-        className={`z-10 ${position !== 0 || lastStep ? "flex flex-col items-center justify-center" : ""}`}
+        className={`z-10 ${position !== 0 || lastStep ? "flex flex-col items-center justify-center" : ""} `}
       >
         <span
           className={`${
             position < currentStep ? "bg-tp-primary" : "bg-charcoal-800"
-          } mb-3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-2 border-transparent text-sm lg:h-10 lg:w-10`}
+          } mb-3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-2 border-transparent text-sm transition-all duration-300 lg:h-10 lg:w-10`}
           // manual switching without next button
           onClick={() => {
             switchCurrentStep(position + 1);

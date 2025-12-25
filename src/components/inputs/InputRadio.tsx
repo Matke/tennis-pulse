@@ -1,14 +1,14 @@
-type RadioItemProps = {
-  id: string;
+export type RadioItemProps<T extends string | number> = {
+  id: T;
   name: string;
   description?: string;
 };
 
-type InputRadioProps = {
+type InputRadioProps<T extends string | number> = {
   legend?: string; // accessibility
-  data: RadioItemProps[];
-  value: string;
-  onChange: (value: string) => void;
+  data: RadioItemProps<T>[];
+  value: T;
+  onChange: (value: T) => void;
   direction?: "horizontal" | "vertical";
   className?: string;
   labelContainer?: string;
@@ -17,7 +17,7 @@ type InputRadioProps = {
   ref?: React.Ref<HTMLInputElement>;
 };
 
-const InputRadio = ({
+const InputRadio = <T extends string | number>({
   legend,
   data,
   value,
@@ -28,7 +28,7 @@ const InputRadio = ({
   optionsContainer = "",
   radioGroupTitle = "",
   ref,
-}: InputRadioProps) => {
+}: InputRadioProps<T>) => {
   return (
     <div className={`${className} w-full`}>
       <fieldset>
@@ -42,12 +42,12 @@ const InputRadio = ({
         <div
           className={`flex ${direction === "horizontal" ? "space-x-8" : "flex-col space-y-5"} border-charcoal-600 h-full rounded-md border px-3 py-3.5 ${optionsContainer}`}
         >
-          {data.map((item: RadioItemProps) => (
+          {data.map((item: RadioItemProps<T>) => (
             <div key={item.id} className="relative flex items-center">
               <div className="flex items-center">
                 <input
-                  id={item.id}
-                  aria-describedby={`${item.id}-name`}
+                  id={String(item.id)}
+                  aria-describedby={`${String(item.id)}-name`}
                   name={item.name}
                   type="radio"
                   ref={ref}
@@ -61,7 +61,7 @@ const InputRadio = ({
                 className={`ml-3 text-sm leading-6 tracking-wide ${labelContainer}`}
               >
                 <label
-                  htmlFor={item.id}
+                  htmlFor={String(item.id)}
                   className="text-tp-typography text-md cursor-pointer font-medium"
                 >
                   {item.name}

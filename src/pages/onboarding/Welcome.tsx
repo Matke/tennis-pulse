@@ -41,7 +41,7 @@ const Welcome = () => {
           label="Skip"
           buttonSize="base"
           themeColor="blank"
-          className="bg-charcoal-800 hover:bg-charcoal-500 mt-3 scale-100 rounded-full transition-all duration-500 hover:scale-103 md:mt-0"
+          className="bg-charcoal-600 hover:bg-charcoal-500 mt-3 scale-100 rounded-full transition-all duration-500 hover:scale-103 md:mt-0"
         />
         <div className="flex gap-2">
           {currentStep !== 1 && (

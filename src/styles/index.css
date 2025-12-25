@@ -165,6 +165,8 @@
   --color-platinum-900: oklch(20.86% 0.013 264.25);
   /* best for dark mode background */
   --color-platinum-950: oklch(17.73% 0.009 264.32);
+
+  --bg-onboard: url("../assets/onboardUserDef.jpg");
 }
 
 /*

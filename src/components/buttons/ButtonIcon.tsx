@@ -94,6 +94,19 @@ const ButtonIcon = ({
     }
   };
 
+  const setHoverColors = () => {
+    switch (themeColor) {
+      case "primary":
+        return "hover:bg-tp-primary hover:text-tp-typography-secondary";
+      case "secondary":
+        return "hover:bg-tp-secondary hover:text-tp-typography-secondary";
+      case "tertiary":
+        return "hover:bg-tp-tertiary hover:text-tp-typography-secondary";
+      case "warning":
+        return "hover:bg-tp-warning hover:text-tp-typography-secondary";
+    }
+  };
+
   const handleVariant = () => {
     switch (variant) {
       case "flat":
@@ -103,9 +116,7 @@ const ButtonIcon = ({
           "bg-transparent",
           "text-tp-typography",
           setBorder(),
-          hoverClass
-            ? "hover:bg-tp-primary hover:text-tp-typography-secondary"
-            : "",
+          hoverClass ? `${setHoverColors()}` : "",
         ];
       case "filled":
         return [setBackgroundColor(), setTextColor(), setBorder()];
