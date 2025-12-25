@@ -5,7 +5,7 @@ import type { UserProfileData } from "@/types/authTypes";
 import { MdInfo } from "react-icons/md";
 
 type Keys = {
-  [index: string]: string; // index signature
+  [index: string | number]: string; // index signature
   "one-handed": string;
   "two-handed": string;
   slice: string;
@@ -17,7 +17,7 @@ type Keys = {
   height: string;
   left: string;
   right: string;
-  4: string;
+  //TODO: not all values are typed out if user enters weight or height less than 16 it will be some interesting errors, it will pick values from chips and concat them with KG
 };
 
 const valueLookupTable: Record<keyof Keys, string> = {

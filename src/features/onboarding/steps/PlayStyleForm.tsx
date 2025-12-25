@@ -123,6 +123,8 @@ const PlayStyleForm = () => {
           <InputSlider
             value={field.value}
             onChange={(value) => field.onChange(value)}
+            mainContainerClassName="col-span-3"
+            showMarks
             label="UTR Skill Level"
             helperIconTooltipText="UTR is a global rating that measures tennis skill based on real match results. Scale meaning: |1.0 - 2.0 Beginner| >> |3.0 - 4.0 Recreational| >> |5.0 - 6.0 Strong Club Player| >> |7.0 - 8.0 Advanced| >> |9.0 - 10.0 College Level| >> |11.0+ Professional / Elite|"
             helperIconTooltipId="utr-skill-level"

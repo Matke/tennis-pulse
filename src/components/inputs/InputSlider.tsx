@@ -7,14 +7,22 @@ import Typography from "@/components/text/Typography";
 import { MdInfo } from "react-icons/md";
 
 type InputSliderProps = {
-  value?: number | number[];
+  value?: number;
+  min?: number;
+  max?: number;
+  steps?: number;
+  showMarks?: boolean;
   onChange: (value: number | number[]) => void;
+  mainContainerClassName?: string;
+  sliderClassName?: string;
+  labelIconContainer?: string;
   label?: string;
   helperIcon?: React.ReactNode;
   helperIconTooltipId?: string;
   helperIconTooltipText?: string;
 };
 
+// to display steps visually
 const marks: Record<number, number> = Object.fromEntries(
   Array.from({ length: 16 }, (_, i) => {
     const value = i + 1;
@@ -25,17 +33,28 @@ const marks: Record<number, number> = Object.fromEntries(
 const InputSlider = ({
   value,
   onChange,
+  min = 1.0,
+  max = 16,
+  steps = 0.5,
+  showMarks,
   label,
+  mainContainerClassName = "",
+  sliderClassName = "",
+  labelIconContainer = "",
   helperIcon = <MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />,
   helperIconTooltipId,
   helperIconTooltipText = "",
 }: InputSliderProps) => {
   const hasHelperIcon = Boolean(helperIcon && helperIconTooltipId);
   return (
-    <div className="col-span-3 -mt-6 mb-5 flex flex-col gap-2">
-      <div className="flex items-center justify-start">
+    <div
+      className={`-mt-6 mb-5 flex w-full flex-col gap-2 ${mainContainerClassName}`}
+    >
+      <div className={`flex items-center justify-start ${labelIconContainer}`}>
         {/* label */}
-        <Typography variant="label">{label}</Typography>
+        <Typography variant="label" as={"span"} className="">
+          {label}
+        </Typography>
         {/* helper icon */}
         {hasHelperIcon && (
           <ButtonIcon
@@ -51,10 +70,11 @@ const InputSlider = ({
       <Slider
         value={value}
         onChange={onChange}
-        min={1.0}
-        max={16}
-        step={0.5}
-        marks={marks}
+        min={min}
+        max={max}
+        step={steps}
+        marks={showMarks ? marks : undefined}
+        className={sliderClassName}
         dotStyle={{
           width: 7,
           height: 7,
