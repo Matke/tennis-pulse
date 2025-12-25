@@ -9,14 +9,19 @@ import {
 } from "@/types/authTypes";
 // hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 
 const PlayerBackgroundForm = () => {
   const { handleNext, setFormData, formData } = useStepsForm();
   const { register, handleSubmit, control } = useForm();
 
-  const onPlayerBackgroundFormSubmit = (data: Partial<UserProfileData>) => {
-    setFormData((prevStepFormData) => ({ ...prevStepFormData, ...data }));
+  const onPlayerBackgroundFormSubmit: SubmitHandler<
+    Partial<UserProfileData>
+  > = (data: Partial<UserProfileData>) => {
+    setFormData((prevStepFormData: UserProfileData) => ({
+      ...prevStepFormData,
+      ...data,
+    }));
     handleNext();
   };
 

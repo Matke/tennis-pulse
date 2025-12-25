@@ -144,7 +144,10 @@ const PersonalDetailsForm = () => {
     data: Partial<UserProfileData>,
   ) => {
     // gather data from previous step form and append new data
-    setFormData((prevStepFormData) => ({ ...prevStepFormData, ...data }));
+    setFormData((prevStepFormData: UserProfileData) => ({
+      ...prevStepFormData,
+      ...data,
+    }));
 
     handleNext();
   };

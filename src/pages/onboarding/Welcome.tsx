@@ -10,12 +10,14 @@ import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 import ConfirmationModal from "@/components/modals/ConfirmationModal";
 import { useNavigate } from "react-router";
+import CropModal from "@/components/modals/CropModal";
 
 const Welcome = () => {
   const { currentStep, handleBack } = useStepsForm();
 
   // control modal
   const [skipModal, setSkipModal] = useState<boolean>(false);
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -68,6 +70,26 @@ const Welcome = () => {
           />
         </div>
       </footer>
+      {isWelcomeModalOpen && (
+        <CropModal
+          title="Welcome to Tennis Pulse!"
+          description="We're pleased to have you onboard! Your tennis journey begins here. Whether you are total beginner or experienced player this app is designed to level up your game. "
+          open={isWelcomeModalOpen}
+          onClose={() => setIsWelcomeModalOpen(false)} // when clicked outside of modal
+          buttons={[
+            {
+              label: "Procced",
+              themeColor: "tertiary",
+              buttonSize: "large",
+              className: "w-full",
+              icon: <FaCircleArrowRight className="h-5 w-5" />,
+              iconPosition: "right",
+              onClick: () => setIsWelcomeModalOpen(false),
+              uppercaseLabel: true,
+            },
+          ]}
+        ></CropModal>
+      )}
 
       {/* modals, rendered with createPortal */}
       {skipModal && (
