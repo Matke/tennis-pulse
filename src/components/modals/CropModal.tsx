@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Button, { type ButtonProps } from "@/components/buttons/Button";
+import Typography from "@/components/text/Typography";
 
 export type CropModalProps = {
-  open?: boolean;
+  title?: string;
+  open: boolean;
   onClose: () => void;
   buttons: ButtonProps[];
   description?: string;
@@ -42,7 +44,14 @@ const modalVariants: Variants = {
   },
 };
 
-const CropModal = ({ buttons, children, open, onClose }: CropModalProps) => {
+const CropModal = ({
+  title,
+  description,
+  buttons,
+  children,
+  open,
+  onClose,
+}: CropModalProps) => {
   // closing with ESC
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -81,6 +90,22 @@ const CropModal = ({ buttons, children, open, onClose }: CropModalProps) => {
             }}
           >
             <div className="flex w-full flex-col gap-1">
+              {title && (
+                <Typography
+                  variant="title"
+                  className="text-center font-bold text-white"
+                >
+                  {title}
+                </Typography>
+              )}
+              {description && (
+                <Typography
+                  variant="paragraph"
+                  className="text-tp-typography mt-4 mb-2"
+                >
+                  {description}
+                </Typography>
+              )}
               {children && (
                 <div className="my-6 -mt-2 flex h-[485px] w-full flex-col overflow-x-hidden">
                   {children}
@@ -102,6 +127,9 @@ const CropModal = ({ buttons, children, open, onClose }: CropModalProps) => {
                   buttonSize={buttonData.buttonSize}
                   loaderWithLabel={buttonData.loaderWithLabel}
                   loaderText={buttonData.loaderText}
+                  icon={buttonData.icon}
+                  iconPosition={buttonData.iconPosition}
+                  uppercaseLabel={buttonData.uppercaseLabel}
                 />
               ))}
             </div>
