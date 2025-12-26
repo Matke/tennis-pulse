@@ -6,7 +6,7 @@ export type UserProfileData = {
   firstName: string;
   lastName: string;
   gender: Gender;
-  profileImage: string;
+  profileImage?: string;
   dateOfBirth: string;
   nationality: string;
   skillLevel: number;
@@ -17,16 +17,22 @@ export type UserProfileData = {
   bio: string;
   racket: string;
   dominantHand: string;
-  created_at: string; // use for how long user has an account
+  created_at: string;
 };
 
-export const userProfileInitialData: UserProfileData = {
+export type UserProfileFormData = Omit<
+  UserProfileData,
+  "profileImage" | "created_at"
+> & {
+  profileImage?: File;
+};
+
+export const userProfileInitialData: UserProfileFormData = {
   userId: "",
   username: "",
   firstName: "",
   lastName: "",
   gender: "male",
-  profileImage: "",
   dateOfBirth: "2000-01-01",
   nationality: "RS",
   skillLevel: 1,
@@ -37,7 +43,7 @@ export const userProfileInitialData: UserProfileData = {
   bio: "",
   racket: "",
   dominantHand: "right",
-  created_at: "",
+  // created_at: "",
 };
 
 export type SignupData = {

@@ -1,9 +1,5 @@
 // components
 import InputRadio from "@/components/inputs/InputRadio";
-// import InputSelect, {
-//   type InputSelectOption,
-// } from "@/components/inputs/InputSelect";
-// import Tooltip from "@/components/tooltip/Tooltip";
 import InputText from "@/components/inputs/InputText";
 // icons
 // import { IoIosInformationCircleOutline } from "react-icons/io";
@@ -11,7 +7,7 @@ import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import {
   userProfileInitialData,
-  type UserProfileData,
+  type UserProfileFormData,
 } from "@/types/authTypes";
 import InputSlider from "@/components/inputs/InputSlider";
 
@@ -42,11 +38,11 @@ const PlayStyleForm = () => {
   const { handleNext, setFormData, formData } = useStepsForm();
   const { register, handleSubmit, control } = useForm();
 
-  const onPlayStyleFormSubmit: SubmitHandler<Partial<UserProfileData>> = (
-    data: Partial<UserProfileData>,
+  const onPlayStyleFormSubmit: SubmitHandler<Partial<UserProfileFormData>> = (
+    data: Partial<UserProfileFormData>,
   ) => {
     // gather data from previous step form and append new data
-    setFormData((prevStepFormData: UserProfileData) => ({
+    setFormData((prevStepFormData: UserProfileFormData) => ({
       ...prevStepFormData,
       ...data,
     }));

@@ -66,8 +66,11 @@ const FinalStepForm = () => {
   // context and hooks
   const { formData } = useStepsForm();
 
-  // accept keys that only exist in UserProfileData type
-  const selectedKeys: (keyof UserProfileData)[] = [
+  // accept keys that only exist in UserProfileData type, without profile image
+  const selectedKeys: (keyof Omit<
+    UserProfileData,
+    "profileImage" | "created_at"
+  >)[] = [
     "dominantHand",
     "backhandType",
     "forehandType",
@@ -84,18 +87,18 @@ const FinalStepForm = () => {
   }));
 
   return (
-    <div className="flex h-full flex-col gap-y-2">
-      <div className="z-10 w-fit">
+    <div className="mt-8 flex h-full flex-col -space-y-5">
+      <FinalProfileOverview formData={formData} chips={chipsArray} />
+      <div className="z-10 w-full">
         <ButtonIcon
           icon={<MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />}
           variant="blank"
-          className="w-fit self-start"
+          className="self-start pt-10"
           tooltipId="final-profile-card-preview"
           tooltipContent="This is your profile card preview. You can update or change any of this information later from your profile settings."
           tooltipPlacement="right"
         />
       </div>
-      <FinalProfileOverview formData={formData} chips={chipsArray} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import ReactFlagsSelect from "react-flags-select";
 // types
 import {
   userProfileInitialData,
-  type UserProfileData,
+  type UserProfileFormData,
 } from "@/types/authTypes";
 // hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
@@ -16,9 +16,9 @@ const PlayerBackgroundForm = () => {
   const { register, handleSubmit, control } = useForm();
 
   const onPlayerBackgroundFormSubmit: SubmitHandler<
-    Partial<UserProfileData>
-  > = (data: Partial<UserProfileData>) => {
-    setFormData((prevStepFormData: UserProfileData) => ({
+    Partial<UserProfileFormData>
+  > = (data: Partial<UserProfileFormData>) => {
+    setFormData((prevStepFormData: UserProfileFormData) => ({
       ...prevStepFormData,
       ...data,
     }));

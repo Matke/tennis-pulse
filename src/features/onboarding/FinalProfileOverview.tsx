@@ -1,10 +1,13 @@
 // components
 import Chip from "@/components/ui/Chip";
-import type { UserProfileData } from "@/types/authTypes";
+import type { UserProfileData, UserProfileFormData } from "@/types/authTypes";
 // icons
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { FaCrown } from "react-icons/fa";
 import { calculateAge } from "@/utils/common";
+import { useStepsForm } from "@/features/onboarding/useStepsForm";
+import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
+import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
 
 const bgColors = [
   "bg-tp-primary",
@@ -18,13 +21,17 @@ const bgColors = [
 
 type FinalProfileOverviewProps = {
   chips: { label: keyof UserProfileData; value: string | number }[];
-  formData: UserProfileData;
+  formData: UserProfileFormData;
 };
 
 const FinalProfileOverview = ({
   chips,
   formData,
 }: FinalProfileOverviewProps) => {
+  console.log(formData);
+
+  const { imageUrl } = useStepsForm();
+
   const {
     username,
     firstName,
@@ -36,31 +43,36 @@ const FinalProfileOverview = ({
     dateOfBirth,
   } = formData;
 
+  // if there is no profile image,svg icon will be selected based on gender
+  const genderProfileIcon =
+    gender === "male" ? <MaleProfileIcon /> : <FemaleProfileIcon />;
+
   return (
     <div className="flex items-center justify-center select-none">
       <div className="group relative">
         {/* Shadow for profile card, adds animation for image (tilt) */}
-        <div className="animate-tilt absolute -inset-1 rounded-2xl bg-linear-to-r from-orange-600/10 to-yellow-200/15 py-8 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+        <div className="animate-tilt absolute -inset-1 rounded-2xl bg-linear-to-r from-orange-600/20 to-yellow-200/25 py-8 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
 
         {/* Section - Profile image, username, flag, gender, bio */}
         <div className="bg-tp-card-back relative grid grid-cols-2 justify-center rounded-xl px-1 py-8 leading-none backdrop-blur-xl">
           <div className="flex flex-col items-center justify-center">
-            {/* Profile image and gender container */}
+            {/* Profile image  container */}
             <div className="group relative">
               <div className="animate-tilt absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-600 to-yellow-200 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
               <div className="relative">
-                <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  className="h-32 w-32 transform rounded-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-6"
-                  alt="Profile"
-                />
+                {/* Profile image part */}
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    className="h-32 w-32 transform rounded-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-6"
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className="h-32 w-32 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
+                    {genderProfileIcon}
+                  </div>
+                )}
               </div>
-              {gender === "male" && (
-                <IoMdMale className="text-tp-typography absolute -right-4 -bottom-4 h-10 w-10 mask-t-from-50% mask-b-from-50%" />
-              )}
-              {gender === "female" && (
-                <IoMdFemale className="text-tp-typography absolute -right-4 -bottom-4 h-10 w-10 rotate-45 mask-t-from-50% mask-b-from-50%" />
-              )}
             </div>
 
             <div className="mt-6 text-center">
@@ -73,11 +85,21 @@ const FinalProfileOverview = ({
                   className={`fi fi-${nationality.toLocaleLowerCase()} mt-1`}
                 ></span>
               </div>
-              <p className="text-tp-secondary/50 mt-1 font-medium">
-                {username || "-"}
-              </p>
+              {/* Username and Gender */}
+              <div className="flex justify-center gap-1">
+                <span className="text-tp-secondary/50 mt-1 font-medium">
+                  {username || "Krokster237"}
+                </span>
+                {gender === "male" && (
+                  <IoMdMale className="text-tp-typography h-6 w-6" />
+                )}
+                {gender === "female" && (
+                  <IoMdFemale className="text-tp-typography h-6 w-6 rotate-45" />
+                )}
+              </div>
               <p className="text-tp-typography mt-2 text-sm">
-                {bio.split(" ").slice(0, 15).join(" ").concat("...") || "-"}
+                {bio.trim().split(" ").slice(0, 15).join(" ").concat("...") ||
+                  "-"}
               </p>
             </div>
           </div>

@@ -101,7 +101,7 @@ export default async function getCroppedImg(
   imageSrc: string | null,
   pixelCrop: CropAreaData,
   rotation = 0,
-): Promise<string | null> {
+): Promise<Blob> {
   if (!imageSrc) throw new Error("Image does not exist!");
 
   const image = await createImage(imageSrc);
@@ -150,11 +150,10 @@ export default async function getCroppedImg(
     canvas.toBlob((file) => {
       if (!file) {
         console.error("Canvas is empty!");
-        resolve(null);
-        return;
+        throw new Error("Cannot convert to blob! No file");
       }
 
-      resolve(URL.createObjectURL(file));
+      resolve(file);
     }, "image/jpeg");
   });
 }

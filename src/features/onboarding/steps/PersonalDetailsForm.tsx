@@ -1,5 +1,5 @@
 import { useDropzone } from "react-dropzone";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 // components
 import InputDate from "@/components/inputs/InputDate";
 import InputRadio, {
@@ -13,7 +13,7 @@ import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 // types
 import {
   userProfileInitialData,
-  type UserProfileData,
+  type UserProfileFormData,
 } from "@/types/authTypes";
 // icons
 import Cropper from "react-easy-crop";
@@ -106,7 +106,7 @@ export type CropAreaData = {
 };
 
 const PersonalDetailsForm = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  // const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [rotation, setRotation] = useState<number>(0);
@@ -121,6 +121,10 @@ const PersonalDetailsForm = () => {
     height: 0,
   });
 
+  const { handleNext, setFormData, formData, imageUrl, handleProfileImageSet } =
+    useStepsForm();
+  const { register, handleSubmit, control } = useForm();
+
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (imageUrl) {
@@ -129,22 +133,21 @@ const PersonalDetailsForm = () => {
       }
 
       const file = acceptedFiles[0];
-      setImageUrl(URL.createObjectURL(file));
+      console.log(file);
+      handleProfileImageSet(URL.createObjectURL(file));
       setIsCropModalOpen(true);
     },
-    [imageUrl],
+    [imageUrl, handleProfileImageSet],
   );
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({ accept: { "image/*": [] }, multiple: false, onDrop });
-  const { handleNext, setFormData, formData } = useStepsForm();
-  const { register, handleSubmit, control } = useForm();
 
-  const onPersonalDetailsFormSubmit: SubmitHandler<Partial<UserProfileData>> = (
-    data: Partial<UserProfileData>,
-  ) => {
+  const onPersonalDetailsFormSubmit: SubmitHandler<
+    Partial<UserProfileFormData>
+  > = (data: Partial<UserProfileFormData>) => {
     // gather data from previous step form and append new data
-    setFormData((prevStepFormData: UserProfileData) => ({
+    setFormData((prevStepFormData: UserProfileFormData) => ({
       ...prevStepFormData,
       ...data,
     }));
@@ -181,13 +184,23 @@ const PersonalDetailsForm = () => {
   const convertToCroppedImage = useCallback(async () => {
     setIsCropping(true);
     try {
-      const croppedImage = await getCroppedImg(
+      const croppedImageBlob = await getCroppedImg(
         imageUrl,
         croppedAreaPixels,
         rotation,
       );
 
-      setImageUrl(croppedImage);
+      const previewImage = URL.createObjectURL(croppedImageBlob);
+      handleProfileImageSet(previewImage);
+
+      const fileBlob = new File([croppedImageBlob], "profile-image.jpg", {
+        type: "image/jpeg",
+      });
+
+      setFormData((prevStepFormData: UserProfileFormData) => ({
+        ...prevStepFormData,
+        profileImage: fileBlob,
+      }));
 
       toast.success("All set! The profile image is ready.");
     } catch (error) {
@@ -198,10 +211,13 @@ const PersonalDetailsForm = () => {
       setIsCropping(false);
       setIsCropModalOpen(false);
     }
-  }, [croppedAreaPixels, rotation, imageUrl]);
-
-  // welcome modal on mount
-  useEffect(() => {}, []);
+  }, [
+    croppedAreaPixels,
+    rotation,
+    imageUrl,
+    setFormData,
+    handleProfileImageSet,
+  ]);
 
   return (
     <form
