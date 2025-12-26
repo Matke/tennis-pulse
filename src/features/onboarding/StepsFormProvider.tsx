@@ -1,6 +1,6 @@
 import {
   userProfileInitialData,
-  type UserProfileData,
+  type UserProfileFormData,
 } from "@/types/authTypes";
 import {
   createContext,
@@ -10,14 +10,16 @@ import {
 } from "react";
 
 type StepsFormContextData = {
-  formData: UserProfileData;
-  setFormData: Dispatch<SetStateAction<UserProfileData>>;
+  formData: UserProfileFormData;
+  setFormData: Dispatch<SetStateAction<UserProfileFormData>>;
   handleBack: () => void;
   handleNext: () => void;
   switchCurrentStep: (newStep: number) => void;
   currentStep: number;
   direction: number;
   // setCurrentStep: Dispatch<SetStateAction<number>>;
+  imageUrl: string | null;
+  handleProfileImageSet: (image: string | null) => void;
 };
 
 const stepsFormInitialValue = {
@@ -29,6 +31,8 @@ const stepsFormInitialValue = {
   currentStep: 1,
   direction: 1, // used for controlling animation if we are going back or forward
   // setCurrentStep: () => {},
+  imageUrl: null,
+  handleProfileImageSet: () => {},
 };
 
 const StepsFormContext = createContext<StepsFormContextData>(
@@ -39,6 +43,7 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
   const [formData, setFormData] = useState(userProfileInitialData);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [direction, setDirection] = useState<number>(1);
+  const [imageUrl, setImageUrl] = useState<string | null>(null); // for ui
 
   const handleNext = () => {
     setDirection(1);
@@ -54,6 +59,10 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentStep(newStep);
   };
 
+  const handleProfileImageSet = (image: string | null) => {
+    setImageUrl(image);
+  };
+
   return (
     <StepsFormContext
       value={{
@@ -64,6 +73,8 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
         currentStep,
         direction,
         switchCurrentStep,
+        imageUrl,
+        handleProfileImageSet,
       }}
     >
       {children}

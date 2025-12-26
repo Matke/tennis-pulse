@@ -101,7 +101,7 @@ const CropModal = ({
               {description && (
                 <Typography
                   variant="paragraph"
-                  className="text-tp-typography mt-4 mb-2"
+                  className="text-tp-typography mt-4 mb-2 text-justify"
                 >
                   {description}
                 </Typography>
