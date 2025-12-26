@@ -51,7 +51,7 @@ const FinalProfileOverview = ({
     <div className="flex items-center justify-center select-none">
       <div className="group relative">
         {/* Shadow for profile card, adds animation for image (tilt) */}
-        <div className="animate-tilt absolute -inset-1 rounded-2xl bg-linear-to-r from-orange-600/20 to-yellow-200/25 py-8 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+        <div className="animate-tilt absolute -inset-1 rounded-2xl bg-linear-to-r from-orange-600/25 to-yellow-200/50 py-8 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
 
         {/* Section - Profile image, username, flag, gender, bio */}
         <div className="bg-tp-card-back relative grid grid-cols-2 justify-center rounded-xl px-1 py-8 leading-none backdrop-blur-xl">

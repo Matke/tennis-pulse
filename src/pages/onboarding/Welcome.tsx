@@ -4,22 +4,25 @@ import Button from "@/components/buttons/Button";
 import PulseLogo from "@/components/ui/PulseLogo";
 import ActiveForm from "@/features/onboarding/ActiveForm";
 import ProgressStepsBar from "@/features/onboarding/ProgressStepsBar";
-// context
+import CropModal from "@/components/modals/CropModal";
+import ConfirmationModal from "@/components/modals/ConfirmationModal";
+// hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
+import { useNavigate } from "react-router";
 // icons
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
-import ConfirmationModal from "@/components/modals/ConfirmationModal";
-import { useNavigate } from "react-router";
-import CropModal from "@/components/modals/CropModal";
 
 const Welcome = () => {
-  const { currentStep, handleBack } = useStepsForm();
+  const { currentStep, handleBack, maxSteps, isAnimationRunning } =
+    useStepsForm();
 
   // control modal
   const [skipModal, setSkipModal] = useState<boolean>(false);
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(true);
 
   const navigate = useNavigate();
+
+  console.log(currentStep);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-between">
@@ -40,6 +43,7 @@ const Welcome = () => {
       <footer className="flex w-full flex-1 items-end justify-between">
         <Button
           onClick={() => setSkipModal(true)}
+          disabled={isAnimationRunning}
           label="Skip"
           buttonSize="base"
           themeColor="blank"
@@ -53,7 +57,7 @@ const Welcome = () => {
               buttonSize="base"
               themeColor="secondary"
               fullWidth
-              disabled={currentStep === 1}
+              disabled={isAnimationRunning}
               icon={<FaCircleArrowLeft className="h-5 w-5" />}
             />
           )}
@@ -61,7 +65,8 @@ const Welcome = () => {
           <Button
             type="submit"
             // onClick={handleNext}
-            label={currentStep === 4 ? "Finish" : "Next"}
+            label={currentStep === maxSteps ? "Finish" : "Next"}
+            disabled={isAnimationRunning}
             buttonSize="base"
             fullWidth
             icon={<FaCircleArrowRight className="h-5 w-5" />}

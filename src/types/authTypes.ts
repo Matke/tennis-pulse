@@ -22,13 +22,13 @@ export type UserProfileData = {
 
 export type UserProfileFormData = Omit<
   UserProfileData,
-  "profileImage" | "created_at"
+  "userId" | "profileImage" | "created_at"
 > & {
   profileImage?: File;
 };
 
 export const userProfileInitialData: UserProfileFormData = {
-  userId: "",
+  // userId: "",
   username: "",
   firstName: "",
   lastName: "",

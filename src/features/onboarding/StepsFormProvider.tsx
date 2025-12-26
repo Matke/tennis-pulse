@@ -17,22 +17,26 @@ type StepsFormContextData = {
   switchCurrentStep: (newStep: number) => void;
   currentStep: number;
   direction: number;
-  // setCurrentStep: Dispatch<SetStateAction<number>>;
   imageUrl: string | null;
   handleProfileImageSet: (image: string | null) => void;
+  maxSteps: number;
+  isAnimationRunning: boolean;
+  setIsAnimationRunning: Dispatch<SetStateAction<boolean>>;
 };
 
-const stepsFormInitialValue = {
+const stepsFormInitialValue: StepsFormContextData = {
   formData: userProfileInitialData,
   setFormData: () => {},
   handleBack: () => {},
   handleNext: () => {},
   switchCurrentStep: () => {},
   currentStep: 1,
-  direction: 1, // used for controlling animation if we are going back or forward
-  // setCurrentStep: () => {},
+  direction: 1,
   imageUrl: null,
   handleProfileImageSet: () => {},
+  maxSteps: 4,
+  isAnimationRunning: false,
+  setIsAnimationRunning: () => {},
 };
 
 const StepsFormContext = createContext<StepsFormContextData>(
@@ -41,9 +45,15 @@ const StepsFormContext = createContext<StepsFormContextData>(
 
 const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
   const [formData, setFormData] = useState(userProfileInitialData);
-  const [currentStep, setCurrentStep] = useState<number>(1);
-  const [direction, setDirection] = useState<number>(1);
-  const [imageUrl, setImageUrl] = useState<string | null>(null); // for ui
+  const [currentStep, setCurrentStep] = useState<number>(
+    stepsFormInitialValue.currentStep,
+  );
+  const [direction, setDirection] = useState<number>(
+    stepsFormInitialValue.direction,
+  ); // used for controlling animation if we are going back or forward
+  const [isAnimationRunning, setIsAnimationRunning] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null); // for UI
+  const maxSteps = stepsFormInitialValue.maxSteps;
 
   const handleNext = () => {
     setDirection(1);
@@ -75,6 +85,9 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
         switchCurrentStep,
         imageUrl,
         handleProfileImageSet,
+        maxSteps,
+        isAnimationRunning,
+        setIsAnimationRunning,
       }}
     >
       {children}
