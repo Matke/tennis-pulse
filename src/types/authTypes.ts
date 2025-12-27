@@ -2,7 +2,7 @@ type Gender = "male" | "female";
 
 export type UserProfileData = {
   userId: string;
-  username: string;
+  userName: string;
   firstName: string;
   lastName: string;
   gender: Gender;
@@ -29,7 +29,7 @@ export type UserProfileFormData = Omit<
 
 export const userProfileInitialData: UserProfileFormData = {
   // userId: "",
-  username: "",
+  userName: "",
   firstName: "",
   lastName: "",
   gender: "male",

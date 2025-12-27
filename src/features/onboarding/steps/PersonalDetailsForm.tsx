@@ -232,8 +232,8 @@ const PersonalDetailsForm = () => {
         className="self-center"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
-        defaultValue={formData.username}
-        {...register("username")}
+        defaultValue={formData.userName}
+        {...register("userName")}
       />
 
       <div className="flex items-center justify-center">

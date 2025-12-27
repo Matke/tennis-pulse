@@ -22,8 +22,6 @@ const Welcome = () => {
 
   const navigate = useNavigate();
 
-  console.log(currentStep);
-
   return (
     <div className="flex h-full w-full flex-col items-center justify-between">
       {/* for mobile view */}

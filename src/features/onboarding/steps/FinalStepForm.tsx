@@ -1,8 +1,12 @@
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import FinalProfileOverview from "@/features/onboarding/FinalProfileOverview";
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
+import { editUserProfile } from "@/services/apiProfile";
+import { useAuth } from "@/store/useAuth";
 import type { UserProfileData } from "@/types/authTypes";
+import { toast } from "react-hot-toast";
 import { MdInfo } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 type Keys = {
   [index: string | number]: string; // index signature
@@ -64,7 +68,10 @@ const valueLookupTable: Record<keyof Keys, string> = {
 
 const FinalStepForm = () => {
   // context and hooks
-  const { formData } = useStepsForm();
+  const { formData, isAnimationRunning } = useStepsForm();
+  const { user } = useAuth();
+  const userId = user?.id;
+  const navigate = useNavigate();
 
   // accept keys that only exist in UserProfileData type, without profile image
   const selectedKeys: (keyof Omit<
@@ -86,8 +93,34 @@ const FinalStepForm = () => {
     value: valueLookupTable[formData[key]] || formData[key],
   }));
 
+  console.log(formData);
+
+  const handleFinalFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // cannot submit if form change animation is still runing
+    if (isAnimationRunning) return;
+
+    try {
+      const updatedProfileData = await editUserProfile(formData, userId);
+      console.log(updatedProfileData);
+
+      toast.success("Profile successfully created!");
+
+      navigate("/home");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
   return (
-    <div className="mt-8 flex h-full flex-col -space-y-5">
+    <form
+      id="onboarding-form"
+      className="mt-8 flex h-full flex-col -space-y-5"
+      onSubmit={handleFinalFormSubmit}
+    >
       <FinalProfileOverview formData={formData} chips={chipsArray} />
       <div className="z-10 w-full">
         <ButtonIcon
@@ -99,7 +132,9 @@ const FinalStepForm = () => {
           tooltipPlacement="right"
         />
       </div>
-    </div>
+      {/* in order to able to submit form without any input this hidden button */}
+      <button type="submit" className="hidden" />
+    </form>
   );
 };
 

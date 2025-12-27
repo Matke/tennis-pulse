@@ -51,8 +51,7 @@ const ProgressStepsBarItem = ({
         <span
           className={`${
             position < currentStep ? "bg-tp-primary" : "bg-charcoal-800"
-          } mb-3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-2 border-transparent text-sm transition-all duration-300 lg:h-10 lg:w-10`}
-          // manual switching without next button
+          } mb-3 flex h-6 w-6 items-center justify-center rounded-full border-2 border-transparent text-sm transition-all duration-300 lg:h-10 lg:w-10`}
         >
           {isCompleted ? (
             <IoIosCheckmarkCircleOutline className="text-tp-card-back h-5 w-5" />

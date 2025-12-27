@@ -33,7 +33,7 @@ const FinalProfileOverview = ({
   const { imageUrl } = useStepsForm();
 
   const {
-    username,
+    userName,
     firstName,
     lastName,
     bio,
@@ -88,7 +88,7 @@ const FinalProfileOverview = ({
               {/* Username and Gender */}
               <div className="flex justify-center gap-1">
                 <span className="text-tp-secondary/50 mt-1 font-medium">
-                  {username || "Krokster237"}
+                  {userName || "Krokster237"}
                 </span>
                 {gender === "male" && (
                   <IoMdMale className="text-tp-typography h-6 w-6" />

@@ -56,6 +56,10 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
   const maxSteps = stepsFormInitialValue.maxSteps;
 
   const handleNext = () => {
+    if (currentStep >= maxSteps) return;
+
+    if (isAnimationRunning) return;
+
     setDirection(1);
     setCurrentStep((prev) => prev + 1);
   };
