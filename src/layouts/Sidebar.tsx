@@ -23,6 +23,7 @@ import PulseLogo from "@/components/ui/PulseLogo";
 // utils
 import { classNames } from "@/utils/common";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useAuth } from "@/store/useAuth";
 
 // SubMenu types
 type SubMenuKeys =
@@ -103,6 +104,7 @@ const defaultSubMenuState = {
 };
 
 const Sidebar = () => {
+  const { userProfile } = useAuth();
   // persist state on refresh
   // whethere sidebar is in open or closed state
   const [open, setOpen] = useLocalStorage("sidebarOpen", false);
@@ -214,7 +216,16 @@ const Sidebar = () => {
       </div>
 
       {/* Profile section - profile image, player name or username, logout */}
-      <div className="flex items-center gap-5 pt-5"></div>
+      <div className="flex items-center gap-5 pt-5">
+        <img
+          src={userProfile.profileImage}
+          alt="profile img"
+          className="h-11 w-11 cursor-pointer rounded-full object-cover object-center"
+        />
+        <Typography variant="label">
+          {userProfile.firstName} {userProfile.lastName}
+        </Typography>
+      </div>
     </aside>
   );
 };

@@ -1,15 +1,15 @@
 // components
 import InputRadio from "@/components/inputs/InputRadio";
 import InputText from "@/components/inputs/InputText";
-// icons
-// import { IoIosInformationCircleOutline } from "react-icons/io";
+import InputSlider from "@/components/inputs/InputSlider";
+// hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+// types
 import {
   userProfileInitialData,
   type UserProfileFormData,
 } from "@/types/authTypes";
-import InputSlider from "@/components/inputs/InputSlider";
 
 const dominantHandOptions = [
   {

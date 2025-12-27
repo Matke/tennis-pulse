@@ -2,7 +2,7 @@ type Gender = "male" | "female";
 
 export type UserProfileData = {
   userId: string;
-  username: string;
+  userName: string;
   firstName: string;
   lastName: string;
   gender: Gender;
@@ -22,14 +22,14 @@ export type UserProfileData = {
 
 export type UserProfileFormData = Omit<
   UserProfileData,
-  "profileImage" | "created_at"
+  "userId" | "profileImage" | "created_at"
 > & {
   profileImage?: File;
 };
 
 export const userProfileInitialData: UserProfileFormData = {
-  userId: "",
-  username: "",
+  // userId: "",
+  userName: "",
   firstName: "",
   lastName: "",
   gender: "male",

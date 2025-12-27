@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const ActiveForm = () => {
   // direction for animation whether it should slide from left or right
-  const { currentStep, direction } = useStepsForm();
+  const { currentStep, direction, setIsAnimationRunning } = useStepsForm();
 
   const renderCurrentForm = () => {
     switch (currentStep) {
@@ -27,12 +27,14 @@ const ActiveForm = () => {
   return (
     // upper div will remove overflow-scroll which may appear when animation is running
     <div className="relative">
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="popLayout" custom={direction}>
         <motion.div
           key={currentStep} // triggers animation on step change
           initial={{ x: direction > 0 ? "100%" : "-100%", opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: direction > 0 ? "-100%" : "100%", opacity: 0 }}
+          onAnimationStart={() => setIsAnimationRunning(true)}
+          onAnimationComplete={() => setIsAnimationRunning(false)}
           transition={{
             type: "tween",
             duration: 0.3,
