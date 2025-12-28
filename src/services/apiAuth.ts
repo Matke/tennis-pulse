@@ -30,6 +30,12 @@ export const login = async ({ email, password }: LoginData) => {
   return data;
 };
 
+// sign out/ logout
+export const logout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message);
+};
+
 // Redirect password
 export const redirectPasswordReset = async ({
   email,

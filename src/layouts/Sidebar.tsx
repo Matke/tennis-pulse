@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // icons
 import { AiFillHome } from "react-icons/ai";
 import { MdSportsTennis } from "react-icons/md";
-import { FaChevronDown, FaChevronRight, FaTrophy } from "react-icons/fa";
+
+import { FaChevronDown, FaChevronRight, FaUser } from "react-icons/fa";
 import { FaPeopleArrows } from "react-icons/fa";
 import { IoTennisball } from "react-icons/io5";
 import { RiSidebarFoldFill } from "react-icons/ri";
@@ -12,9 +13,11 @@ import { MdUpcoming } from "react-icons/md";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
+import { BiSolidLogOut } from "react-icons/bi";
+import { HiTrophy } from "react-icons/hi2";
 
 // router
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 // components
 import Typography from "@/components/text/Typography";
@@ -24,6 +27,11 @@ import PulseLogo from "@/components/ui/PulseLogo";
 import { classNames } from "@/utils/common";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAuth } from "@/store/useAuth";
+import { HiDotsVertical } from "react-icons/hi";
+import Dropdown from "@/components/dropdown/Dropdown";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
+import SidebarSkeletonLoader from "@/components/loaders/SidebarSkeletonLoader";
+import ConfirmationModal from "@/components/modals/ConfirmationModal";
 
 // SubMenu types
 type SubMenuKeys =
@@ -80,7 +88,7 @@ const navigation: NavigationItem[] = [
   {
     title: "Tournaments",
     key: "tournaments",
-    icon: <FaTrophy className="h-6 w-6" />,
+    icon: <HiTrophy className="h-6 w-6" />,
   },
   {
     title: "Head2Head",
@@ -104,10 +112,13 @@ const defaultSubMenuState = {
 };
 
 const Sidebar = () => {
-  const { userProfile } = useAuth();
+  const { userProfile, isLoading, onLogout, getUser } = useAuth();
   // persist state on refresh
   // whethere sidebar is in open or closed state
   const [open, setOpen] = useLocalStorage("sidebarOpen", false);
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] =
+    useState<boolean>(false);
+  const navigate = useNavigate();
 
   const [subMenus, setSubMenus] = useState<SubMenu>(defaultSubMenuState);
 
@@ -119,20 +130,40 @@ const Sidebar = () => {
     }));
   };
 
+  const onLogoutConfirm = () => {
+    onLogout();
+
+    navigate("/login", { replace: true });
+  };
+
+  useEffect(() => {
+    const userFetch = async () => {
+      getUser();
+    };
+
+    userFetch();
+  }, [getUser]);
+
+  // skeleton loader for sidebar, wait for profile data to load before showing sidebar to screen
+  if (isLoading) {
+    return <SidebarSkeletonLoader open={open} />;
+  }
+
   return (
+    // same padding for open and closed state in order not to have strange moving of sidebar
     <aside
-      className={`${open ? "w-72 p-5" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5 duration-300 ease-in-out`}
+      className={`${open ? "w-72 p-3" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5 duration-300 ease-in-out`}
     >
       {/* Sidebar section for toggling open/close state */}
       {/* z-100 - to be above logo when button is at the top */}
       <section
-        className={`bg-tp-card-back absolute -right-4 ${!open ? "bottom-4.5" : "bottom-6"} flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0.5 text-xl ${!open && "rotate-360"} hover:bg-tp-main-background/90 transition-all duration-300 ease-in-out`}
+        className={`bg-tp-card-back absolute -right-4 ${!open ? "top-1" : "top-1"} flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-0.5 text-xl ${!open && "rotate-360"} hover:bg-tp-main-background/90 transition-all duration-300 ease-in-out`}
         onClick={() => setOpen(!open)}
       >
         {open ? (
-          <RiSidebarFoldFill className="text-tp-typography h-5 w-5" />
+          <RiSidebarFoldFill className="text-tp-typography h-4.5 w-4" />
         ) : (
-          <RiSidebarUnfoldFill className="text-tp-typography h-5 w-5" />
+          <RiSidebarUnfoldFill className="text-tp-typography h-4.5 w-5" />
         )}
       </section>
 
@@ -148,7 +179,7 @@ const Sidebar = () => {
       </section>
 
       {/* Sidebar Items section */}
-      <div className="scrollbar-hide flex-1 space-y-0.5 overflow-y-auto pt-6">
+      <div className="scrollbar-hide flex-1 space-y-0.5 overflow-y-auto pt-2">
         {navigation.map((item: NavigationItem) => (
           <NavLink
             key={item.key}
@@ -216,16 +247,63 @@ const Sidebar = () => {
       </div>
 
       {/* Profile section - profile image, player name or username, logout */}
-      <div className="flex items-center gap-5 pt-5">
+      <div
+        className="flex cursor-pointer items-center gap-5 rounded-md p-1 hover:bg-zinc-800/50"
+        onClick={() => setOpen(!open)}
+      >
         <img
-          src={userProfile.profileImage}
+          src={userProfile.profileImage || ""}
           alt="profile img"
-          className="h-11 w-11 cursor-pointer rounded-full object-cover object-center"
+          className="h-12 w-12 cursor-pointer rounded-full object-cover object-center"
+          onClick={() => setOpen(!open)}
         />
-        <Typography variant="label">
+        <Typography
+          variant="label"
+          className={`${!open && "hidden"} whitespace-nowrap`}
+        >
           {userProfile.firstName} {userProfile.lastName}
         </Typography>
+        <Dropdown
+          buttonIcon={
+            <ButtonIcon
+              icon={<HiDotsVertical />}
+              className={`${!open && "hidden"}`}
+              backgroundColor="bg-transparent"
+              borderColor="border-none"
+              iconColor="text-tp-typography"
+            />
+          }
+          className="ml-4 cursor-pointer"
+          menuPosition="bottom-12.5 right-3"
+          items={[
+            {
+              label: "Profile",
+              icon: (
+                <FaUser className="text-tp-typography group-hover:text-tp-typography-secondary" />
+              ), // or any other icon
+              action: () => console.log("Edit clicked"),
+            },
+            {
+              label: "Log Out",
+              borderTop: true,
+              icon: (
+                <BiSolidLogOut className="text-tp-typography group-hover:text-tp-typography-secondary h-4 w-4" />
+              ),
+              action: () => setIsLogoutConfirmOpen(true),
+            },
+          ]}
+        />
       </div>
+
+      {isLogoutConfirmOpen && (
+        <ConfirmationModal
+          openModal={isLogoutConfirmOpen}
+          title="Confirm Logout"
+          description="Are you sure you want to log out"
+          onClose={() => setIsLogoutConfirmOpen(false)}
+          onConfirm={onLogoutConfirm}
+        />
+      )}
     </aside>
   );
 };
