@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // icons
 import { AiFillHome } from "react-icons/ai";
@@ -112,7 +112,7 @@ const defaultSubMenuState = {
 };
 
 const Sidebar = () => {
-  const { userProfile, isLoading, onLogout, getUser } = useAuth();
+  const { userProfile, isLoading, onLogout } = useAuth();
   // persist state on refresh
   // whethere sidebar is in open or closed state
   const [open, setOpen] = useLocalStorage("sidebarOpen", false);
@@ -135,14 +135,6 @@ const Sidebar = () => {
 
     navigate("/login", { replace: true });
   };
-
-  useEffect(() => {
-    const userFetch = async () => {
-      getUser();
-    };
-
-    userFetch();
-  }, [getUser]);
 
   // skeleton loader for sidebar, wait for profile data to load before showing sidebar to screen
   if (isLoading) {

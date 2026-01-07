@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 // api func
 import { getCurrentUser, getUserProfile, logout } from "@/services/apiAuth";
 // types
@@ -12,7 +12,7 @@ type AuthContextData = {
   isLoading: boolean;
   error: string;
   onLogout: () => void;
-  getUser: () => void;
+  // getUser: () => void;
 };
 
 const authContextInitialValue = {
@@ -21,7 +21,7 @@ const authContextInitialValue = {
   isLoading: false,
   error: "",
   onLogout: () => {},
-  getUser: () => {},
+  // getUser: () => {},
 };
 
 const AuthContext = createContext<AuthContextData>(authContextInitialValue);
@@ -46,36 +46,36 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // useEffect(() => {
-  const getUser = useCallback(async () => {
-    setIsLoading(true);
+  useEffect(() => {
+    const getUser = async () => {
+      setIsLoading(true);
 
-    try {
-      const data: User = await getCurrentUser();
+      try {
+        const data: User = await getCurrentUser();
 
-      setUser(data);
+        setUser(data);
 
-      if (data.role !== "authenticated" || !data.user_metadata.email_verified)
-        throw new Error("User not authenticated");
+        if (data.role !== "authenticated" && !data.user_metadata.email_verified)
+          throw new Error("User not authenticated");
 
-      const profile = await getUserProfile(data.id);
-      setUserProfile(profile);
+        const profile = await getUserProfile(data.id);
+        setUserProfile(profile);
 
-      console.log(profile);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
+        console.log(profile);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
+      } finally {
+        setIsLoading(false);
       }
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    getUser();
   }, []);
-  // }, []);
 
   return (
-    <AuthContext
-      value={{ user, userProfile, error, isLoading, onLogout, getUser }}
-    >
+    <AuthContext value={{ user, userProfile, error, isLoading, onLogout }}>
       {children}
     </AuthContext>
   );
