@@ -1,5 +1,4 @@
 // icons
-import { IoIosArrowDown } from "react-icons/io"; // motion is automatically rotating one arrow
 import { IoIosArrowUp } from "react-icons/io";
 
 // motion framer

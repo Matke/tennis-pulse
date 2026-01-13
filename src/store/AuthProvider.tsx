@@ -1,4 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 // api func
 import { getCurrentUser, getUserProfile, logout } from "@/services/apiAuth";
 // types
@@ -9,19 +15,21 @@ import { toast } from "react-hot-toast";
 type AuthContextData = {
   user: Partial<User> | null;
   userProfile: Partial<UserProfileData>;
+  setUser: Dispatch<SetStateAction<Partial<User> | null>>;
+  setUserProfile: Dispatch<SetStateAction<Partial<UserProfileData>>>;
   isLoading: boolean;
   error: string;
   onLogout: () => void;
-  // getUser: () => void;
 };
 
 const authContextInitialValue = {
   user: null,
   userProfile: {},
+  setUser: () => {},
+  setUserProfile: () => {},
   isLoading: false,
   error: "",
   onLogout: () => {},
-  // getUser: () => {},
 };
 
 const AuthContext = createContext<AuthContextData>(authContextInitialValue);
@@ -58,7 +66,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (data.role !== "authenticated" && !data.user_metadata.email_verified)
           throw new Error("User not authenticated");
 
-        const profile = await getUserProfile(data.id);
+        const profile: UserProfileData = await getUserProfile(data.id);
         setUserProfile(profile);
 
         console.log(profile);
@@ -75,7 +83,17 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext value={{ user, userProfile, error, isLoading, onLogout }}>
+    <AuthContext
+      value={{
+        user,
+        setUser,
+        userProfile,
+        setUserProfile,
+        error,
+        isLoading,
+        onLogout,
+      }}
+    >
       {children}
     </AuthContext>
   );

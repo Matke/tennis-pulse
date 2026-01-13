@@ -14,8 +14,12 @@ import * as yup from "yup";
 import type { LoginData } from "@/types/authTypes";
 
 // router
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "@/store/useAuth";
+import { toast } from "react-hot-toast";
+import { getUserProfile } from "@/services/apiAuth";
+import { useState } from "react";
 
 const schema: yup.ObjectSchema<LoginData> = yup.object({
   email: yup
@@ -29,21 +33,60 @@ const schema: yup.ObjectSchema<LoginData> = yup.object({
 });
 
 const LoginForm = () => {
+  // user and profile data
+  const { setUser, setUserProfile } = useAuth();
   const { login, isPending } = useLogin();
+  const navigate = useNavigate();
+
+  // loading state
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const {
     register,
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<LoginData>({
     resolver: yupResolver(schema),
   });
 
+  // TODO:
+  // this is temporary solution for getting user profile when user login
+  // later on it will be reworked to call getUserProfile function in sidebar when user login
+  // wrap it in useCallback to preserve it between the re-renders
   const onFormSubmit: SubmitHandler<LoginData> = ({ email, password }) => {
-    login({ email, password }, { onSettled: () => reset() });
+    login(
+      { email, password },
+      {
+        onSuccess: async (data) => {
+          const user = data.user || data;
+
+          setUser(user);
+          setIsFetching(true);
+
+          try {
+            const profile = await getUserProfile(user.id);
+            console.log(profile);
+            setUserProfile(profile);
+
+            toast.success("Successfully logged in!");
+
+            navigate("/home", { replace: true });
+          } catch (error) {
+            console.error("Failed to fetch profile", error);
+
+            toast.error("Profile info missing! Refresh the page to fix");
+
+            navigate("/home", { replace: true });
+          } finally {
+            setIsFetching(false);
+          }
+        },
+      },
+    );
   };
+
+  const isWorking = isPending || isFetching;
 
   return (
     <form
@@ -95,8 +138,8 @@ const LoginForm = () => {
         className="mb-3.5 w-full self-center"
         loaderWithLabel
         buttonSize="base"
-        disabled={isPending}
-        isLoading={isPending}
+        disabled={isWorking}
+        isLoading={isWorking}
       />
     </form>
   );

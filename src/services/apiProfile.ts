@@ -39,7 +39,8 @@ export const editUserProfile = async (
     .from("profiles")
     .update({ ...newProfileData, profileImage: publicUrl })
     .eq("id", userId)
-    .select();
+    .select()
+    .single();
 
   if (error) {
     console.error(error);

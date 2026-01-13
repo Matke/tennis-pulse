@@ -69,7 +69,7 @@ const valueLookupTable: Record<keyof Keys, string> = {
 const FinalStepForm = () => {
   // context and hooks
   const { formData, isAnimationRunning } = useStepsForm();
-  const { user } = useAuth();
+  const { user, setUserProfile } = useAuth();
   const userId = user?.id;
   const navigate = useNavigate();
 
@@ -102,8 +102,13 @@ const FinalStepForm = () => {
     if (isAnimationRunning) return;
 
     try {
-      const updatedProfileData = await editUserProfile(formData, userId);
+      const updatedProfileData: UserProfileData = await editUserProfile(
+        formData,
+        userId,
+      );
       console.log(updatedProfileData);
+
+      setUserProfile(updatedProfileData);
 
       toast.success("Profile successfully created!");
 
