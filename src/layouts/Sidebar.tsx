@@ -259,14 +259,16 @@ const Sidebar = () => {
           buttonIcon={
             <ButtonIcon
               icon={<HiDotsVertical />}
-              className={`${!open && "hidden"}`}
-              backgroundColor="bg-transparent"
+              className={`${!open && "hidden"} rounded-xl hover:bg-zinc-800`}
+              // backgroundColor="bg-transparent"
+              themeColor="blank"
               borderColor="border-none"
               iconColor="text-tp-typography"
+              hoverClass
             />
           }
           className="ml-4 cursor-pointer"
-          menuPosition="bottom-12.5 right-3"
+          menuPosition="bottom-12.5 right-1"
           items={[
             {
               label: "Profile",
@@ -291,7 +293,7 @@ const Sidebar = () => {
         <ConfirmationModal
           openModal={isLogoutConfirmOpen}
           title="Confirm Logout"
-          description="Are you sure you want to log out"
+          description="Are you sure you want to log out?"
           onClose={() => setIsLogoutConfirmOpen(false)}
           onConfirm={onLogoutConfirm}
         />

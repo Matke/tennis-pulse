@@ -137,6 +137,7 @@ const PlayStyleForm = () => {
         placeholder="Racket"
         className="col-span-3"
         fullWidth
+        defaultValue={formData.racket || userProfileInitialData.racket}
         backgroundInputColor="bg-tp-card-back"
         {...register("racket")}
       />
