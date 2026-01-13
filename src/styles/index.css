@@ -413,3 +413,10 @@ input:-webkit-autofill::first-line {
     @apply absolute top-0 right-0 z-20 m-0 h-full w-10 cursor-pointer opacity-0;
   }
 }
+
+// for loader
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}

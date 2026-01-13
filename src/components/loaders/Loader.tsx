@@ -25,9 +25,9 @@ const Loader = ({
           borderRadius: "50%",
           border: `${borderSize}px solid`,
           borderColor: `var(${backgroundLoaderColor || "--color-tp-loader-transparent"}) var(${loaderColor || "--color-charcoal-950"})`,
-          animation: "spin 1s infinite linear",
+          // animation: "spin 1s infinite linear", switch for regular css
         }}
-        className={className}
+        className={`${className} animate-spin`}
       />
       {/* Used for loader text if wanted */}
       {children}
