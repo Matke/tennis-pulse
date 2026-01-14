@@ -234,6 +234,7 @@ const PersonalDetailsForm = () => {
         backgroundInputColor="bg-tp-card-back"
         defaultValue={formData.userName}
         {...register("userName")}
+        isValidField
       />
 
       <div className="flex items-center justify-center">

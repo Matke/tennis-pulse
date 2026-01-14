@@ -224,8 +224,10 @@ const Sidebar = () => {
                       <li
                         key={subMenu.key}
                         className={`${isActive && "hover:bg-tp-primary/60"} flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
+                        onClick={() => console.log("Ne radi ili radi")}
                       >
                         <span>{subMenu.icon}</span>
+                        {/* uppercase only first letter of key to be the label */}
                         {subMenu.key.charAt(0).toUpperCase() +
                           subMenu.key.slice(1)}
                       </li>
