@@ -93,8 +93,6 @@ const FinalStepForm = () => {
     value: valueLookupTable[formData[key]] || formData[key],
   }));
 
-  console.log(formData);
-
   const handleFinalFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

@@ -28,8 +28,6 @@ const FinalProfileOverview = ({
   chips,
   formData,
 }: FinalProfileOverviewProps) => {
-  console.log(formData);
-
   const { imageUrl } = useStepsForm();
 
   const {
