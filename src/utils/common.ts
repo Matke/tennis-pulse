@@ -1,5 +1,5 @@
 // types
-import type { CropAreaData } from "@/features/onboarding/steps/PersonalDetailsForm";
+import type { CropAreaData } from "@/features/onboarding/ImageCropper";
 // helper for react easy crop
 /**
  * Joins all classes strings

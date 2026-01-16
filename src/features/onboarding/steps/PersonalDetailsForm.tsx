@@ -1,6 +1,9 @@
 import { useState } from "react";
 // components
 import InputDate from "@/components/inputs/InputDate";
+import ProfileImageUploader from "@/features/onboarding/ProfileImageUploader";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
+import ImageCropper from "@/features/onboarding/ImageCropper";
 import InputRadio, {
   type RadioItemProps,
 } from "@/components/inputs/InputRadio";
@@ -8,15 +11,61 @@ import InputText from "@/components/inputs/InputText";
 // hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import { calculateAge } from "@/utils/common";
 // types
 import {
   userProfileInitialData,
+  type Gender,
   type UserProfileFormData,
 } from "@/types/authTypes";
-import ButtonIcon from "@/components/buttons/ButtonIcon";
+// icons
 import { RiImageEditFill } from "react-icons/ri";
-import ProfileImageUploader from "@/features/onboarding/ProfileImageUploader";
-import ImageCropper from "@/features/onboarding/ImageCropper";
+// yup
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+// picking only those value that are present in this step form for validation using utility type Pick
+type PersonalDetailsFormData = Pick<
+  UserProfileFormData,
+  "userName" | "firstName" | "lastName" | "dateOfBirth" | "gender"
+>;
+
+const schema: yup.ObjectSchema<PersonalDetailsFormData> = yup.object({
+  userName: yup
+    .string()
+    .trim()
+    .required("Username is required")
+    .min(5, "Username must be at least 5 characters"),
+  firstName: yup
+    .string()
+    .trim()
+    .required("First name is required")
+    .matches(/^[a-zA-Z]+$/, "First name can contain only letters"),
+  lastName: yup
+    .string()
+    .trim()
+    .required("Last name is required")
+    .matches(/^[a-zA-Z]+$/, "Last name can contain only letters"),
+  dateOfBirth: yup
+    .string()
+    .required("Date of birth required")
+    .test("is-valid-age", "You must be at least 10 years old", (value) => {
+      if (!value) return false;
+      const currentAge = calculateAge(value);
+
+      return currentAge >= 10;
+    })
+    .test("is-alive", "How you are not dead?", (value) => {
+      if (!value) return false;
+      const currentAge = calculateAge(value);
+
+      return currentAge <= 110;
+    }),
+  gender: yup
+    .string()
+    .required("Please select a gender")
+    .oneOf(["male" as Gender, "female" as Gender], "Invalid gender selection"),
+});
 
 // gender radio options
 const genderOptions: RadioItemProps<string>[] = [
@@ -33,17 +82,24 @@ const genderOptions: RadioItemProps<string>[] = [
 const PersonalDetailsForm = () => {
   const [isCropModalOpen, setIsCropModalOpen] = useState<boolean>(false);
 
-  const { handleNext, setFormData, formData, imageUrl } = useStepsForm();
-  const { register, handleSubmit, control } = useForm();
+  const { handleNext, processStepFormData, formData, imageUrl } =
+    useStepsForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, touchedFields }, // validation errors
+  } = useForm<PersonalDetailsFormData>({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+  });
 
   const onPersonalDetailsFormSubmit: SubmitHandler<
     Partial<UserProfileFormData>
   > = (data: Partial<UserProfileFormData>) => {
     // gather data from previous step form and append new data
-    setFormData((prevStepFormData: UserProfileFormData) => ({
-      ...prevStepFormData,
-      ...data,
-    }));
+    processStepFormData(data);
 
     handleNext();
   };
@@ -51,7 +107,7 @@ const PersonalDetailsForm = () => {
   return (
     <form
       id="onboarding-form"
-      className="grid grid-cols-2 gap-9"
+      className="grid grid-cols-2 gap-9.5"
       onSubmit={handleSubmit(onPersonalDetailsFormSubmit)}
     >
       {/* Username */}
@@ -61,11 +117,14 @@ const PersonalDetailsForm = () => {
         className="self-center"
         fullWidth
         backgroundInputColor="bg-tp-card-back"
-        defaultValue={formData.userName}
+        defaultValue={formData.userName || userProfileInitialData.userName}
         required
+        error={errors?.userName?.message}
+        isValidField={touchedFields.userName && !errors?.userName?.message}
         {...register("userName")}
       />
 
+      {/* Image  */}
       <div className="flex items-center justify-center">
         <div className="container flex items-end justify-center">
           {/* React Dropzone */}
@@ -99,6 +158,7 @@ const PersonalDetailsForm = () => {
         defaultValue={
           formData.dateOfBirth || userProfileInitialData.dateOfBirth
         }
+        error={errors?.dateOfBirth?.message}
         {...register("dateOfBirth")}
       />
 
@@ -128,6 +188,7 @@ const PersonalDetailsForm = () => {
         backgroundInputColor="bg-tp-card-back"
         defaultValue={formData.firstName}
         required
+        error={errors?.firstName?.message}
         {...register("firstName")}
       />
 
@@ -140,9 +201,11 @@ const PersonalDetailsForm = () => {
         backgroundInputColor="bg-tp-card-back"
         defaultValue={formData.lastName}
         required
+        error={errors?.lastName?.message}
         {...register("lastName")}
       />
 
+      {/* Adjust profile image - cropper */}
       {isCropModalOpen && imageUrl && (
         <ImageCropper setIsCropModalOpen={setIsCropModalOpen} />
       )}

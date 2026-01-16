@@ -113,7 +113,7 @@ const InputText = ({
           >
             {error && iconError}
             {isValidField && iconSuccess}
-            {inputFieldText && inputFieldExp}
+            {!error && inputFieldText && inputFieldExp}
           </motion.div>
         </div>
       </div>

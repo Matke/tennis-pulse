@@ -14,6 +14,7 @@ type StepsFormContextData = {
   setFormData: Dispatch<SetStateAction<UserProfileFormData>>;
   handleBack: () => void;
   handleNext: () => void;
+  processStepFormData: (currentStepData: Partial<UserProfileFormData>) => void;
   switchCurrentStep: (newStep: number) => void;
   currentStep: number;
   direction: number;
@@ -29,6 +30,7 @@ const stepsFormInitialValue: StepsFormContextData = {
   setFormData: () => {},
   handleBack: () => {},
   handleNext: () => {},
+  processStepFormData: () => {},
   switchCurrentStep: () => {},
   currentStep: 1,
   direction: 1,
@@ -69,12 +71,21 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const switchCurrentStep = (newStep: number) => {
-    setCurrentStep(newStep);
+  const processStepFormData = (
+    currentStepData: Partial<UserProfileFormData>,
+  ) => {
+    setFormData((prevStepFormData: UserProfileFormData) => ({
+      ...prevStepFormData,
+      ...currentStepData,
+    }));
   };
 
   const handleProfileImageSet = (image: string | null) => {
     setImageUrl(image);
+  };
+
+  const switchCurrentStep = (newStep: number) => {
+    setCurrentStep(newStep);
   };
 
   return (
@@ -84,6 +95,7 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
         setFormData,
         handleBack,
         handleNext,
+        processStepFormData,
         currentStep,
         direction,
         switchCurrentStep,

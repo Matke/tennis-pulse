@@ -44,13 +44,12 @@ const Welcome = () => {
 
         <Button
           type="submit"
-          // onClick={handleNext}
+          formId="onboarding-form" // this will trigger form submission
           label={currentStep === maxSteps ? "Finish" : "Next"}
           disabled={isAnimationRunning}
           buttonSize="base"
           icon={<FaCircleArrowRight className="h-5 w-5" />}
           iconPosition="right"
-          formId="onboarding-form"
         />
       </footer>
 

@@ -11,29 +11,37 @@ export const editUserProfile = async (
 ) => {
   if (!userId) throw new Error("User not authenticated!");
 
-  // unique name for image is needed
-  const imageName =
-    `${Math.random()}-${newProfileData.profileImage?.name}`.replaceAll("/", "");
+  let publicUrl: string = "";
 
-  const imagePath = `${userId}/${imageName}`;
+  if (newProfileData.profileImage) {
+    // unique name for image is needed
+    const imageName =
+      `${Math.random()}-${newProfileData.profileImage?.name}`.replaceAll(
+        "/",
+        "",
+      );
 
-  //  upload image after update
-  const { error: storageBucketError } = await supabase.storage
-    .from("avatars")
-    .upload(imagePath, newProfileData.profileImage, {
-      upsert: true,
-      contentType: "image/jpeg",
-    });
+    const imagePath = `${userId}/${imageName}`;
 
-  if (storageBucketError) {
-    console.error(storageBucketError);
-    throw new Error("Profile image could not be uploaded!");
+    //  upload image after update
+    const { error: storageBucketError } = await supabase.storage
+      .from("avatars")
+      .upload(imagePath, newProfileData.profileImage, {
+        upsert: true,
+        contentType: "image/jpeg",
+      });
+
+    if (storageBucketError) {
+      console.error(storageBucketError);
+      throw new Error("Profile image could not be uploaded!");
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("avatars")
+      .getPublicUrl(imagePath);
+
+    publicUrl = urlData.publicUrl;
   }
-  const { data: urlData } = supabase.storage
-    .from("avatars")
-    .getPublicUrl(imagePath);
-
-  const publicUrl = urlData.publicUrl;
 
   const { data, error } = await supabase
     .from("profiles")

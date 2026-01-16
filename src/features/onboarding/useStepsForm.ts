@@ -6,7 +6,7 @@ const useStepsForm = () => {
   const context = use(StepsFormContext);
 
   if (context === undefined) {
-    throw new Error("AuthContext was used outside of context!");
+    throw new Error("StepsFormContext was used outside of context!");
   }
 
   return context;
