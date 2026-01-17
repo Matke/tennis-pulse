@@ -414,9 +414,48 @@ input:-webkit-autofill::first-line {
   }
 }
 
-// for loader
+// for loader, replace spin with l1
 @keyframes l1 {
   to {
     transform: rotate(0.5turn);
+  }
+}
+
+/* Loader with text filling */
+.loaderFill {
+  width: fit-content;
+}
+
+/* span will enable dynamic text with prop */
+.loaderFill span {
+  position: relative;
+  display: inline-block;
+
+  font-size: 30px;
+  line-height: 1.5;
+  font-family: system-ui, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  color: #0000;
+  -webkit-text-stroke: 0.3px #000;
+  background:
+    radial-gradient(0.71em at 50% 1em, #e5e5e6 99%, #0000 101%) calc(50% - 1em)
+      1em/2em 200% repeat-x text,
+    radial-gradient(0.71em at 50% -0.5em, #e5e5e6 99%, #e5e5e6 101%) 50%
+      1.5em/2em 200% repeat-x text;
+  animation:
+    l10-0 0.6s linear infinite alternate,
+    l10-1 3s linear infinite;
+}
+
+@keyframes l10-0 {
+  to {
+    background-position-x: 50%, calc(50% + 1em);
+  }
+}
+@keyframes l10-1 {
+  to {
+    background-position-y: -0.5em, 0;
   }
 }

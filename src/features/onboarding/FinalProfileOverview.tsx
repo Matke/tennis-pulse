@@ -8,6 +8,7 @@ import { calculateAge } from "@/utils/common";
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
+import FillingLoader from "@/components/loaders/FillingLoader";
 
 const bgColors = [
   "bg-tp-primary",
@@ -28,7 +29,7 @@ const FinalProfileOverview = ({
   chips,
   formData,
 }: FinalProfileOverviewProps) => {
-  const { imageUrl } = useStepsForm();
+  const { imageUrl, isEditingProfile } = useStepsForm();
 
   const {
     userName,
@@ -46,8 +47,15 @@ const FinalProfileOverview = ({
     gender === "male" ? <MaleProfileIcon /> : <FemaleProfileIcon />;
 
   return (
-    <div className="flex items-center justify-center select-none">
+    <div className="flex items-center justify-center opacity-100 select-none">
       <div className="group relative">
+        {/* with absolute inset-0 position container across the parent relative div */}
+        {/* with flex center content inside div */}
+        {isEditingProfile && (
+          <div className="absolute inset-0 z-100 flex items-center justify-center opacity-100 backdrop-blur-xs">
+            <FillingLoader text="Creating your profile" />
+          </div>
+        )}
         {/* Shadow for profile card, adds animation for image (tilt) */}
         <div className="animate-tilt absolute -inset-1 rounded-2xl bg-linear-to-r from-orange-600/25 to-yellow-200/50 py-8 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
 

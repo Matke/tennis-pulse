@@ -27,6 +27,7 @@ import ConfirmationModal from "@/components/modals/ConfirmationModal";
 import ReactFlagsSelect from "react-flags-select";
 import Accordion from "@/components/accordion/Accordion";
 import Dropdown from "@/components/dropdown/Dropdown";
+import FillingLoader from "@/components/loaders/FillingLoader";
 
 const TestPage = () => {
   const [isDataFetching, setIsDataFetching] = useState<boolean>(false);
@@ -513,6 +514,7 @@ const TestPage = () => {
             // accordionItemBackgroundColor="tp-secondary"
           />
         </div>
+        <FillingLoader text="Creating profile" />
       </div>
     </div>
   );

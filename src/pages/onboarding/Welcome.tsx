@@ -11,8 +11,13 @@ import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
 const Welcome = () => {
-  const { currentStep, handleBack, maxSteps, isAnimationRunning } =
-    useStepsForm();
+  const {
+    currentStep,
+    handleBack,
+    maxSteps,
+    isAnimationRunning,
+    isEditingProfile,
+  } = useStepsForm();
 
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(true);
 
@@ -38,7 +43,7 @@ const Welcome = () => {
           label="Back"
           buttonSize="base"
           themeColor="secondary"
-          disabled={isAnimationRunning || currentStep === 1}
+          disabled={isAnimationRunning || currentStep === 1 || isEditingProfile}
           icon={<FaCircleArrowLeft className="h-5 w-5" />}
         />
 
@@ -46,7 +51,8 @@ const Welcome = () => {
           type="submit"
           formId="onboarding-form" // this will trigger form submission
           label={currentStep === maxSteps ? "Finish" : "Next"}
-          disabled={isAnimationRunning}
+          disabled={isAnimationRunning || isEditingProfile}
+          isLoading={isEditingProfile}
           buttonSize="base"
           icon={<FaCircleArrowRight className="h-5 w-5" />}
           iconPosition="right"
