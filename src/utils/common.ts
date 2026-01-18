@@ -157,3 +157,27 @@ export default async function getCroppedImg(
     }, "image/jpeg");
   });
 }
+
+// replace with lodash in the future updates
+export function debounce<T extends (...args: never[]) => unknown>(
+  fn: T,
+  delay: number,
+) {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  return (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => {
+    return new Promise((resolve, reject) => {
+      if (timeoutId) clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(async () => {
+        try {
+          // Type cast to ensure the result is treated as the ReturnType
+          const result = (await fn(...args)) as Awaited<ReturnType<T>>;
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      }, delay);
+    });
+  };
+}

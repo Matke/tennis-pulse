@@ -69,8 +69,6 @@ const valueLookupTable: Record<keyof Keys, string> = {
 const FinalStepForm = () => {
   // context and hooks
   const { formData, editProfile } = useStepsForm();
-  // const { user, setUserProfile } = useAuth();
-  // const userId = user?.id;
   const navigate = useNavigate();
 
   // accept keys that only exist in UserProfileData type, without profile image
@@ -93,11 +91,13 @@ const FinalStepForm = () => {
     value: valueLookupTable[formData[key]] || formData[key],
   }));
 
+  // final form submission
   const handleFinalFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const data = await editProfile();
 
+    // navigate to app if successful
     if (data) {
       navigate("/home");
     }
@@ -109,7 +109,9 @@ const FinalStepForm = () => {
       className="mt-8 flex h-full flex-col -space-y-5"
       onSubmit={handleFinalFormSubmit}
     >
+      {/* Profile card preview */}
       <FinalProfileOverview formData={formData} chips={chipsArray} />
+
       <div className="z-100 w-full">
         <ButtonIcon
           icon={<MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />}

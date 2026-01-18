@@ -35,17 +35,14 @@ const forehandTypeOptions = [
 ];
 
 const PlayStyleForm = () => {
-  const { handleNext, setFormData, formData } = useStepsForm();
+  const { handleNext, processStepFormData, formData } = useStepsForm();
   const { register, handleSubmit, control } = useForm();
 
   const onPlayStyleFormSubmit: SubmitHandler<Partial<UserProfileFormData>> = (
     data: Partial<UserProfileFormData>,
   ) => {
     // gather data from previous step form and append new data
-    setFormData((prevStepFormData: UserProfileFormData) => ({
-      ...prevStepFormData,
-      ...data,
-    }));
+    processStepFormData(data);
 
     handleNext();
   };

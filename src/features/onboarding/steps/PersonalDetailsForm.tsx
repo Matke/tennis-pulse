@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 // components
 import InputDate from "@/components/inputs/InputDate";
 import ProfileImageUploader from "@/features/onboarding/ProfileImageUploader";
@@ -11,7 +11,7 @@ import InputText from "@/components/inputs/InputText";
 // hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import { calculateAge } from "@/utils/common";
+import { calculateAge, debounce } from "@/utils/common";
 // types
 import {
   userProfileInitialData,
@@ -30,22 +30,40 @@ type PersonalDetailsFormData = Pick<
   "userName" | "firstName" | "lastName" | "dateOfBirth" | "gender"
 >;
 
+type YupContext = {
+  onCheckUsernameUnique: (username: string | undefined) => Promise<boolean>;
+};
+
 const schema: yup.ObjectSchema<PersonalDetailsFormData> = yup.object({
   userName: yup
     .string()
     .trim()
+    // Async validation here causes to run async function when we type in any other field also
+    .test(
+      "is-username-unique",
+      "Username already taken",
+      async function (value: string | undefined) {
+        // passed here from useForm context
+        const { onCheckUsernameUnique } = this.options.context as YupContext;
+
+        // skip making request if username does not exist or if it does not satisfies condition for length or if its the same as previous
+        if (!onCheckUsernameUnique || !value || value.length < 5) return true;
+
+        return await onCheckUsernameUnique(value);
+      },
+    )
     .required("Username is required")
     .min(5, "Username must be at least 5 characters"),
   firstName: yup
     .string()
     .trim()
     .required("First name is required")
-    .matches(/^[a-zA-Z]+$/, "First name can contain only letters"),
+    .matches(/^[a-zA-Z\s]+$/, "First name can contain only letters and spaces"),
   lastName: yup
     .string()
     .trim()
     .required("Last name is required")
-    .matches(/^[a-zA-Z]+$/, "Last name can contain only letters"),
+    .matches(/^[a-zA-Z\s]+$/, "Last name can contain only letters and spaces"),
   dateOfBirth: yup
     .string()
     .required("Date of birth required")
@@ -82,8 +100,24 @@ const genderOptions: RadioItemProps<string>[] = [
 const PersonalDetailsForm = () => {
   const [isCropModalOpen, setIsCropModalOpen] = useState<boolean>(false);
 
-  const { handleNext, processStepFormData, formData, imageUrl } =
-    useStepsForm();
+  const {
+    handleNext,
+    processStepFormData,
+    checkUsernameUniqueness,
+    formData,
+    imageUrl,
+    isEditingProfile,
+  } = useStepsForm();
+
+  const debouncedCheck = useMemo(
+    () =>
+      debounce(async (username: string | undefined): Promise<boolean> => {
+        const isUsernameAvailable = await checkUsernameUniqueness(username);
+        return isUsernameAvailable;
+      }, 500),
+    [checkUsernameUniqueness], // These are now clearly tracked
+  );
+
   const {
     register,
     handleSubmit,
@@ -91,8 +125,12 @@ const PersonalDetailsForm = () => {
     formState: { errors, touchedFields }, // validation errors
   } = useForm<PersonalDetailsFormData>({
     resolver: yupResolver(schema),
+    // way to pass functions or values from components to yup schema
+    context: {
+      onCheckUsernameUnique: debouncedCheck,
+    },
     mode: "onBlur",
-    reValidateMode: "onChange",
+    reValidateMode: "onChange", // after submission try it will switch to onChange mode
   });
 
   const onPersonalDetailsFormSubmit: SubmitHandler<
@@ -109,6 +147,7 @@ const PersonalDetailsForm = () => {
       id="onboarding-form"
       className="grid grid-cols-2 gap-9.5"
       onSubmit={handleSubmit(onPersonalDetailsFormSubmit)}
+      noValidate
     >
       {/* Username */}
       <InputText
@@ -120,7 +159,12 @@ const PersonalDetailsForm = () => {
         defaultValue={formData.userName || userProfileInitialData.userName}
         required
         error={errors?.userName?.message}
-        isValidField={touchedFields.userName && !errors?.userName?.message}
+        isValidating={isEditingProfile}
+        validFieldText={
+          touchedFields.userName && !errors?.userName?.message
+            ? "Username available"
+            : ""
+        }
         {...register("userName")}
       />
 

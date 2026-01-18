@@ -8,7 +8,7 @@ import CropModal from "@/components/modals/CropModal";
 // hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 // icons
-import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
+import { FaCircleArrowRight } from "react-icons/fa6";
 
 const Welcome = () => {
   const {
@@ -43,8 +43,10 @@ const Welcome = () => {
           label="Back"
           buttonSize="base"
           themeColor="secondary"
+          className={`${currentStep === 1 && "invisible"}`}
           disabled={isAnimationRunning || currentStep === 1 || isEditingProfile}
-          icon={<FaCircleArrowLeft className="h-5 w-5" />}
+          // icon={<FaCircleArrowLeft className="h-5 w-5" />}
+          // iconPosition="right"
         />
 
         <Button
@@ -54,8 +56,9 @@ const Welcome = () => {
           disabled={isAnimationRunning || isEditingProfile}
           isLoading={isEditingProfile}
           buttonSize="base"
-          icon={<FaCircleArrowRight className="h-5 w-5" />}
-          iconPosition="right"
+          // loaderWithLabel
+          // icon={<FaCircleArrowRight className="h-5 w-5" />}
+          // iconPosition="left"
         />
       </footer>
 

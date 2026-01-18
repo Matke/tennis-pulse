@@ -1,8 +1,6 @@
 import supabase from "@/services/supabase";
 import type { UserProfileFormData } from "@/types/authTypes";
 
-// const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-
 // profile is automatically created when user creates an account
 // with supabase trigger function
 export const editUserProfile = async (
@@ -56,4 +54,21 @@ export const editUserProfile = async (
   }
 
   return data;
+};
+
+// checking username, not allowing duplicate usernames
+export const checkUsernameAvailability = async (
+  username: string | undefined,
+) => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("userName")
+    .eq("userName", username)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error("Error while checking username availability");
+  }
+
+  return !data;
 };

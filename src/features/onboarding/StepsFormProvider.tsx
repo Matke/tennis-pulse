@@ -1,4 +1,7 @@
-import { editUserProfile } from "@/services/apiProfile";
+import {
+  checkUsernameAvailability,
+  editUserProfile,
+} from "@/services/apiProfile";
 import { useAuth } from "@/store/useAuth";
 import {
   userProfileInitialData,
@@ -28,6 +31,7 @@ type StepsFormContextData = {
   isAnimationRunning: boolean;
   isEditingProfile: boolean;
   editProfile: () => Promise<UserProfileData | null>;
+  checkUsernameUniqueness: (username: string | undefined) => Promise<boolean>;
   setIsAnimationRunning: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -46,6 +50,7 @@ const stepsFormInitialValue: StepsFormContextData = {
   isAnimationRunning: false,
   isEditingProfile: false,
   editProfile: async () => null,
+  checkUsernameUniqueness: async () => true,
   setIsAnimationRunning: () => {},
 };
 
@@ -68,6 +73,7 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null); // for UI
   const maxSteps = stepsFormInitialValue.maxSteps;
 
+  // user data
   const { user, setUserProfile } = useAuth();
   const userId = user?.id;
 
@@ -120,6 +126,21 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const checkUsernameUniqueness = async (username: string | undefined) => {
+    if (!username || username.length < 5) return true; // skip check if empty
+    setIsEditingProfile(true);
+    try {
+      const isUsernameAvailable = await checkUsernameAvailability(username);
+
+      return isUsernameAvailable;
+    } catch (error) {
+      console.error("Username check error", error);
+      return false;
+    } finally {
+      setIsEditingProfile(false);
+    }
+  };
+
   const handleProfileImageSet = (image: string | null) => {
     setImageUrl(image);
   };
@@ -145,6 +166,7 @@ const StepsFormProvider = ({ children }: { children: React.ReactNode }) => {
         isAnimationRunning,
         isEditingProfile,
         editProfile,
+        checkUsernameUniqueness,
         setIsAnimationRunning,
       }}
     >
