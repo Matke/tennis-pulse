@@ -23,6 +23,7 @@ import CheckEmail from "@/pages/auth/CheckEmail";
 import VerifyEmail from "@/pages/auth/VerifyEmail";
 import OnboardLayout from "@/layouts/OnboardLayout";
 import Welcome from "@/pages/onboarding/Welcome";
+import ProtectedRoute from "@/utils/ProtectedRoute";
 
 const AppRouter = () => {
   return (
@@ -41,7 +42,13 @@ const AppRouter = () => {
           <Route path="welcome" element={<Welcome />} />
         </Route>
 
-        <Route element={<AppLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate replace to="home" />} />
           <Route path="home" element={<Home />} />
           <Route path="matches" element={<Matches />} />

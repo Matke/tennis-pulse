@@ -38,7 +38,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<Partial<User> | null>(null);
   const [userProfile, setUserProfile] = useState<Partial<UserProfileData>>({}); // all are optional when Partial
   const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const onLogout = async () => {
     try {
@@ -62,6 +62,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const data: User = await getCurrentUser();
 
         setUser(data);
+        setError("");
+        console.log(data);
 
         if (data.role !== "authenticated" && !data.user_metadata.email_verified)
           throw new Error("User not authenticated");

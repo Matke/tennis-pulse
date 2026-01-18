@@ -39,6 +39,7 @@ const schema: yup.ObjectSchema<PersonalDetailsFormData> = yup.object({
     .string()
     .trim()
     // Async validation here causes to run async function when we type in any other field also
+    // validation will be debounced for every 500ms
     .test(
       "is-username-unique",
       "Username already taken",
@@ -115,7 +116,7 @@ const PersonalDetailsForm = () => {
         const isUsernameAvailable = await checkUsernameUniqueness(username);
         return isUsernameAvailable;
       }, 500),
-    [checkUsernameUniqueness], // These are now clearly tracked
+    [checkUsernameUniqueness],
   );
 
   const {
