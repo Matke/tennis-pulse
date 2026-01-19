@@ -3,7 +3,7 @@ import { useAuth } from "@/store/useAuth";
 import { Navigate } from "react-router";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isLoading, user } = useAuth();
+  const { isLoading, user, userProfile } = useAuth();
 
   if (isLoading && !user) {
     return (
@@ -17,6 +17,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   // if no user and data is finished loading return the user to login
   if (!user && !isLoading) {
     return <Navigate to="/login" replace />;
+  }
+
+  // if user somehow skips welcome they will be redirect back because profile is not complete
+  if (!user && !userProfile?.userName && !isLoading) {
+    return <Navigate to="/welcome" replace />;
   }
 
   return children;

@@ -31,7 +31,7 @@ export type InputProps = {
   // isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
-  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   defaultValue?: string | number;
   ref?: React.Ref<HTMLInputElement>; // react 19, refs can be passed directly as a prop
 };
