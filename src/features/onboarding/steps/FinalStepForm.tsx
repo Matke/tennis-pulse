@@ -1,10 +1,10 @@
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import FinalProfileOverview from "@/features/onboarding/FinalProfileOverview";
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
-import { editUserProfile } from "@/services/apiProfile";
-import { useAuth } from "@/store/useAuth";
+// import { editUserProfile } from "@/services/apiProfile";
+// import { useAuth } from "@/store/useAuth";
 import type { UserProfileData } from "@/types/authTypes";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import { MdInfo } from "react-icons/md";
 import { useNavigate } from "react-router";
 
@@ -68,9 +68,7 @@ const valueLookupTable: Record<keyof Keys, string> = {
 
 const FinalStepForm = () => {
   // context and hooks
-  const { formData, isAnimationRunning } = useStepsForm();
-  const { user, setUserProfile } = useAuth();
-  const userId = user?.id;
+  const { formData, editProfile } = useStepsForm();
   const navigate = useNavigate();
 
   // accept keys that only exist in UserProfileData type, without profile image
@@ -93,30 +91,15 @@ const FinalStepForm = () => {
     value: valueLookupTable[formData[key]] || formData[key],
   }));
 
-  console.log(formData);
-
+  // final form submission
   const handleFinalFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // cannot submit if form change animation is still runing
-    if (isAnimationRunning) return;
+    const data = await editProfile();
 
-    try {
-      const updatedProfileData: UserProfileData = await editUserProfile(
-        formData,
-        userId,
-      );
-      console.log(updatedProfileData);
-
-      setUserProfile(updatedProfileData);
-
-      toast.success("Profile successfully created!");
-
+    // navigate to app if successful
+    if (data) {
       navigate("/home");
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
     }
   };
 
@@ -126,8 +109,10 @@ const FinalStepForm = () => {
       className="mt-8 flex h-full flex-col -space-y-5"
       onSubmit={handleFinalFormSubmit}
     >
+      {/* Profile card preview */}
       <FinalProfileOverview formData={formData} chips={chipsArray} />
-      <div className="z-10 w-full">
+
+      <div className="z-100 w-full">
         <ButtonIcon
           icon={<MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />}
           variant="blank"

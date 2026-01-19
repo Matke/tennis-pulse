@@ -23,25 +23,61 @@ import CheckEmail from "@/pages/auth/CheckEmail";
 import VerifyEmail from "@/pages/auth/VerifyEmail";
 import OnboardLayout from "@/layouts/OnboardLayout";
 import Welcome from "@/pages/onboarding/Welcome";
+import ProtectedRoute from "@/utils/ProtectedRoute";
+import PublicRoute from "@/utils/PublicRoute";
+import OnboardRoute from "@/utils/OnboardRoute";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout />}>
-          <Route path="signup" element={<Signup />} />
-          <Route path="login" element={<Login />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="signup"
+            element={
+              <PublicRoute>
+                <Signup />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="email-confirmation" element={<CheckEmail />} />
           <Route path="verify-email" element={<VerifyEmail />} />
         </Route>
 
-        <Route element={<OnboardLayout />}>
+        <Route
+          element={
+            <OnboardRoute>
+              <OnboardLayout />
+            </OnboardRoute>
+          }
+        >
           <Route path="welcome" element={<Welcome />} />
         </Route>
 
-        <Route element={<AppLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate replace to="home" />} />
           <Route path="home" element={<Home />} />
           <Route path="matches" element={<Matches />} />

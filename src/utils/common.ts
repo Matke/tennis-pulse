@@ -1,5 +1,5 @@
 // types
-import type { CropAreaData } from "@/features/onboarding/steps/PersonalDetailsForm";
+import type { CropAreaData } from "@/features/onboarding/ImageCropper";
 // helper for react easy crop
 /**
  * Joins all classes strings
@@ -156,4 +156,28 @@ export default async function getCroppedImg(
       resolve(file);
     }, "image/jpeg");
   });
+}
+
+// replace with lodash in the future updates
+export function debounce<T extends (...args: never[]) => unknown>(
+  fn: T,
+  delay: number,
+) {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  return (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => {
+    return new Promise((resolve, reject) => {
+      if (timeoutId) clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(async () => {
+        try {
+          // Type cast to ensure the result is treated as the ReturnType
+          const result = (await fn(...args)) as Awaited<ReturnType<T>>;
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      }, delay);
+    });
+  };
 }

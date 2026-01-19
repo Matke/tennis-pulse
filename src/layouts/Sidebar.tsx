@@ -1,9 +1,8 @@
 import { useState } from "react";
-
 // icons
 import { AiFillHome } from "react-icons/ai";
 import { MdSportsTennis } from "react-icons/md";
-
+// icons
 import { FaChevronDown, FaChevronRight, FaUser } from "react-icons/fa";
 import { FaPeopleArrows } from "react-icons/fa";
 import { IoTennisball } from "react-icons/io5";
@@ -15,23 +14,22 @@ import { FaHeart } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { BiSolidLogOut } from "react-icons/bi";
 import { HiTrophy } from "react-icons/hi2";
-
+import { HiDotsVertical } from "react-icons/hi";
 // router
 import { NavLink, useNavigate } from "react-router";
-
 // components
 import Typography from "@/components/text/Typography";
 import PulseLogo from "@/components/ui/PulseLogo";
-
-// utils
-import { classNames } from "@/utils/common";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useAuth } from "@/store/useAuth";
-import { HiDotsVertical } from "react-icons/hi";
+import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
+import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
 import Dropdown from "@/components/dropdown/Dropdown";
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import SidebarSkeletonLoader from "@/components/loaders/SidebarSkeletonLoader";
 import ConfirmationModal from "@/components/modals/ConfirmationModal";
+// utils
+import { classNames } from "@/utils/common";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useAuth } from "@/store/useAuth";
 
 // SubMenu types
 type SubMenuKeys =
@@ -102,7 +100,7 @@ const navigation: NavigationItem[] = [
   },
 ];
 
-const defaultSubMenuState = {
+const defaultSubMenuState: SubMenu = {
   home: false,
   challenge: false,
   matches: false,
@@ -245,18 +243,38 @@ const Sidebar = () => {
         className="flex cursor-pointer items-center gap-5 rounded-md p-1 hover:bg-zinc-800/50"
         onClick={() => setOpen(!open)}
       >
-        <img
-          src={userProfile.profileImage || ""}
-          alt="profile img"
-          className="h-12 w-12 cursor-pointer rounded-full object-cover object-center"
-          onClick={() => setOpen(!open)}
-        />
+        {/* Profile image or avatar */}
+        {!userProfile.profileImage ? (
+          <div className="group relative">
+            <div className="absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-200 to-yellow-200 opacity-75 blur-[0.5px] transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+            <div className="relative">
+              <div className="h-12 w-12 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
+                {/* Profile avatar based on gender */}
+                {userProfile.gender === "male" ? (
+                  <MaleProfileIcon />
+                ) : (
+                  <FemaleProfileIcon />
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <img
+            src={userProfile.profileImage}
+            alt="profile img"
+            className="h-12 w-12 scale-105 cursor-pointer rounded-full object-cover object-center"
+          />
+        )}
+
+        {/* Full name */}
         <Typography
           variant="label"
           className={`${!open && "hidden"} whitespace-nowrap`}
         >
           {userProfile.firstName} {userProfile.lastName}
         </Typography>
+
+        {/* Profile and logout menu dropdown */}
         <Dropdown
           buttonIcon={
             <ButtonIcon
@@ -291,6 +309,7 @@ const Sidebar = () => {
         />
       </div>
 
+      {/* Logout confirmation modal */}
       {isLogoutConfirmOpen && (
         <ConfirmationModal
           openModal={isLogoutConfirmOpen}

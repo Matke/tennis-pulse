@@ -8,13 +8,29 @@ import CropModal from "@/components/modals/CropModal";
 // hooks
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 // icons
-import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
+import { FaCircleArrowRight } from "react-icons/fa6";
+import { useAuth } from "@/store/useAuth";
+import FillingLoader from "@/components/loaders/FillingLoader";
 
 const Welcome = () => {
-  const { currentStep, handleBack, maxSteps, isAnimationRunning } =
-    useStepsForm();
+  const { isLoading } = useAuth();
+  const {
+    currentStep,
+    handleBack,
+    maxSteps,
+    isAnimationRunning,
+    isEditingProfile,
+  } = useStepsForm();
 
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(true);
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black">
+        <FillingLoader text="Checking user credentials..." classic />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-between">
@@ -38,19 +54,22 @@ const Welcome = () => {
           label="Back"
           buttonSize="base"
           themeColor="secondary"
-          disabled={isAnimationRunning || currentStep === 1}
-          icon={<FaCircleArrowLeft className="h-5 w-5" />}
+          className={`${currentStep === 1 && "invisible"}`}
+          disabled={isAnimationRunning || currentStep === 1 || isEditingProfile}
+          // icon={<FaCircleArrowLeft className="h-5 w-5" />}
+          // iconPosition="right"
         />
 
         <Button
           type="submit"
-          // onClick={handleNext}
+          formId="onboarding-form" // this will trigger form submission
           label={currentStep === maxSteps ? "Finish" : "Next"}
-          disabled={isAnimationRunning}
+          disabled={isAnimationRunning || isEditingProfile}
+          isLoading={isEditingProfile}
           buttonSize="base"
-          icon={<FaCircleArrowRight className="h-5 w-5" />}
-          iconPosition="right"
-          formId="onboarding-form"
+          // loaderWithLabel
+          // icon={<FaCircleArrowRight className="h-5 w-5" />}
+          // iconPosition="left"
         />
       </footer>
 

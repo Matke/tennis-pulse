@@ -1,4 +1,5 @@
 // Components
+import Loader from "@/components/loaders/Loader";
 import Typography from "@/components/text/Typography";
 
 // framer motion
@@ -19,7 +20,9 @@ export type InputProps = {
   name?: string;
   error?: string;
   errorPlaceholderClass?: string;
-  isValidField?: boolean;
+  validFieldText?: string;
+  isValidating?: boolean;
+  successFieldText?: string;
   className?: string;
   labelClass?: string;
   fullWidth?: boolean;
@@ -28,6 +31,7 @@ export type InputProps = {
   // isIconVisible?: boolean;
   backgroundInputColor?: string;
   required?: boolean;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   defaultValue?: string | number;
   ref?: React.Ref<HTMLInputElement>; // react 19, refs can be passed directly as a prop
 };
@@ -42,15 +46,17 @@ const InputText = ({
   name = "",
   error = "",
   errorPlaceholderClass = "",
-  isValidField = false,
+  validFieldText = "",
   className,
   inputFieldText = "",
   labelClass = "",
   fullWidth = false,
+  isValidating = false,
   inputClass = "",
   // isIconVisible = true,
   backgroundInputColor = "bg-tp-background",
   required = false,
+  onBlur,
   defaultValue,
   ref,
   ...rest
@@ -88,6 +94,7 @@ const InputText = ({
           ref={ref}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           type={type}
           id={nameId}
           name={nameId}
@@ -111,12 +118,28 @@ const InputText = ({
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            {error && iconError}
-            {isValidField && iconSuccess}
-            {inputFieldText && inputFieldExp}
+            {error && !isValidating && iconError}
+            {validFieldText && !isValidating && iconSuccess}
+            {!error && inputFieldText && inputFieldExp}
+            {isValidating && (
+              <Loader
+                size={20}
+                borderSize={2}
+                loaderColor={"--color-charcoal-100"}
+                // backgroundLoaderColor={backgroundLoaderColor}
+                className="loading-container absolute top-3.5 right-3 ml-3 h-5 w-5"
+              />
+            )}
           </motion.div>
         </div>
       </div>
+      {!error && validFieldText && (
+        <div className={`absolute`}>
+          <Typography variant="label-small" className={`mt-0.5 ml-2.5`}>
+            <span className="text-tp-tertiary">{validFieldText}</span>
+          </Typography>
+        </div>
+      )}
       {error && (
         <div className={`absolute ${errorPlaceholderClass}`}>
           <Typography

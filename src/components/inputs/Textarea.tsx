@@ -2,12 +2,7 @@
 import Typography from "@/components/text/Typography";
 
 // framer motion
-import { motion } from "framer-motion";
 import type React from "react";
-
-// Icons
-import { GoCheckCircleFill } from "react-icons/go";
-import { IoIosCloseCircle } from "react-icons/io";
 
 export type TextareaProps = {
   value?: string;
@@ -35,7 +30,6 @@ export type TextareaProps = {
 const Textarea = ({
   value,
   onChange,
-  clearValueOnError,
   placeholder,
   name = "",
   disableResize = false,
@@ -43,7 +37,6 @@ const Textarea = ({
   cols = 33,
   error = "",
   errorPlaceholderClass = "",
-  isValidField = false,
   className,
   labelClass = "",
   fullWidth = false,
@@ -58,21 +51,6 @@ const Textarea = ({
 
   const nameId =
     name || placeholder.toLocaleLowerCase("en-US").replace(/\s+/g, "-");
-
-  const iconError: React.ReactNode = (
-    <IoIosCloseCircle
-      className="text-tp-warning absolute top-3.5 right-3 ml-3 h-5 w-5 cursor-pointer transition-all duration-300 hover:scale-110"
-      onMouseDown={(e) => {
-        if (clearValueOnError) {
-          e.preventDefault();
-          clearValueOnError("");
-        }
-      }}
-    />
-  );
-  const iconSuccess: React.ReactNode = (
-    <GoCheckCircleFill className="text-tp-tertiary absolute top-3.5 right-3 ml-3 h-5 w-5" />
-  );
 
   return (
     <div className={`${backgroundInputColor} rounded-sm ${className}`}>
@@ -97,17 +75,6 @@ const Textarea = ({
         >
           {placeholder} {required ? "*" : ""}
         </label>
-
-        <div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            {error && iconError}
-            {isValidField && iconSuccess}
-          </motion.div>
-        </div>
       </div>
       {error && (
         <div className={`absolute ${errorPlaceholderClass}`}>
