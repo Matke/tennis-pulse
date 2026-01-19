@@ -8,8 +8,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (isLoading && !user) {
     return (
       // full page loader
-      <div className="bg-tp-typography-secondary fixed inset-0 flex items-center justify-center">
-        <FillingLoader text="Checking user credentials..." />
+      <div className="bg-tp-typography-secondary fixed inset-0 z-9999 flex items-center justify-center">
+        <FillingLoader text="Checking user credentials..." classic />
       </div>
     );
   }
@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   // if user somehow skips welcome they will be redirect back because profile is not complete
-  if (!user && !userProfile?.userName && !isLoading) {
+  if (!isLoading && user && !userProfile?.userName) {
     return <Navigate to="/welcome" replace />;
   }
 

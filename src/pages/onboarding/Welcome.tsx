@@ -9,8 +9,11 @@ import CropModal from "@/components/modals/CropModal";
 import { useStepsForm } from "@/features/onboarding/useStepsForm";
 // icons
 import { FaCircleArrowRight } from "react-icons/fa6";
+import { useAuth } from "@/store/useAuth";
+import FillingLoader from "@/components/loaders/FillingLoader";
 
 const Welcome = () => {
+  const { isLoading } = useAuth();
   const {
     currentStep,
     handleBack,
@@ -20,6 +23,14 @@ const Welcome = () => {
   } = useStepsForm();
 
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(true);
+
+  if (isLoading) {
+    return (
+      <div className="bg-tp-typography-secondary fixed inset-0 z-9999 flex items-center justify-center">
+        <FillingLoader text="Checking user credentials..." classic />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-between">

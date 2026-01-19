@@ -2,8 +2,8 @@ import FillingLoader from "@/components/loaders/FillingLoader";
 import { useAuth } from "@/store/useAuth";
 import { Navigate } from "react-router";
 
-const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isLoading, user } = useAuth();
+const OnboardRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isLoading, user, userProfile } = useAuth();
 
   if (isLoading) {
     // full page loader
@@ -14,11 +14,15 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (user && !isLoading) {
+  if (!user && !isLoading) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (userProfile?.userName && !isLoading) {
     return <Navigate to="/home" replace />;
   }
 
   return children;
 };
 
-export default PublicRoute;
+export default OnboardRoute;

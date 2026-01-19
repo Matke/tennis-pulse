@@ -25,6 +25,7 @@ import OnboardLayout from "@/layouts/OnboardLayout";
 import Welcome from "@/pages/onboarding/Welcome";
 import ProtectedRoute from "@/utils/ProtectedRoute";
 import PublicRoute from "@/utils/PublicRoute";
+import OnboardRoute from "@/utils/OnboardRoute";
 
 const AppRouter = () => {
   return (
@@ -60,7 +61,13 @@ const AppRouter = () => {
           <Route path="verify-email" element={<VerifyEmail />} />
         </Route>
 
-        <Route element={<OnboardLayout />}>
+        <Route
+          element={
+            <OnboardRoute>
+              <OnboardLayout />
+            </OnboardRoute>
+          }
+        >
           <Route path="welcome" element={<Welcome />} />
         </Route>
 
