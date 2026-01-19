@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (isLoading && !user) {
     return (
       // full page loader
-      <div className="bg-tp-typography-secondary fixed inset-0 z-9999 flex items-center justify-center">
+      <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black">
         <FillingLoader text="Checking user credentials..." classic />
       </div>
     );

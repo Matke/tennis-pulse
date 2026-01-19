@@ -26,7 +26,7 @@ const Welcome = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-tp-typography-secondary fixed inset-0 z-9999 flex items-center justify-center">
+      <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black">
         <FillingLoader text="Checking user credentials..." classic />
       </div>
     );
