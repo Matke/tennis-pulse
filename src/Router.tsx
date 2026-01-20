@@ -60,7 +60,14 @@ const AppRouter = () => {
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="email-confirmation" element={<CheckEmail />} />
           <Route path="verify-email" element={<VerifyEmail />} />
-          <Route path="magic-signin" element={<MagicSignIn />} />
+          <Route
+            path="magic-signin"
+            element={
+              <PublicRoute>
+                <MagicSignIn />
+              </PublicRoute>
+            }
+          />
         </Route>
 
         <Route
