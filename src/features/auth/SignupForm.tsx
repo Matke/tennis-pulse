@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // signup hook
 import { useSignup } from "@/features/auth/useSignup";
 import { generateSecurePassword } from "@/utils/common";
+// import { useAuth } from "@/store/useAuth";
 
 // TODO: extract schemas in separate folder
 const schema: yup.ObjectSchema<SignupData> = yup.object({
@@ -37,7 +38,6 @@ const SignupForm = () => {
     register,
     control,
     handleSubmit,
-    reset,
     setValue,
     formState: { errors },
   } = useForm<SignupData>({
@@ -45,7 +45,7 @@ const SignupForm = () => {
   });
 
   const onFormSubmit: SubmitHandler<SignupData> = ({ email, password }) => {
-    signup({ email, password }, { onSettled: () => reset() });
+    signup({ email, password });
   };
 
   const handlePasswordGenerate = () => {

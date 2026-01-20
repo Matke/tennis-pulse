@@ -26,6 +26,7 @@ import Welcome from "@/pages/onboarding/Welcome";
 import ProtectedRoute from "@/utils/ProtectedRoute";
 import PublicRoute from "@/utils/PublicRoute";
 import OnboardRoute from "@/utils/OnboardRoute";
+import MagicSignIn from "@/pages/auth/MagicSignIn";
 
 const AppRouter = () => {
   return (
@@ -59,6 +60,7 @@ const AppRouter = () => {
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="email-confirmation" element={<CheckEmail />} />
           <Route path="verify-email" element={<VerifyEmail />} />
+          <Route path="magic-signin" element={<MagicSignIn />} />
         </Route>
 
         <Route
