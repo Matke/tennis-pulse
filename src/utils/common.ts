@@ -181,3 +181,39 @@ export function debounce<T extends (...args: never[]) => unknown>(
     });
   };
 }
+
+// secure generative function for password
+export function generateSecurePassword(length: number = 15): string {
+  const charset: string =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\\:;?><,./-=";
+  const numbers = "0123456789";
+
+  // will create an typed array of integers (0-255) from a size of length
+  // 12 length - [226,210,242,63...] and etc
+  // crypto secure random bytes
+  const values: Uint8Array = new Uint8Array(length);
+  // this method requires typed array, fills values with crypto secure random numbers
+  window.crypto.getRandomValues(values);
+
+  // values = [226, 210, 243, 63]
+  // 226 % 92 = 2.45 , 2 * 92 = 184 , 226 - 184 = 42
+  // so Q wil be picked
+  let password: string = "";
+
+  for (let i = 0; i < length; i++) {
+    password += charset[values[i] % charset.length];
+  }
+
+  const arrayPass = Array.from(password);
+
+  const numberIndex =
+    window.crypto.getRandomValues(new Uint8Array(1))[0] % numbers.length;
+  arrayPass.push(numbers[numberIndex]);
+
+  for (let i = arrayPass.length - 1; i > 0; i--) {
+    const j = window.crypto.getRandomValues(new Uint8Array(1))[0] % (i + 1);
+    [arrayPass[i], arrayPass[j]] = [arrayPass[j], arrayPass[i]];
+  }
+
+  return arrayPass.join("");
+}
