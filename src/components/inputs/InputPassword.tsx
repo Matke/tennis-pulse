@@ -3,6 +3,7 @@ import { useState } from "react";
 // Components
 import type { InputProps } from "@/components/inputs/InputText";
 import Typography from "@/components/text/Typography";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
 
 // framer motion
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,10 +12,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Chip, { type ChipThemeColor } from "@/components/ui/Chip";
+import { PiPasswordBold } from "react-icons/pi";
 
 export type InputPasswordProps = InputProps & {
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   removePasswordCheck?: boolean; // for login only
+  onPasswordGenerate?: () => void;
 };
 
 type ChipLabel = "weak" | "fair" | "good" | "strong";
@@ -37,6 +40,7 @@ const InputPassword = ({
   backgroundInputColor = "bg-tp-background",
   required = false,
   removePasswordCheck = false,
+  onPasswordGenerate,
   ...rest
 }: InputPasswordProps) => {
   // toggle eye icon and type of input to reveal password
@@ -114,6 +118,18 @@ const InputPassword = ({
               containerClass="absolute top-4 right-12 cursor-pointer"
               tooltipId="password-check"
               tooltipContent="Your password must be at least 8 characters. For a stronger password, use an uppercase letter,a lowercase letter, a number, and a special character."
+            />
+          )}
+          {!value && !removePasswordCheck && (
+            <ButtonIcon
+              onClick={onPasswordGenerate}
+              className="absolute top-1.5 right-9 ml-3"
+              icon={<PiPasswordBold className="h-5 w-5" />}
+              variant="blank"
+              borderColor="border-none"
+              tooltipId="generate-secure-password"
+              tooltipPlacement="top"
+              tooltipContent="Automatically generate a good or strong, secure password."
             />
           )}
           <AnimatePresence mode="wait">

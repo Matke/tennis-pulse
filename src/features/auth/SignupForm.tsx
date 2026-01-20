@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // signup hook
 import { useSignup } from "@/features/auth/useSignup";
+import { generateSecurePassword } from "@/utils/common";
 
 // TODO: extract schemas in separate folder
 const schema: yup.ObjectSchema<SignupData> = yup.object({
@@ -37,6 +38,7 @@ const SignupForm = () => {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<SignupData>({
     resolver: yupResolver(schema),
@@ -44,6 +46,10 @@ const SignupForm = () => {
 
   const onFormSubmit: SubmitHandler<SignupData> = ({ email, password }) => {
     signup({ email, password }, { onSettled: () => reset() });
+  };
+
+  const handlePasswordGenerate = () => {
+    setValue("password", generateSecurePassword(), { shouldValidate: true });
   };
 
   return (
@@ -74,6 +80,7 @@ const SignupForm = () => {
             fullWidth
             backgroundInputColor="bg-linear-to-br from-[#010101] via-[#090909] to-[#010101]"
             labelClass="peer-focus:bg-[linear-gradient(to_bottom_right,#010101,#090909,#010101)]"
+            onPasswordGenerate={handlePasswordGenerate}
             error={errors?.password?.message}
           />
         )}

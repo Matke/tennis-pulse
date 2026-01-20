@@ -1,7 +1,12 @@
 import supabase from "@/services/supabase";
 
 // Types
-import type { ForgotPassword, LoginData, SignupData } from "@/types/authTypes";
+import type {
+  ForgotPassword,
+  LoginData,
+  MagicLinkData,
+  SignupData,
+} from "@/types/authTypes";
 
 // SignUp
 export const signup = async ({ email, password }: SignupData) => {
@@ -90,4 +95,20 @@ export const getUserProfile = async (id: string) => {
   if (error) throw new Error(error.message);
 
   return profiles;
+};
+
+// magic link sign in
+export const sendMagicLink = async ({ email, redirectURL }: MagicLinkData) => {
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email: email,
+    options: {
+      // set this to false if you do not want the user to be automatically signed up
+      // shouldCreateUser: false,
+      emailRedirectTo: redirectURL,
+    },
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };

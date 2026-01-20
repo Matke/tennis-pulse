@@ -60,3 +60,8 @@ export type ForgotPassword = {
   email: string;
   redirectURL: string;
 };
+
+export type MagicLinkData = {
+  email: string;
+  redirectURL: string;
+};
