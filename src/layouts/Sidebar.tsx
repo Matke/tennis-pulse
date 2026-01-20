@@ -16,7 +16,7 @@ import { BiSolidLogOut } from "react-icons/bi";
 import { HiTrophy } from "react-icons/hi2";
 import { HiDotsVertical } from "react-icons/hi";
 // router
-import { NavLink, useNavigate } from "react-router";
+import { NavLink } from "react-router";
 // components
 import Typography from "@/components/text/Typography";
 import PulseLogo from "@/components/ui/PulseLogo";
@@ -116,7 +116,7 @@ const Sidebar = () => {
   const [open, setOpen] = useLocalStorage("sidebarOpen", false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] =
     useState<boolean>(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [subMenus, setSubMenus] = useState<SubMenu>(defaultSubMenuState);
 
@@ -131,7 +131,8 @@ const Sidebar = () => {
   const onLogoutConfirm = () => {
     onLogout();
 
-    navigate("/login", { replace: true });
+    // not needed anymore because protectedroute will handle who can stay logged in
+    // navigate("/login", { replace: true });
   };
 
   // skeleton loader for sidebar, wait for profile data to load before showing sidebar to screen

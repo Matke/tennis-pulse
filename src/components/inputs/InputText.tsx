@@ -19,6 +19,7 @@ export type InputProps = {
   type?: string;
   name?: string;
   error?: string;
+  disabled?: boolean;
   errorPlaceholderClass?: string;
   validFieldText?: string;
   isValidating?: boolean;
@@ -47,6 +48,7 @@ const InputText = ({
   error = "",
   errorPlaceholderClass = "",
   validFieldText = "",
+  disabled = false,
   className,
   inputFieldText = "",
   labelClass = "",
@@ -96,6 +98,7 @@ const InputText = ({
           onChange={onChange}
           onBlur={onBlur}
           type={type}
+          disabled={disabled}
           id={nameId}
           name={nameId}
           defaultValue={defaultValue}
