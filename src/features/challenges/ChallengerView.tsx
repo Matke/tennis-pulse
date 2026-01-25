@@ -1,3 +1,4 @@
+import Button from "@/components/buttons/Button";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import type { UserProfileData } from "@/types/authTypes";
@@ -96,14 +97,22 @@ const ChallengerView = ({
             tooltipPlacement="left"
           />
           <Chip
-            label={userProfile.weight ? `${userProfile?.weight}kg` : ""}
-            chipSize="medium"
-          />
-          <Chip
             label={userProfile.height ? `${userProfile?.height}cm` : ""}
             chipSize="medium"
           />
+          <Chip
+            label={userProfile.weight ? `${userProfile?.weight}kg` : ""}
+            chipSize="medium"
+          />
         </div>
+
+        <Button
+          label="Edit profile"
+          className="mt-8 border-none hover:border-none"
+          themeColor="secondary"
+          buttonSize="base"
+          fullWidth
+        />
       </motion.div>
     </>
   );

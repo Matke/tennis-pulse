@@ -39,10 +39,10 @@ const Challenge = () => {
         disablePadding
       >
         <div className="flex h-full w-full flex-row items-center justify-center">
-          <div className="border-tp-divider/20 hover:bg-tp-main-background/60 flex h-full w-1/2 cursor-pointer flex-col items-center justify-center border-r border-dashed transition-all duration-300">
+          <div className="border-tp-divider/20 hover:bg-tp-main-background/70 flex h-full w-1/2 cursor-pointer flex-col items-center justify-center border-r border-dashed transition-all duration-300">
             <ChallengerView userProfile={userProfile} />
           </div>
-          <div className="hover:bg-tp-main-background/60 flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
+          <div className="hover:bg-tp-main-background/70 flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
             <OpponentView userProfile={userProfile} />
           </div>
         </div>

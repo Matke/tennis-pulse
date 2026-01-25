@@ -1,10 +1,12 @@
 // import ButtonIcon from "@/components/buttons/ButtonIcon";
+import Button from "@/components/buttons/Button";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import type { UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
 import { motion } from "framer-motion";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 // import { MdInfo } from "react-icons/md";
 
 const OpponentView = ({
@@ -96,6 +98,16 @@ const OpponentView = ({
           tooltipId="username_opponent"
           tooltipContent="Your username"
           tooltipPlacement="right"
+        />
+
+        <Button
+          label="Search players"
+          className="mt-8 border-none hover:border-none"
+          themeColor="secondary"
+          buttonSize="base"
+          fullWidth
+          icon={<FaMagnifyingGlass className="h-4 w-4" />}
+          iconPosition="left"
         />
       </motion.div>
     </>
