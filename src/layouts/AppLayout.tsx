@@ -11,9 +11,9 @@ const AppLayout = () => {
       <Sidebar />
 
       {/* Main layout section */}
-      <main className="bg-tp-card-back h-screen flex-1 space-y-6">
+      <main className="h-screen flex-1 space-y-6">
         {/* Dashboard contents - padding here will move page content from sidebar */}
-        <div className="w-full p-7">
+        <div className="bg-tp-card-back h-full w-full overflow-y-auto p-7">
           <Outlet />
         </div>
       </main>
