@@ -72,3 +72,11 @@ export const checkUsernameAvailability = async (
 
   return !data;
 };
+
+export const fetchProfiles = async () => {
+  const { data: profiles, error } = await supabase.from("profiles").select("*");
+
+  if (error) throw new Error("Error while fetching all user profiles");
+
+  return profiles;
+};

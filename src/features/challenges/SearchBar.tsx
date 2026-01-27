@@ -1,3 +1,4 @@
+import SearchResultList from "@/features/challenges/SearchResultList";
 import { useRef } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
@@ -43,6 +44,7 @@ const SearchBar = ({
     <div
       className={`bg-tp-card-back shadow-tp-primary relative flex w-full items-center rounded-full shadow-xs md:px-2 md:py-2 ${parentContainerClassName}`}
     >
+      <SearchResultList />
       <div onClick={handleInputFocus} className="absolute left-4">
         {icon}
       </div>
