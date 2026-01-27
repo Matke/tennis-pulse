@@ -20,8 +20,8 @@ const SearchResult = () => {
           ({userProfile?.userName})
         </Typography>
       </div>
-      <Typography variant="label-small">
-        {calculateAge(userProfile?.dateOfBirth)}
+      <Typography variant="label-small" className="mt-0.5">
+        {calculateAge(userProfile?.dateOfBirth)} yrs
       </Typography>
     </div>
   );
