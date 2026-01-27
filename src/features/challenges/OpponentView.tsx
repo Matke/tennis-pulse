@@ -1,13 +1,10 @@
-// import ButtonIcon from "@/components/buttons/ButtonIcon";
-import Button from "@/components/buttons/Button";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
+import SearchBar from "@/features/challenges/SearchBar";
 import type { UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
 import { motion } from "framer-motion";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-// import { MdInfo } from "react-icons/md";
 
 const OpponentView = ({
   userProfile,
@@ -20,15 +17,6 @@ const OpponentView = ({
         <Typography variant="title" className="font-bold">
           Opponent
         </Typography>
-        {/* <div className="w-full">
-          <ButtonIcon
-            icon={<MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />}
-            variant="blank"
-            tooltipId="challenger"
-            tooltipContent="Edit your profile in profile section of the app to ensure the latest data is presented here."
-            tooltipPlacement="left"
-          />
-        </div> */}
       </div>
       <motion.div
         initial={{ y: -20, opacity: 0 }}
@@ -96,18 +84,13 @@ const OpponentView = ({
           label={userProfile.userName ? userProfile?.userName : ""}
           chipSize="medium"
           tooltipId="username_opponent"
-          tooltipContent="Your username"
-          tooltipPlacement="right"
+          tooltipContent="Opponent username"
+          tooltipPlacement="left"
         />
 
-        <Button
-          label="Search players"
-          className="mt-8 border-none hover:border-none"
-          themeColor="secondary"
-          buttonSize="base"
-          fullWidth
-          icon={<FaMagnifyingGlass className="h-4 w-4" />}
-          iconPosition="left"
+        <SearchBar
+          placeholder="Search players"
+          parentContainerClassName="mt-8"
         />
       </motion.div>
     </>

@@ -1,9 +1,15 @@
-import Button from "@/components/buttons/Button";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import type { UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
 import { motion } from "framer-motion";
+// import { FaUserEdit } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
+import { FaListAlt } from "react-icons/fa";
+
+// import { FaLockOpen } from "react-icons/fa";
 
 const ChallengerView = ({
   userProfile,
@@ -106,13 +112,45 @@ const ChallengerView = ({
           />
         </div>
 
-        <Button
-          label="Edit profile"
-          className="mt-8 border-none hover:border-none"
-          themeColor="secondary"
-          buttonSize="base"
-          fullWidth
-        />
+        {/* TODO: Make it map from array of objects */}
+        <div className="mt-8 flex items-center gap-3">
+          <ButtonIcon
+            icon={<MdEdit className="h-5 w-5" />}
+            variant="outlined"
+            className="shadow-tp-primary p-2.5 shadow-sm hover:border-none"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            hoverClass
+            rounded
+            tooltipId="edit-profile"
+            tooltipContent="Edit your profile"
+            tooltipPlacement="top"
+          />
+          <ButtonIcon
+            icon={<FaLock className="h-5 w-5" />}
+            variant="outlined"
+            className="shadow-tp-primary p-2.5 shadow-sm"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            hoverClass
+            rounded
+            tooltipId="private-public"
+            tooltipContent="Your profile is private, so it won't appear in challenges or matches searches"
+            tooltipPlacement="top"
+          />
+          <ButtonIcon
+            icon={<FaListAlt className="h-5 w-5" />}
+            variant="outlined"
+            className="shadow-tp-primary p-2.5 shadow-sm"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            hoverClass
+            rounded
+            tooltipId="list-challenges"
+            tooltipContent="View your list of challenges"
+            tooltipPlacement="top"
+          />
+        </div>
       </motion.div>
     </>
   );

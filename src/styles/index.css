@@ -286,6 +286,23 @@ input:-webkit-autofill::first-line {
   -webkit-text-fill-color: #e5e5e6 !important;
 }
 
+/* Target more specific input that are out of forms */
+.custom-autofill:-webkit-autofill,
+.custom-autofill:-webkit-autofill:hover,
+.custom-autofill:-webkit-autofill:focus {
+  -webkit-text-fill-color: #e5e5e6 !important;
+  caret-color: #e5e5e6 !important;
+
+  box-shadow: 0 0 0px 1000px #010101 inset !important;
+  border: 1px solid #010101 !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* needed for @ autofill override */
+.custom-autofill:-webkit-autofill::first-line {
+  -webkit-text-fill-color: #010101 !important;
+}
+
 /* Country select custom style (react-flags-select) */
 .selected-country-button {
   background-color: transparent;

@@ -33,10 +33,11 @@ const Tabs = ({
           key={tabIdx}
           label={tab.label}
           themeColor={currentTab === tab.label ? "primary" : "secondary"}
-          className="shadow-tp-primary/30 rounded-none border-none shadow-none brightness-90"
+          className="shadow-tp-primary/30 rounded-none border-none shadow-none brightness-90 hover:bg-transparent"
           buttonSize="medium"
           icon={tab.icon}
           uppercaseLabel
+          disabled={tab.label === "location"}
           onClick={() => changeTab(tab.label)}
         />
       ))}
