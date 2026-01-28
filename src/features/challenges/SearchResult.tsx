@@ -26,20 +26,22 @@ const SearchResult = ({
       className="hover:bg-tp-main-background flex items-center justify-between p-2"
       onClick={() => console.log(data.id)}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex flex-1 items-center gap-2">
         <span
           className={`fi fi-${data?.nationality.toLocaleLowerCase()}`}
         ></span>
         <Typography variant="label" className="whitespace-nowrap">
           {data?.firstName} {data?.lastName}
         </Typography>
+      </div>
+      <div className="flex items-center gap-1">
         <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
           ({data?.userName})
         </Typography>
+        <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
+          {calculateAge(data?.dateOfBirth)} yrs
+        </Typography>
       </div>
-      <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
-        {calculateAge(data?.dateOfBirth)} yrs
-      </Typography>
     </div>
   );
 };
