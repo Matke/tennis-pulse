@@ -30,14 +30,14 @@ const SearchResult = ({
         <span
           className={`fi fi-${data?.nationality.toLocaleLowerCase()}`}
         ></span>
-        <Typography variant="label">
+        <Typography variant="label" className="whitespace-nowrap">
           {data?.firstName} {data?.lastName}
         </Typography>
-        <Typography variant="label-small" className="mt-0.5">
+        <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
           ({data?.userName})
         </Typography>
       </div>
-      <Typography variant="label-small" className="mt-0.5">
+      <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
         {calculateAge(data?.dateOfBirth)} yrs
       </Typography>
     </div>
