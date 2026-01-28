@@ -23,7 +23,7 @@ const SearchResult = ({
 
   return (
     <div
-      className="hover:bg-tp-main-background flex items-center justify-between p-2"
+      className="hover:bg-tp-main-background flex items-center justify-between gap-3 p-2"
       onClick={() => console.log(data.id)}
     >
       <div className="flex flex-1 items-center gap-2">
@@ -32,12 +32,15 @@ const SearchResult = ({
         ></span>
         <Typography variant="label" className="whitespace-nowrap">
           {data?.firstName} {data?.lastName}
+          <Typography
+            variant="label-small"
+            className="mt-0.5 whitespace-nowrap"
+          >
+            ({data?.userName})
+          </Typography>
         </Typography>
       </div>
       <div className="flex items-center gap-1">
-        <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
-          ({data?.userName})
-        </Typography>
         <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
           {calculateAge(data?.dateOfBirth)} yrs
         </Typography>
