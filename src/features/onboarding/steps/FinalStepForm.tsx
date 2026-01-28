@@ -74,7 +74,7 @@ const FinalStepForm = () => {
   // accept keys that only exist in UserProfileData type, without profile image
   const selectedKeys: (keyof Omit<
     UserProfileData,
-    "userId" | "profileImage" | "created_at"
+    "id" | "profileImage" | "created_at"
   >)[] = [
     "dominantHand",
     "backhandType",

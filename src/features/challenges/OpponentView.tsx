@@ -2,15 +2,42 @@ import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import SearchBar from "@/features/challenges/SearchBar";
-import type { UserProfileData } from "@/types/authTypes";
+import { fetchProfiles } from "@/services/apiProfile";
+import { defaultUserProfile, type UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const OpponentView = ({
   userProfile,
 }: {
   userProfile: Partial<UserProfileData>;
 }) => {
+  const [profiles, setProfiles] = useState<UserProfileData[]>([
+    defaultUserProfile,
+  ]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadProfiles = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchProfiles();
+        setProfiles(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfiles();
+  }, []);
+
+  if (!userProfile) return null;
+
   return (
     <>
       <div className="mt-8 flex items-center justify-center">
@@ -18,12 +45,7 @@ const OpponentView = ({
           Opponent
         </Typography>
       </div>
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="mt-8 flex h-full flex-col items-center justify-start gap-5 px-6"
-      >
+      <div className="mt-8 flex h-full flex-col items-center justify-start gap-5 px-6">
         <div className="group relative">
           <div className="animate-tilt absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-600 to-yellow-200 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
           <div className="relative">
@@ -81,7 +103,7 @@ const OpponentView = ({
         </div>
 
         <Chip
-          label={userProfile.userName ? userProfile?.userName : ""}
+          label={userProfile.userName ?? ""}
           chipSize="medium"
           tooltipId="username_opponent"
           tooltipContent="Opponent username"
@@ -91,8 +113,10 @@ const OpponentView = ({
         <SearchBar
           placeholder="Search players"
           parentContainerClassName="mt-8"
+          data={profiles}
+          loading={loading}
         />
-      </motion.div>
+      </div>
     </>
   );
 };

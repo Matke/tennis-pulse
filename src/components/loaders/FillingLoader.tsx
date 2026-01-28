@@ -2,7 +2,7 @@ const FillingLoader = ({
   text,
   classic = false,
 }: {
-  text: string;
+  text?: string;
   classic?: boolean;
 }) => {
   if (classic) {

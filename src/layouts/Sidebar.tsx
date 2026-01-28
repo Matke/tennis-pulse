@@ -143,7 +143,7 @@ const Sidebar = () => {
   return (
     // same padding for open and closed state in order not to have strange moving of sidebar
     <aside
-      className={`${open ? "w-72 p-3" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5 duration-300 ease-in-out`}
+      className={`${open ? "w-72 p-3" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5`}
     >
       {/* Sidebar section for toggling open/close state */}
       {/* z-100 - to be above logo when button is at the top */}
@@ -161,12 +161,18 @@ const Sidebar = () => {
       {/* Logo and title section */}
       <section className="flex items-center gap-x-4">
         <PulseLogo isInSidebar />
-
-        <Typography
-          className={`text-xl font-semibold duration-200 ease-in-out ${!open && "scale-0"} animate-pulse bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text text-center font-extrabold tracking-widest whitespace-nowrap text-transparent select-auto`}
+        <span
+          className={classNames(
+            "origin-left transform-gpu transition-all duration-300",
+            open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          )}
         >
-          Tennis Pulse
-        </Typography>
+          <Typography
+            className={`text-xl font-semibold duration-200 ease-in-out ${!open && "scale-0"} animate-pulse bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text text-center font-extrabold tracking-widest whitespace-nowrap text-transparent select-auto`}
+          >
+            Tennis Pulse
+          </Typography>
+        </span>
       </section>
 
       {/* Sidebar Items section */}
@@ -194,7 +200,10 @@ const Sidebar = () => {
                   <div className="flex items-center gap-7">
                     <span className="text-lg">{item.icon}</span>
                     <span
-                      className={`${!open && "hidden"} origin-left duration-300 ease-in-out`}
+                      className={classNames(
+                        "origin-left transform-gpu whitespace-nowrap transition-all duration-300",
+                        open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+                      )}
                     >
                       {item.title}
                     </span>
@@ -203,7 +212,10 @@ const Sidebar = () => {
                   {item.subMenu && (
                     <span
                       className={`py-full group-hover:border-tp-divider/5 absolute -right-4 flex cursor-pointer items-center justify-center rounded-r-md px-4 py-4 text-sm group-hover:border-2 group-hover:shadow-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
-                      onClick={() => toggleSubMenu(item.key)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleSubMenu(item.key);
+                      }}
                     >
                       {subMenus[item.key] ? (
                         <FaChevronDown />
@@ -270,7 +282,11 @@ const Sidebar = () => {
         {/* Full name */}
         <Typography
           variant="label"
-          className={`${!open && "hidden"} whitespace-nowrap`}
+          className={classNames(
+            "origin-left transform-gpu transition-all duration-100",
+            "whitespace-nowrap",
+            open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          )}
         >
           {userProfile.firstName} {userProfile.lastName}
         </Typography>

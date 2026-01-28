@@ -1,27 +1,44 @@
+// import FillingLoader from "@/components/loaders/FillingLoader";
 import Typography from "@/components/text/Typography";
-import { useAuth } from "@/store/useAuth";
+// import { useAuth } from "@/store/useAuth";
+import type { UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
 
-const SearchResult = () => {
-  const { userProfile } = useAuth();
+const SearchResult = ({
+  data,
+  // loading,
+}: {
+  data: UserProfileData;
+  // loading: boolean;
+}) => {
+  // const { userProfile } = useAuth();
 
-  if (!userProfile) return null;
+  // if (!userProfile) return null;
+
+  // if (loading) {
+  //   <div className="flex items-center justify-center bg-amber-500">
+  //     <FillingLoader classic />
+  //   </div>;
+  // }
 
   return (
-    <div className="hover:bg-tp-main-background flex items-center justify-between p-2">
+    <div
+      className="hover:bg-tp-main-background flex items-center justify-between p-2"
+      onClick={() => console.log(data.id)}
+    >
       <div className="flex items-center gap-2">
         <span
-          className={`fi fi-${userProfile?.nationality.toLocaleLowerCase()}`}
+          className={`fi fi-${data?.nationality.toLocaleLowerCase()}`}
         ></span>
         <Typography variant="label">
-          {userProfile?.firstName} {userProfile?.lastName}
+          {data?.firstName} {data?.lastName}
         </Typography>
         <Typography variant="label-small" className="mt-0.5">
-          ({userProfile?.userName})
+          ({data?.userName})
         </Typography>
       </div>
       <Typography variant="label-small" className="mt-0.5">
-        {calculateAge(userProfile?.dateOfBirth)} yrs
+        {calculateAge(data?.dateOfBirth)} yrs
       </Typography>
     </div>
   );

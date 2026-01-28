@@ -3,13 +3,67 @@ import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import type { UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
-import { motion } from "framer-motion";
-// import { FaUserEdit } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { FaListAlt } from "react-icons/fa";
-
+import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
+// import { FaUserEdit } from "react-icons/fa";
 // import { FaLockOpen } from "react-icons/fa";
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15, // Delay between each child
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: -10, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { type: "spring", stiffness: 100 },
+  },
+};
+
+const itemVariantsX: Variants = {
+  hidden: { x: 10, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: { type: "spring", stiffness: 100 },
+  },
+};
+
+const profilePopVariant: Variants = {
+  hidden: { scale: 0.8, opacity: 0 },
+  visible: {
+    scale: 1.0, // Overshoot slightly
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 20,
+    },
+  },
+};
+
+const revealVariant: Variants = {
+  hidden: { y: "100%", opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.33, 1, 0.68, 1], // Custom cubic-bezier for a "slick" feel
+    },
+  },
+};
 
 const ChallengerView = ({
   userProfile,
@@ -18,27 +72,25 @@ const ChallengerView = ({
 }) => {
   return (
     <>
-      <div className="mt-8 flex items-center justify-center">
-        <Typography variant="title" className="font-bold">
-          Challenger
-        </Typography>
-        {/* <div className="w-full">
-          <ButtonIcon
-            icon={<MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />}
-            variant="blank"
-            tooltipId="challenger"
-            tooltipContent="Edit your profile in profile section of the app to ensure the latest data is presented here."
-            tooltipPlacement="left"
-          />
-        </div> */}
-      </div>
       <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mt-8 flex items-center justify-center"
+      >
+        <motion.div variants={itemVariants}>
+          <Typography variant="title" className="font-bold">
+            Challenger
+          </Typography>
+        </motion.div>
+      </motion.div>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
         className="mt-8 flex h-full flex-col items-center justify-start gap-5 px-6"
       >
-        <div className="group relative">
+        <motion.div variants={profilePopVariant} className="group relative">
           <div className="animate-tilt absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-600 to-yellow-200 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
           <div className="relative">
             {/* Profile image part */}
@@ -54,9 +106,12 @@ const ChallengerView = ({
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-row items-center justify-center gap-2">
+        <motion.div
+          variants={revealVariant}
+          className="flex flex-row items-center justify-center gap-2"
+        >
           <span
             className={`fi fi-${userProfile?.nationality?.toLocaleLowerCase()}`}
             style={{
@@ -70,9 +125,12 @@ const ChallengerView = ({
           <Typography variant="subtitle">
             {userProfile.firstName} {userProfile.lastName}
           </Typography>
-        </div>
+        </motion.div>
 
-        <div className="flex w-full justify-center gap-x-7">
+        <motion.div
+          variants={revealVariant}
+          className="flex w-full justify-center gap-x-7"
+        >
           <div className="transform text-center transition-all duration-300 hover:scale-110">
             <p className="bg-linear-to-l from-yellow-500 to-orange-500 bg-clip-text text-2xl font-bold text-transparent">
               {userProfile?.nationality?.toLocaleUpperCase()}
@@ -92,9 +150,9 @@ const ChallengerView = ({
             </p>
             <p className="text-xs text-gray-400">UTR Rating</p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="space-x-2">
+        <motion.div variants={itemVariantsX} className="space-x-2">
           <Chip
             label={userProfile.userName ? userProfile?.userName : ""}
             chipSize="medium"
@@ -110,10 +168,13 @@ const ChallengerView = ({
             label={userProfile.weight ? `${userProfile?.weight}kg` : ""}
             chipSize="medium"
           />
-        </div>
+        </motion.div>
 
         {/* TODO: Make it map from array of objects */}
-        <div className="mt-8 flex items-center gap-3">
+        <motion.div
+          variants={revealVariant}
+          className="mt-8 flex items-center gap-3"
+        >
           <ButtonIcon
             icon={<MdEdit className="h-5 w-5" />}
             variant="outlined"
@@ -150,7 +211,7 @@ const ChallengerView = ({
             tooltipContent="View your list of challenges"
             tooltipPlacement="top"
           />
-        </div>
+        </motion.div>
       </motion.div>
     </>
   );
