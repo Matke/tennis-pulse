@@ -1,34 +1,23 @@
-// import FillingLoader from "@/components/loaders/FillingLoader";
+// components
 import Typography from "@/components/text/Typography";
-// import { useAuth } from "@/store/useAuth";
+// types
 import type { UserProfileData } from "@/types/authTypes";
+// utils
 import { calculateAge } from "@/utils/common";
 
-const SearchResult = ({
-  data,
-  // loading,
-}: {
-  data: UserProfileData;
-  // loading: boolean;
-}) => {
-  // const { userProfile } = useAuth();
+type SearchResultData = {
+  data: Partial<UserProfileData>;
+};
 
-  // if (!userProfile) return null;
-
-  // if (loading) {
-  //   <div className="flex items-center justify-center bg-amber-500">
-  //     <FillingLoader classic />
-  //   </div>;
-  // }
-
+const SearchResult = ({ data }: SearchResultData) => {
   return (
     <div
-      className="hover:bg-tp-main-background flex items-center justify-between gap-3 p-2"
+      className="hover:bg-tp-main-background z-100 flex items-center justify-between gap-3 rounded-md p-2 not-disabled:active:scale-99 not-disabled:active:brightness-99"
       onClick={() => console.log(data.id)}
     >
       <div className="flex flex-1 items-center gap-2">
         <span
-          className={`fi fi-${data?.nationality.toLocaleLowerCase()}`}
+          className={`fi fi-${data?.nationality?.toLocaleLowerCase()}`}
         ></span>
         <Typography variant="label" className="whitespace-nowrap">
           {data?.firstName} {data?.lastName}
@@ -42,7 +31,7 @@ const SearchResult = ({
       </div>
       <div className="flex items-center gap-1">
         <Typography variant="label-small" className="mt-0.5 whitespace-nowrap">
-          {calculateAge(data?.dateOfBirth)} yrs
+          {calculateAge(data?.dateOfBirth ?? "")} yrs
         </Typography>
       </div>
     </div>

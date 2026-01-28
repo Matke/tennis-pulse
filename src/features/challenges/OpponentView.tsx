@@ -2,8 +2,9 @@ import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import SearchBar from "@/features/challenges/SearchBar";
+import SearchResultList from "@/features/challenges/SearchResultList";
 import { fetchProfiles } from "@/services/apiProfile";
-import { defaultUserProfile, type UserProfileData } from "@/types/authTypes";
+import { type UserProfileData } from "@/types/authTypes";
 import { calculateAge } from "@/utils/common";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -13,15 +14,14 @@ const OpponentView = ({
 }: {
   userProfile: Partial<UserProfileData>;
 }) => {
-  const [profiles, setProfiles] = useState<UserProfileData[]>([
-    defaultUserProfile,
-  ]);
-  const [loading, setLoading] = useState(false);
+  const [profiles, setProfiles] = useState<Partial<UserProfileData>[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // just for making UI
   useEffect(() => {
     const loadProfiles = async () => {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const data = await fetchProfiles();
         setProfiles(data);
       } catch (error) {
@@ -29,7 +29,7 @@ const OpponentView = ({
           toast.error(error.message);
         }
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -102,20 +102,31 @@ const OpponentView = ({
           </div>
         </div>
 
-        <Chip
-          label={userProfile.userName ?? ""}
-          chipSize="medium"
-          tooltipId="username_opponent"
-          tooltipContent="Opponent username"
-          tooltipPlacement="left"
-        />
+        <div className="space-x-2">
+          <Chip
+            label={userProfile.userName ?? ""}
+            chipSize="medium"
+            tooltipId="username_opponent"
+            tooltipContent="Opponent username"
+            tooltipPlacement="bottom"
+            themeColor="warning"
+          />
+          <Chip
+            label={userProfile.height ? `${userProfile?.height}cm` : ""}
+            chipSize="medium"
+            themeColor="warning"
+          />
+          <Chip
+            label={userProfile.weight ? `${userProfile?.weight}kg` : ""}
+            chipSize="medium"
+            themeColor="warning"
+          />
+        </div>
 
-        <SearchBar
-          placeholder="Search players"
-          parentContainerClassName="mt-8"
-          data={profiles}
-          loading={loading}
-        />
+        {/* Search opponent for challenge */}
+        <SearchBar placeholder="Search players" parentContainerClassName="mt-8">
+          <SearchResultList listData={profiles} isLoading={isLoading} />
+        </SearchBar>
       </div>
     </>
   );

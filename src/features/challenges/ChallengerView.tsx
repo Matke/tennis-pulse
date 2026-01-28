@@ -16,7 +16,7 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // Delay between each child
+      staggerChildren: 0.15,
       delayChildren: 0.2,
     },
   },
@@ -43,7 +43,7 @@ const itemVariantsX: Variants = {
 const profilePopVariant: Variants = {
   hidden: { scale: 0.8, opacity: 0 },
   visible: {
-    scale: 1.0, // Overshoot slightly
+    scale: 1.0,
     opacity: 1,
     transition: {
       type: "spring",
@@ -60,7 +60,7 @@ const revealVariant: Variants = {
     opacity: 1,
     transition: {
       duration: 0.6,
-      ease: [0.33, 1, 0.68, 1], // Custom cubic-bezier for a "slick" feel
+      ease: [0.33, 1, 0.68, 1],
     },
   },
 };
@@ -158,7 +158,7 @@ const ChallengerView = ({
             chipSize="medium"
             tooltipId="username"
             tooltipContent="Your username"
-            tooltipPlacement="left"
+            tooltipPlacement="bottom"
           />
           <Chip
             label={userProfile.height ? `${userProfile?.height}cm` : ""}
