@@ -253,43 +253,45 @@ const Sidebar = () => {
 
       {/* Profile section - profile image, player name or username, logout */}
       <div
-        className="flex cursor-pointer items-center gap-5 rounded-md p-1 hover:bg-zinc-800/50"
+        className="flex cursor-pointer items-center justify-between gap-5 rounded-md p-1 hover:bg-zinc-800/50"
         onClick={() => setOpen(!open)}
       >
         {/* Profile image or avatar */}
-        {!userProfile.profileImage ? (
-          <div className="group relative">
-            <div className="absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-200 to-yellow-200 opacity-75 blur-[0.5px] transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-            <div className="relative">
-              <div className="h-12 w-12 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
-                {/* Profile avatar based on gender */}
-                {userProfile.gender === "male" ? (
-                  <MaleProfileIcon />
-                ) : (
-                  <FemaleProfileIcon />
-                )}
+        <div className="flex items-center gap-5">
+          {!userProfile.profileImage ? (
+            <div className="group relative">
+              <div className="absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-200 to-yellow-200 opacity-75 blur-[0.5px] transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+              <div className="relative">
+                <div className="h-12 w-12 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
+                  {/* Profile avatar based on gender */}
+                  {userProfile.gender === "male" ? (
+                    <MaleProfileIcon />
+                  ) : (
+                    <FemaleProfileIcon />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <img
-            src={userProfile.profileImage}
-            alt="profile img"
-            className="h-12 w-12 scale-105 cursor-pointer rounded-full object-cover object-center"
-          />
-        )}
-
-        {/* Full name */}
-        <Typography
-          variant="label"
-          className={classNames(
-            "origin-left transform-gpu transition-all duration-100",
-            "whitespace-nowrap",
-            open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          ) : (
+            <img
+              src={userProfile.profileImage}
+              alt="profile img"
+              className="h-12 w-12 scale-105 cursor-pointer rounded-full object-cover object-center"
+            />
           )}
-        >
-          {userProfile.firstName} {userProfile.lastName}
-        </Typography>
+
+          {/* Full name */}
+          <Typography
+            variant="label"
+            className={classNames(
+              "origin-left transform-gpu transition-all duration-100",
+              "whitespace-nowrap",
+              open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+            )}
+          >
+            {userProfile.firstName} {userProfile.lastName}
+          </Typography>
+        </div>
 
         {/* Profile and logout menu dropdown */}
         <Dropdown

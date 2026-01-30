@@ -1,13 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 export type SearchBarProps = {
   icon?: React.ReactNode;
-  value?: string;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   placeholder: string;
-  // data: UserProfileData[];
-  // loading: boolean;
   children: React.ReactNode;
 
   parentContainerClassName?: string;
@@ -21,12 +27,11 @@ export type SearchBarProps = {
 
 const SearchBar = ({
   value,
+  setValue,
   onChange,
   icon = <FaMagnifyingGlass className="text-tp-typography h-4 w-4" />,
   placeholder,
   children,
-  // data,
-  // loading,
   type = "text",
   name = "",
   parentContainerClassName = "",
@@ -71,7 +76,9 @@ const SearchBar = ({
       className={`bg-tp-card-back shadow-tp-primary relative flex w-full items-center rounded-full shadow-xs md:px-2 md:py-2 ${parentContainerClassName}`}
     >
       {/* box where search results will be displayed */}
-      {showResults && children}
+      {showResults && value && (
+        <div onClick={() => setShowResults(false)}> {children} </div>
+      )}
       {/* <SearchResultList listData={data} loading={loading} /> */}
       <div onClick={handleInputFocus} className="absolute left-4">
         {icon}
@@ -93,6 +100,14 @@ const SearchBar = ({
         autoComplete="off"
         {...rest}
       />
+      {value && (
+        <div onClick={handleInputFocus} className="absolute right-4">
+          <IoClose
+            className="text-tp-typography h-4 w-4"
+            onClick={() => setValue("")}
+          />
+        </div>
+      )}
     </div>
   );
 };

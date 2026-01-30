@@ -80,3 +80,29 @@ export const fetchProfiles = async () => {
 
   return profiles;
 };
+
+export const searchProfiles = async (
+  queryString: string,
+  currentUserId: string,
+) => {
+  if (!queryString) return [];
+
+  const supabaseQuery = supabase
+    .from("profiles")
+    .select(
+      "userName,firstName,lastName,nationality,dateOfBirth, profileImage, weight, height, skillLevel",
+    )
+    .neq("id", currentUserId)
+    .or(
+      `userName.ilike.%${queryString}%,firstName.ilike.%${queryString}%,lastName.ilike.%${queryString}%`,
+    );
+
+  const { data: matchedProfiles, error } = await supabaseQuery;
+
+  if (error) {
+    console.error("Search error:", error);
+    throw new Error("Error while searching profiles");
+  }
+
+  return matchedProfiles;
+};

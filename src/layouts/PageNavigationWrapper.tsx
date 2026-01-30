@@ -1,15 +1,17 @@
 import Typography from "@/components/text/Typography";
 
-const PageHeaderWrapper = ({
+const PageNavigationWrapper = ({
   title,
   children,
+  className = "",
 }: {
-  title: string;
+  title?: string;
+  className?: string;
   children?: React.ReactNode;
 }) => {
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className={`flex items-center justify-between ${className}`}>
         {title && <Typography className="font-bold">{title}</Typography>}
         {children}
       </div>
@@ -17,4 +19,4 @@ const PageHeaderWrapper = ({
   );
 };
 
-export default PageHeaderWrapper;
+export default PageNavigationWrapper;

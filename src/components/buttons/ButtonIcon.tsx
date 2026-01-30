@@ -116,7 +116,7 @@ const ButtonIcon = ({
           "bg-transparent",
           "text-tp-typography",
           setBorder(),
-          hoverClass ? `${setHoverColors()}` : "",
+          hoverClass && !disabled ? `${setHoverColors()}` : "",
         ];
       case "filled":
         return [setBackgroundColor(), setTextColor(), setBorder()];

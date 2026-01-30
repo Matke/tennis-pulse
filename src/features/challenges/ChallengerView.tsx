@@ -1,75 +1,63 @@
+// components
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
+// types
 import type { UserProfileData } from "@/types/authTypes";
-import { calculateAge } from "@/utils/common";
+// icons
 import { MdEdit } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import { FaListAlt } from "react-icons/fa";
-import type { Variants } from "framer-motion";
+import { FaPeopleArrows } from "react-icons/fa";
+// utils
 import { motion } from "framer-motion";
-// import { FaUserEdit } from "react-icons/fa";
-// import { FaLockOpen } from "react-icons/fa";
+import { calculateAge } from "@/utils/common";
+import {
+  containerVariants,
+  itemVariants,
+  itemVariantsX,
+  profilePopVariant,
+  revealVariant,
+} from "@/utils/animationVariants";
+import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
+import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
-  },
+type ChallengerActionsData = {
+  icon: React.ReactNode;
+  tooltipId: string;
+  tooltipContent: string;
 };
 
-const itemVariants: Variants = {
-  hidden: { y: -10, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 100 },
+const challengerActions: ChallengerActionsData[] = [
+  {
+    icon: <MdEdit className="h-5 w-5" />,
+    tooltipId: "edit-profile",
+    tooltipContent: "Edit your profile",
   },
-};
-
-const itemVariantsX: Variants = {
-  hidden: { x: 10, opacity: 0 },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 100 },
+  {
+    icon: <FaLock className="h-5 w-5" />,
+    tooltipId: "private-public",
+    tooltipContent:
+      "Your profile is private, so it won't appear in challenges or matches searches",
   },
-};
-
-const profilePopVariant: Variants = {
-  hidden: { scale: 0.8, opacity: 0 },
-  visible: {
-    scale: 1.0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 260,
-      damping: 20,
-    },
+  {
+    icon: <FaPeopleArrows className="h-5 w-5" />,
+    tooltipId: "list-challenges",
+    tooltipContent: "View your head-to-head score with selected opponent",
   },
-};
-
-const revealVariant: Variants = {
-  hidden: { y: "100%", opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.33, 1, 0.68, 1],
-    },
-  },
-};
+];
 
 const ChallengerView = ({
   userProfile,
 }: {
   userProfile: Partial<UserProfileData>;
 }) => {
+  const genderIcon =
+    userProfile?.gender === "male" ? (
+      <MaleProfileIcon />
+    ) : (
+      <FemaleProfileIcon />
+    );
+
   return (
     <>
       <motion.div
@@ -101,8 +89,8 @@ const ChallengerView = ({
                 alt="Profile"
               />
             ) : (
-              <div className="h-32 w-32 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
-                {""}
+              <div className="h-32 w-32 scale-110 transform rounded-full mask-b-from-100% object-cover transition-all duration-500">
+                {genderIcon}
               </div>
             )}
           </div>
@@ -170,47 +158,26 @@ const ChallengerView = ({
           />
         </motion.div>
 
-        {/* TODO: Make it map from array of objects */}
+        {/* Challenger actions */}
         <motion.div
           variants={revealVariant}
           className="mt-8 flex items-center gap-3"
         >
-          <ButtonIcon
-            icon={<MdEdit className="h-5 w-5" />}
-            variant="outlined"
-            className="shadow-tp-primary p-2.5 shadow-sm hover:border-none"
-            backgroundColor="bg-tp-card-back"
-            borderColor="border-none"
-            hoverClass
-            rounded
-            tooltipId="edit-profile"
-            tooltipContent="Edit your profile"
-            tooltipPlacement="top"
-          />
-          <ButtonIcon
-            icon={<FaLock className="h-5 w-5" />}
-            variant="outlined"
-            className="shadow-tp-primary p-2.5 shadow-sm"
-            backgroundColor="bg-tp-card-back"
-            borderColor="border-none"
-            hoverClass
-            rounded
-            tooltipId="private-public"
-            tooltipContent="Your profile is private, so it won't appear in challenges or matches searches"
-            tooltipPlacement="top"
-          />
-          <ButtonIcon
-            icon={<FaListAlt className="h-5 w-5" />}
-            variant="outlined"
-            className="shadow-tp-primary p-2.5 shadow-sm"
-            backgroundColor="bg-tp-card-back"
-            borderColor="border-none"
-            hoverClass
-            rounded
-            tooltipId="list-challenges"
-            tooltipContent="View your list of challenges"
-            tooltipPlacement="top"
-          />
+          {challengerActions.map((action) => (
+            <ButtonIcon
+              key={action.tooltipId}
+              icon={action.icon}
+              variant="outlined"
+              className="shadow-tp-primary p-2.5 shadow-sm hover:border-none"
+              backgroundColor="bg-tp-card-back"
+              borderColor="border-none"
+              hoverClass
+              rounded
+              tooltipId={action.tooltipId}
+              tooltipContent={action.tooltipContent}
+              tooltipPlacement="top"
+            />
+          ))}
         </motion.div>
       </motion.div>
     </>

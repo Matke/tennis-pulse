@@ -4,16 +4,18 @@ import Typography from "@/components/text/Typography";
 import type { UserProfileData } from "@/types/authTypes";
 // utils
 import { calculateAge } from "@/utils/common";
+import type { Dispatch, SetStateAction } from "react";
 
 type SearchResultData = {
   data: Partial<UserProfileData>;
+  onPlayerSelect: Dispatch<SetStateAction<Partial<UserProfileData> | null>>;
 };
 
-const SearchResult = ({ data }: SearchResultData) => {
+const SearchResult = ({ data, onPlayerSelect }: SearchResultData) => {
   return (
     <div
       className="hover:bg-tp-main-background z-100 flex items-center justify-between gap-3 rounded-md p-2 not-disabled:active:scale-99 not-disabled:active:brightness-99"
-      onClick={() => console.log(data.id)}
+      onClick={() => onPlayerSelect(data)}
     >
       <div className="flex flex-1 items-center gap-2">
         <span

@@ -15,12 +15,12 @@ const Tabs = ({
 }: {
   tabs: TabItem[];
   currentTab: string;
-  helperText: string;
+  helperText?: string;
   changeTab: (tab: string) => void;
 }) => {
   return (
     <nav
-      className="flex flex-row items-center justify-center gap-0 border-b py-0.5 md:border-none"
+      className="flex flex-row items-center justify-center gap-2 border-b py-0.5 md:border-none"
       aria-label="Tabs"
     >
       {helperText && (
@@ -31,13 +31,14 @@ const Tabs = ({
       {tabs.map((tab, tabIdx) => (
         <Button
           key={tabIdx}
-          label={tab.label}
+          label={tab.label.split("-").join(" ")}
           themeColor={currentTab === tab.label ? "primary" : "secondary"}
-          className="shadow-tp-primary/30 rounded-none border-none shadow-none brightness-90 hover:bg-transparent"
+          className="shadow-tp-primary/50 border-none shadow-none brightness-90 hover:bg-transparent"
           buttonSize="medium"
           icon={tab.icon}
           uppercaseLabel
-          disabled={tab.label === "location"}
+          iconPosition="right"
+          // disabled={tab.label === "location"}
           onClick={() => changeTab(tab.label)}
         />
       ))}
