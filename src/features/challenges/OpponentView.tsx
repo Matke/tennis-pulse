@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react";
+// components
+import ButtonActionsMenu, {
+  type ButtonActionsData,
+} from "@/components/buttons/ButtonActionsMenu";
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
@@ -6,17 +11,17 @@ import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
 import SearchBar from "@/features/challenges/SearchBar";
 import SearchResultList from "@/features/challenges/SearchResultList";
-import { searchProfiles } from "@/services/apiProfile";
+// types
 import { type UserProfileData } from "@/types/authTypes";
+// utils
 import { calculateAge } from "@/utils/common";
-import { useEffect, useState } from "react";
+import { searchProfiles } from "@/services/apiProfile";
 import { toast } from "react-hot-toast";
-// import { toast } from "react-hot-toast";
+// icons
 import { IoTennisball } from "react-icons/io5";
 import { IoCloseCircle } from "react-icons/io5";
+import { FaHeart, FaPeopleArrows } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
-import { FaPeopleArrows } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa6";
 
 const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
   const [searchPlayerValue, setSearchPlayerValue] = useState<string>("");
@@ -28,7 +33,7 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchPlayerValue(e.target.value);
-    setIsLoading(true);
+    setIsLoading(true); // to avoid blinking of empty state
   };
 
   useEffect(() => {
@@ -61,10 +66,31 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
       <FemaleProfileIcon />
     );
 
+  const actioButtonsData: ButtonActionsData[] = [
+    {
+      icon: <FaHeart className="h-5 w-5" />,
+      action: () => console.log("Save as favorite"),
+      tooltipId: "favorite-opponent",
+      tooltipContent: "Save as favorite opponent",
+    },
+    {
+      icon: <FaPeopleArrows className="h-5 w-5" />,
+      action: () => console.log("View head2head"),
+      tooltipId: "list-challenges",
+      tooltipContent: "View your head-to-head score with selected opponent",
+    },
+    {
+      icon: <CgDetailsMore className="h-5 w-5" />,
+      action: () => setShowPlayerDetails(!showPlayerDetails),
+      tooltipId: "full-player-details",
+      tooltipContent: "Show player full details",
+    },
+  ];
+
   return (
     <div className="hover:bg-tp-main-background/70 relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
       <div
-        className={`bg-tp-main-background absolute inset-0 z-100 flex flex-col transition-transform duration-500 ease-in-out ${!showPlayerDetails ? "translate-x-0" : "translate-x-full"}`}
+        className={`bg-tp-main-background absolute inset-0 z-100 flex flex-col transition-transform duration-500 ease-in-out ${!showPlayerDetails ? "translate-x-0" : "translate-x-full"} `}
       >
         <div className="relative">
           <FullPlayerDetails opponentData={selectedOpponent} />
@@ -103,21 +129,6 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
                 {genderIcon}
               </div>
             )}
-            {/* {selectedOpponent && (
-              <ButtonIcon
-                onClick={() => setShowPlayerDetails(!showPlayerDetails)}
-                icon={<CgDetailsMore className="h-5 w-5" />}
-                variant="outlined"
-                className="shadow-tp-primary absolute -right-12 -bottom-1.5 border-none p-2.5 shadow-sm hover:border-none"
-                backgroundColor="bg-tp-card-back"
-                borderColor="border-none"
-                hoverClass
-                rounded
-                tooltipId="full-player-details"
-                tooltipContent="Show player full details"
-                tooltipPlacement="right"
-              />
-            )} */}
           </div>
         </div>
 
@@ -191,7 +202,12 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
         </div>
 
         {/* Search bar with action to start challenge */}
-        <div className="mt-8 flex items-center justify-center gap-2">
+        {/* TODO ml-10 will temporarily center search bar and other action buttons */}
+        <div className="mt-8 ml-10 flex items-center gap-2">
+          <ButtonActionsMenu
+            actions={actioButtonsData}
+            isMenuDisabled={!selectedOpponent}
+          />
           <SearchBar
             placeholder="Search players"
             value={searchPlayerValue}
@@ -221,50 +237,6 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
           />
         </div>
       </div>
-      {/* TODO will open a modal */}
-      {selectedOpponent && (
-        <div className="absolute top-23 right-35 space-y-2">
-          <ButtonIcon
-            icon={<FaHeart className="h-5 w-5" />}
-            variant="outlined"
-            className="shadow-tp-primary border-none p-2.5 shadow-sm hover:border-none"
-            backgroundColor="bg-tp-card-back"
-            borderColor="border-none"
-            hoverClass
-            rounded
-            tooltipId="favorite-opponent"
-            tooltipContent="Save as favorite opponent"
-            tooltipPlacement="top"
-          />
-          <ButtonIcon
-            onClick={() => setShowPlayerDetails(!showPlayerDetails)}
-            icon={<CgDetailsMore className="h-5 w-5" />}
-            variant="outlined"
-            className="shadow-tp-primary border-none p-2.5 shadow-sm hover:border-none"
-            backgroundColor="bg-tp-card-back"
-            borderColor="border-none"
-            hoverClass
-            rounded
-            tooltipId="full-player-details"
-            tooltipContent="Show player full details"
-            tooltipPlacement="top"
-          />
-          <ButtonIcon
-            onClick={() => console.log("Start a match")}
-            disabled={!selectedOpponent}
-            icon={<FaPeopleArrows className="h-5 w-5" />}
-            variant="outlined"
-            className="shadow-tp-primary p-2.5 shadow-sm"
-            backgroundColor="bg-tp-card-back"
-            borderColor="border-none"
-            hoverClass
-            rounded
-            tooltipId="list-challenges"
-            tooltipContent="View your head-to-head score with selected opponent"
-            tooltipPlacement="top"
-          />
-        </div>
-      )}
     </div>
   );
 };
