@@ -103,7 +103,7 @@ const SearchBar = ({
       {value && (
         <div onClick={handleInputFocus} className="absolute right-4">
           <IoClose
-            className="text-tp-typography h-4 w-4"
+            className="text-tp-typography h-4 w-4 rounded-full"
             onClick={() => setValue("")}
           />
         </div>

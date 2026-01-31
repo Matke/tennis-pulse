@@ -89,9 +89,10 @@ export const searchProfiles = async (
 
   const supabaseQuery = supabase
     .from("profiles")
-    .select(
-      "userName,firstName,lastName,nationality,dateOfBirth, profileImage, weight, height, skillLevel",
-    )
+    // .select(
+    //   "userName,firstName,lastName,nationality,dateOfBirth, profileImage, weight, height, skillLevel",
+    // )
+    .select("*")
     .neq("id", currentUserId)
     .or(
       `userName.ilike.%${queryString}%,firstName.ilike.%${queryString}%,lastName.ilike.%${queryString}%`,

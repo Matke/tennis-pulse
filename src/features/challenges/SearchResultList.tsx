@@ -7,9 +7,9 @@ import type { UserProfileData } from "@/types/authTypes";
 import type { Dispatch, SetStateAction } from "react";
 
 type SearchResultListData = {
-  listData: Partial<UserProfileData>[];
+  listData: UserProfileData[];
   isLoading: boolean;
-  onPlayerSelect: Dispatch<SetStateAction<Partial<UserProfileData> | null>>;
+  onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
 };
 
 const SearchResultList = ({
@@ -33,7 +33,7 @@ const SearchResultList = ({
           </Typography>
         </div>
       ) : (
-        listData.map((item: Partial<UserProfileData>) => {
+        listData.map((item: UserProfileData) => {
           return (
             <SearchResult
               key={item.id}

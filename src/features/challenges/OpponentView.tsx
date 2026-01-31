@@ -3,6 +3,7 @@ import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
 import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
+import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
 import SearchBar from "@/features/challenges/SearchBar";
 import SearchResultList from "@/features/challenges/SearchResultList";
 import { searchProfiles } from "@/services/apiProfile";
@@ -12,13 +13,18 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 // import { toast } from "react-hot-toast";
 import { IoTennisball } from "react-icons/io5";
+import { IoCloseCircle } from "react-icons/io5";
+import { CgDetailsMore } from "react-icons/cg";
+import { FaPeopleArrows } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
 
 const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
   const [searchPlayerValue, setSearchPlayerValue] = useState<string>("");
   const [selectedOpponent, setSelectedOpponent] =
-    useState<Partial<UserProfileData> | null>(null);
-  const [profiles, setProfiles] = useState<Partial<UserProfileData>[]>([]);
+    useState<UserProfileData | null>(null);
+  const [profiles, setProfiles] = useState<UserProfileData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(true);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchPlayerValue(e.target.value);
@@ -56,7 +62,26 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
     );
 
   return (
-    <>
+    <div className="hover:bg-tp-main-background/70 relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
+      <div
+        className={`bg-tp-main-background absolute inset-0 z-100 flex flex-col transition-transform duration-500 ease-in-out ${!showPlayerDetails ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="relative">
+          <FullPlayerDetails opponentData={selectedOpponent} />
+          <ButtonIcon
+            onClick={() => setShowPlayerDetails(!showPlayerDetails)}
+            icon={<IoCloseCircle className="h-6 w-6" />}
+            variant="outlined"
+            className="absolute top-3 left-4 p-2.5 shadow-sm"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            rounded
+          />
+          <Typography variant="paragraph" className="mt-5 ml-7">
+            Last 5 matches
+          </Typography>
+        </div>
+      </div>
       <div className="mt-8 flex items-center justify-center">
         <Typography variant="title" className="font-bold">
           Opponent
@@ -78,6 +103,21 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
                 {genderIcon}
               </div>
             )}
+            {/* {selectedOpponent && (
+              <ButtonIcon
+                onClick={() => setShowPlayerDetails(!showPlayerDetails)}
+                icon={<CgDetailsMore className="h-5 w-5" />}
+                variant="outlined"
+                className="shadow-tp-primary absolute -right-12 -bottom-1.5 border-none p-2.5 shadow-sm hover:border-none"
+                backgroundColor="bg-tp-card-back"
+                borderColor="border-none"
+                hoverClass
+                rounded
+                tooltipId="full-player-details"
+                tooltipContent="Show player full details"
+                tooltipPlacement="right"
+              />
+            )} */}
           </div>
         </div>
 
@@ -165,7 +205,6 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
             />
           </SearchBar>
 
-          {/* TODO will open a modal */}
           <ButtonIcon
             onClick={() => console.log("Start a match")}
             disabled={!selectedOpponent}
@@ -178,11 +217,55 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
             rounded
             tooltipId="challenge-play"
             tooltipContent={`${selectedOpponent ? `Create a challenge with ${selectedOpponent?.firstName + " " + selectedOpponent?.lastName + " (" + selectedOpponent?.userName + ")"}` : "Search and select your opponent to procced with challenge creation"}`}
-            tooltipPlacement="right"
+            tooltipPlacement="top"
           />
         </div>
       </div>
-    </>
+      {/* TODO will open a modal */}
+      {selectedOpponent && (
+        <div className="absolute top-23 right-35 space-y-2">
+          <ButtonIcon
+            icon={<FaHeart className="h-5 w-5" />}
+            variant="outlined"
+            className="shadow-tp-primary border-none p-2.5 shadow-sm hover:border-none"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            hoverClass
+            rounded
+            tooltipId="favorite-opponent"
+            tooltipContent="Save as favorite opponent"
+            tooltipPlacement="top"
+          />
+          <ButtonIcon
+            onClick={() => setShowPlayerDetails(!showPlayerDetails)}
+            icon={<CgDetailsMore className="h-5 w-5" />}
+            variant="outlined"
+            className="shadow-tp-primary border-none p-2.5 shadow-sm hover:border-none"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            hoverClass
+            rounded
+            tooltipId="full-player-details"
+            tooltipContent="Show player full details"
+            tooltipPlacement="top"
+          />
+          <ButtonIcon
+            onClick={() => console.log("Start a match")}
+            disabled={!selectedOpponent}
+            icon={<FaPeopleArrows className="h-5 w-5" />}
+            variant="outlined"
+            className="shadow-tp-primary p-2.5 shadow-sm"
+            backgroundColor="bg-tp-card-back"
+            borderColor="border-none"
+            hoverClass
+            rounded
+            tooltipId="list-challenges"
+            tooltipContent="View your head-to-head score with selected opponent"
+            tooltipPlacement="top"
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

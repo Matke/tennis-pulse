@@ -7,7 +7,7 @@ import type { UserProfileData } from "@/types/authTypes";
 // icons
 import { MdEdit } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import { FaPeopleArrows } from "react-icons/fa";
+// import { FaPeopleArrows } from "react-icons/fa";
 // utils
 import { motion } from "framer-motion";
 import { calculateAge } from "@/utils/common";
@@ -20,6 +20,7 @@ import {
 } from "@/utils/animationVariants";
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
+import { PiListHeartFill } from "react-icons/pi";
 
 type ChallengerActionsData = {
   icon: React.ReactNode;
@@ -40,9 +41,9 @@ const challengerActions: ChallengerActionsData[] = [
       "Your profile is private, so it won't appear in challenges or matches searches",
   },
   {
-    icon: <FaPeopleArrows className="h-5 w-5" />,
-    tooltipId: "list-challenges",
-    tooltipContent: "View your head-to-head score with selected opponent",
+    icon: <PiListHeartFill className="h-5 w-5" />,
+    tooltipId: "list-favorite-opponents",
+    tooltipContent: "View list of your favorite opponents",
   },
 ];
 
@@ -59,7 +60,7 @@ const ChallengerView = ({
     );
 
   return (
-    <>
+    <div className="border-tp-divider/20 hover:bg-tp-main-background/70 flex h-full w-1/2 cursor-pointer flex-col items-center justify-center border-r border-dashed transition-all duration-300">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -180,7 +181,7 @@ const ChallengerView = ({
           ))}
         </motion.div>
       </motion.div>
-    </>
+    </div>
   );
 };
 

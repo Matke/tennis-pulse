@@ -7,8 +7,8 @@ import { calculateAge } from "@/utils/common";
 import type { Dispatch, SetStateAction } from "react";
 
 type SearchResultData = {
-  data: Partial<UserProfileData>;
-  onPlayerSelect: Dispatch<SetStateAction<Partial<UserProfileData> | null>>;
+  data: UserProfileData;
+  onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
 };
 
 const SearchResult = ({ data, onPlayerSelect }: SearchResultData) => {
