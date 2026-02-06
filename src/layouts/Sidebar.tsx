@@ -168,7 +168,7 @@ const Sidebar = () => {
           )}
         >
           <Typography
-            className={`text-xl font-semibold duration-200 ease-in-out ${!open && "scale-0"} animate-pulse bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text text-center font-extrabold tracking-widest whitespace-nowrap text-transparent select-auto`}
+            className={`text-xl font-semibold duration-200 ease-in-out ${!open && "scale-0"} bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text text-center font-extrabold tracking-widest whitespace-nowrap text-transparent select-auto`}
           >
             Tennis Pulse
           </Typography>
