@@ -79,7 +79,6 @@ const SearchBar = ({
       {showResults && value && (
         <div onClick={() => setShowResults(false)}> {children} </div>
       )}
-      {/* <SearchResultList listData={data} loading={loading} /> */}
       <div onClick={handleInputFocus} className="absolute left-4">
         {icon}
       </div>

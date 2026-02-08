@@ -4,12 +4,13 @@ import Typography from "@/components/text/Typography";
 import SearchResult from "@/features/challenges/SearchResult";
 // types
 import type { UserProfileData } from "@/types/authTypes";
-import type { Dispatch, SetStateAction } from "react";
+// import type { Dispatch, SetStateAction } from "react";
 
 type SearchResultListData = {
   listData: UserProfileData[];
   isLoading: boolean;
-  onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
+  onPlayerSelect: (player: UserProfileData) => void;
+  // onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
 };
 
 const SearchResultList = ({

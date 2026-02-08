@@ -4,11 +4,12 @@ import Typography from "@/components/text/Typography";
 import type { UserProfileData } from "@/types/authTypes";
 // utils
 import { calculateAge } from "@/utils/common";
-import type { Dispatch, SetStateAction } from "react";
+// import type { Dispatch, SetStateAction } from "react";
 
 type SearchResultData = {
   data: UserProfileData;
-  onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
+  onPlayerSelect: (player: UserProfileData) => void;
+  // onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
 };
 
 const SearchResult = ({ data, onPlayerSelect }: SearchResultData) => {

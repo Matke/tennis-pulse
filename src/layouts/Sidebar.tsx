@@ -209,7 +209,7 @@ const Sidebar = () => {
                     </span>
                   </div>
 
-                  {item.subMenu && (
+                  {item.subMenu && isActive && (
                     <span
                       className={`py-full group-hover:border-tp-divider/5 absolute -right-4 flex cursor-pointer items-center justify-center rounded-r-md px-4 py-4 text-sm group-hover:border-2 group-hover:shadow-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
                       onClick={(e) => {

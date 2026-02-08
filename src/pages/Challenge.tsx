@@ -14,7 +14,8 @@ import { FaListAlt } from "react-icons/fa";
 
 const Challenge = () => {
   const [currentTab, setCurrentTab] = useState("create");
-  const { userProfile } = useAuth(); // challenger view data
+  const { userProfile } = useAuth();
+
   return (
     <div className="flex h-full flex-col justify-between gap-5">
       <PageNavigationWrapper>
@@ -46,9 +47,7 @@ const Challenge = () => {
         disablePadding
       >
         <div className="flex h-full w-full flex-row items-center justify-center">
-          {/* left side */}
           <ChallengerView userProfile={userProfile} />
-          {/* right side */}
           <OpponentView userProfile={userProfile} />
         </div>
       </SimpleCard>
