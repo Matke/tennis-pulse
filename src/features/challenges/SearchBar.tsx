@@ -1,0 +1,114 @@
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+
+export type SearchBarProps = {
+  icon?: React.ReactNode;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  placeholder: string;
+  children: React.ReactNode;
+
+  parentContainerClassName?: string;
+  inputClassName?: string;
+  type?: string;
+  name?: string;
+  disabled?: boolean;
+  defaultValue?: string;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+};
+
+const SearchBar = ({
+  value,
+  setValue,
+  onChange,
+  icon = <FaMagnifyingGlass className="text-tp-typography h-4 w-4" />,
+  placeholder,
+  children,
+  type = "text",
+  name = "",
+  parentContainerClassName = "",
+  inputClassName = "",
+  disabled = false,
+  onBlur,
+  defaultValue,
+  ...rest
+}: SearchBarProps) => {
+  const [showResults, setShowResults] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleInputFocus = () => {
+    inputRef?.current?.focus();
+  };
+
+  // 3. Effect to handle clicks outside the component
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // If the container exists and the click target is NOT inside the container
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setShowResults(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const nameId =
+    name || placeholder.toLocaleLowerCase("en-US").replace(/\s+/g, "-");
+
+  return (
+    <div
+      ref={containerRef}
+      className={`bg-tp-card-back shadow-tp-primary relative flex w-full items-center rounded-full shadow-xs md:px-2 md:py-2 ${parentContainerClassName}`}
+    >
+      {/* box where search results will be displayed */}
+      {showResults && value && (
+        <div onClick={() => setShowResults(false)}> {children} </div>
+      )}
+      <div onClick={handleInputFocus} className="absolute left-4">
+        {icon}
+      </div>
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        type={type}
+        disabled={disabled}
+        id={nameId}
+        onFocus={() => setShowResults(true)}
+        name={nameId}
+        defaultValue={defaultValue}
+        spellCheck={false}
+        className={`custom-autofill text-tp-typography focus-none mr-2 ml-9 border-none transition-colors outline-none ${inputClassName}`}
+        placeholder={placeholder}
+        autoComplete="off"
+        {...rest}
+      />
+      {value && (
+        <div onClick={handleInputFocus} className="absolute right-4">
+          <IoClose
+            className="text-tp-typography h-4 w-4 rounded-full"
+            onClick={() => setValue("")}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SearchBar;

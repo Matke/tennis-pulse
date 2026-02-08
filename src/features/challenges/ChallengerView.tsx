@@ -1,0 +1,207 @@
+// components
+import ButtonIcon from "@/components/buttons/ButtonIcon";
+import Typography from "@/components/text/Typography";
+import Chip from "@/components/ui/Chip";
+// types
+import type { UserProfileData } from "@/types/authTypes";
+// icons
+import { MdEdit } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
+// import { FaPeopleArrows } from "react-icons/fa";
+// utils
+import { motion } from "framer-motion";
+import { calculateAge } from "@/utils/common";
+import {
+  containerVariants,
+
+  // itemVariants,
+  itemVariantsX,
+  profilePopVariant,
+  revealVariant,
+} from "@/utils/animationVariants";
+import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
+import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
+import { PiListHeartFill } from "react-icons/pi";
+import { useMemo } from "react";
+import type { TooltipPlacement } from "@/components/tooltip/Tooltip";
+
+type ChallengerActionsData = {
+  icon: React.ReactNode;
+  tooltipId: string;
+  tooltipContent: string;
+};
+
+type BasicPlayerInfoChips = {
+  label: string;
+  tooltipId?: string;
+  tooltipContent?: string;
+  tooltipPlacement?: TooltipPlacement;
+};
+
+const ChallengerView = ({ userProfile }: { userProfile: UserProfileData }) => {
+  const challengerActions: ChallengerActionsData[] = useMemo(
+    () => [
+      {
+        icon: <MdEdit className="h-5 w-5" />,
+        tooltipId: "edit-profile",
+        tooltipContent: "Edit your profile",
+      },
+      {
+        icon: <FaLock className="h-5 w-5" />,
+        tooltipId: "private-public",
+        tooltipContent:
+          "Your profile is private, so it won't appear in challenges or matches searches",
+      },
+      {
+        icon: <PiListHeartFill className="h-5 w-5" />,
+        tooltipId: "list-favorite-opponents",
+        tooltipContent: "View list of your favorite opponents",
+      },
+    ],
+    [],
+  );
+
+  const genderIcon =
+    userProfile?.gender === "male" ? (
+      <MaleProfileIcon />
+    ) : (
+      <FemaleProfileIcon />
+    );
+
+  const chipsPlayerInfo: BasicPlayerInfoChips[] = [
+    {
+      label: userProfile.userName,
+      tooltipId: "username",
+      tooltipContent: "Your username",
+      tooltipPlacement: "left",
+    },
+    {
+      label: `${userProfile?.height}cm`,
+    },
+    {
+      label: `${userProfile?.weight}kg`,
+    },
+  ];
+
+  return (
+    // pseudo element to display VS text in the middle of the border (right side of element)
+    <div className="border-tp-divider/20 hover:bg-tp-main-background/70 after:text-tp-typography/50 relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center border-r border-dashed transition-all duration-300 after:absolute after:-right-2.5 after:z-100 after:bg-transparent after:text-lg after:font-bold after:content-['VS']">
+      <div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex h-full flex-col items-center justify-center gap-5 px-6"
+        >
+          <motion.div variants={profilePopVariant} className="group relative">
+            <div className="animate-tilt absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-600 to-yellow-200 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+            <div className="relative">
+              {/* Profile image part */}
+              {userProfile.profileImage ? (
+                <img
+                  src={userProfile.profileImage}
+                  className="h-32 w-32 scale-110 rotate-6 transform rounded-full object-cover transition-all duration-500"
+                  alt="Profile"
+                />
+              ) : (
+                <div className="h-32 w-32 scale-110 transform rounded-full mask-b-from-100% object-cover transition-all duration-500">
+                  {genderIcon}
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={revealVariant}
+            className="flex flex-row items-center justify-center gap-2"
+          >
+            <span
+              className={`fi fi-${userProfile?.nationality?.toLocaleLowerCase()}`}
+              style={{
+                backgroundSize: "contain",
+                backgroundPosition: "50%",
+                backgroundRepeat: "no-repeat",
+                width: "40px",
+                height: "40px",
+              }}
+            ></span>
+            <Typography variant="subtitle">
+              {userProfile.firstName} {userProfile.lastName}
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            variants={revealVariant}
+            className="flex w-full justify-center gap-x-7"
+          >
+            <div className="transform text-center transition-all duration-300 hover:scale-110">
+              <p className="bg-linear-to-l from-yellow-500 to-orange-500 bg-clip-text text-2xl font-bold text-transparent">
+                {userProfile?.nationality?.toLocaleUpperCase()}
+              </p>
+              <p className="text-xs text-gray-400">COUNTRY</p>
+            </div>
+            <div className="transform text-center transition-all duration-300 hover:scale-110">
+              <p className="bg-linear-to-r from-yellow-500 to-orange-500 bg-clip-text text-2xl font-bold text-transparent">
+                {userProfile.dateOfBirth &&
+                  calculateAge(userProfile?.dateOfBirth)}
+              </p>
+              <p className="text-xs text-gray-400">AGE</p>
+            </div>
+            <div className="transform text-center transition-all duration-300 hover:scale-110">
+              <p className="bg-linear-to-l from-yellow-500 to-orange-500 bg-clip-text text-2xl font-bold text-transparent">
+                {userProfile?.skillLevel?.toFixed(1)}
+              </p>
+              <p className="text-xs text-gray-400">UTR Rating</p>
+            </div>
+          </motion.div>
+
+          <motion.div variants={itemVariantsX} className="space-x-2">
+            {chipsPlayerInfo.map(
+              (item: BasicPlayerInfoChips, index: number) => (
+                <Chip
+                  key={index}
+                  label={item.label}
+                  chipSize="medium"
+                  tooltipId={item.tooltipId}
+                  tooltipContent={item.tooltipContent}
+                  tooltipPlacement={item.tooltipPlacement}
+                />
+              ),
+            )}
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Challenger actions */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mt-8"
+      >
+        <motion.div
+          variants={containerVariants}
+          className="flex items-center gap-3"
+        >
+          {challengerActions.map((action) => (
+            <ButtonIcon
+              key={action.tooltipId}
+              icon={action.icon}
+              variant="outlined"
+              className="shadow-tp-primary p-2.5 shadow-sm hover:border-none"
+              backgroundColor="bg-tp-card-back"
+              borderColor="border-none"
+              hoverClass
+              rounded
+              tooltipId={action.tooltipId}
+              tooltipContent={action.tooltipContent}
+              tooltipPlacement="top"
+            />
+          ))}
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default ChallengerView;

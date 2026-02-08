@@ -61,12 +61,13 @@ const LoginForm = () => {
         onSuccess: async (data) => {
           const user = data.user || data;
 
-          setUser(user);
-          setIsFetching(true);
-
           try {
+            setIsFetching(true);
             const profile = await getUserProfile(user.id);
+
             console.log(profile);
+            // putting state here will fix /welcome flicker when user log in
+            setUser(user);
             setUserProfile(profile);
 
             toast.success("Successfully logged in!");

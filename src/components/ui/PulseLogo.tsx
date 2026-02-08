@@ -14,12 +14,12 @@ const PulseLogo = ({
       <div className={`relative ${isInSidebar ? "h-14 w-14" : "h-24 w-24"}`}>
         {/* big animation for pulse around logo */}
         <div
-          className={`absolute ${isInSidebar ? "inset-2" : "inset-0"} animate-ping rounded-full border-2 border-white/20`}
+          className={`absolute ${isInSidebar ? "inset-2" : "inset-0 animate-ping"} rounded-full border-2 border-white/20`}
         ></div>
 
         {/* smaller animation around logo  */}
         <div
-          className={`absolute ${isInSidebar ? "inset-2" : "inset-0"} animate-pulse rounded-full border border-white/10`}
+          className={`absolute ${isInSidebar ? "inset-2" : "inset-0 animate-pulse"} rounded-full border border-white/10`}
         ></div>
 
         {/* image container  */}
@@ -30,7 +30,7 @@ const PulseLogo = ({
             <img
               src={newLogo}
               alt=""
-              className={`${isInSidebar ? "scale-[8]" : "scale-[3] hover:scale-[3] md:scale-[2]"} animate-pulse transition-all duration-300`}
+              className={`${isInSidebar ? "scale-[8]" : "scale-[3] animate-pulse hover:scale-[3] md:scale-[2]"} transition-all duration-300`}
             />
           </div>
         </div>

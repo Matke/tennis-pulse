@@ -43,7 +43,7 @@ const Welcome = () => {
       </header>
 
       {/* Form section */}
-      <section className="h-full w-full flex-1">
+      <section className="mt-2.5 h-full w-full flex-1">
         <ActiveForm />
       </section>
 

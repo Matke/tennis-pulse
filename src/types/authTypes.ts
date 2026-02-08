@@ -1,7 +1,7 @@
 export type Gender = "male" | "female";
 
 export type UserProfileData = {
-  userId: string;
+  id: string;
   userName: string;
   firstName: string;
   lastName: string;
@@ -22,7 +22,7 @@ export type UserProfileData = {
 
 export type UserProfileFormData = Omit<
   UserProfileData,
-  "userId" | "profileImage" | "created_at"
+  "id" | "profileImage" | "created_at"
 > & {
   profileImage?: File;
 };
@@ -44,6 +44,26 @@ export const userProfileInitialData: UserProfileFormData = {
   racket: "",
   dominantHand: "right",
   // created_at: "",
+};
+
+export const defaultUserProfile: UserProfileData = {
+  id: "",
+  userName: "",
+  firstName: "",
+  lastName: "",
+  gender: "male" as Gender, // adjust if you have a real enum
+  profileImage: "",
+  dateOfBirth: "",
+  nationality: "RS",
+  skillLevel: 0,
+  backhandType: "",
+  forehandType: "",
+  height: 0,
+  weight: 0,
+  bio: "",
+  racket: "",
+  dominantHand: "",
+  created_at: "",
 };
 
 export type SignupData = {

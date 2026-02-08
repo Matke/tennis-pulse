@@ -143,7 +143,7 @@ const Sidebar = () => {
   return (
     // same padding for open and closed state in order not to have strange moving of sidebar
     <aside
-      className={`${open ? "w-72 p-3" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5 duration-300 ease-in-out`}
+      className={`${open ? "w-72 p-3" : "w-20 p-3"} bg-tp-main-background relative flex h-screen flex-col pt-5`}
     >
       {/* Sidebar section for toggling open/close state */}
       {/* z-100 - to be above logo when button is at the top */}
@@ -161,12 +161,18 @@ const Sidebar = () => {
       {/* Logo and title section */}
       <section className="flex items-center gap-x-4">
         <PulseLogo isInSidebar />
-
-        <Typography
-          className={`text-xl font-semibold duration-200 ease-in-out ${!open && "scale-0"} animate-pulse bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text text-center font-extrabold tracking-widest whitespace-nowrap text-transparent select-auto`}
+        <span
+          className={classNames(
+            "origin-left transform-gpu transition-all duration-300",
+            open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          )}
         >
-          Tennis Pulse
-        </Typography>
+          <Typography
+            className={`text-xl font-semibold duration-200 ease-in-out ${!open && "scale-0"} bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-600 bg-clip-text text-center font-extrabold tracking-widest whitespace-nowrap text-transparent select-auto`}
+          >
+            Tennis Pulse
+          </Typography>
+        </span>
       </section>
 
       {/* Sidebar Items section */}
@@ -194,16 +200,22 @@ const Sidebar = () => {
                   <div className="flex items-center gap-7">
                     <span className="text-lg">{item.icon}</span>
                     <span
-                      className={`${!open && "hidden"} origin-left duration-300 ease-in-out`}
+                      className={classNames(
+                        "origin-left transform-gpu whitespace-nowrap transition-all duration-300",
+                        open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+                      )}
                     >
                       {item.title}
                     </span>
                   </div>
 
-                  {item.subMenu && (
+                  {item.subMenu && isActive && (
                     <span
                       className={`py-full group-hover:border-tp-divider/5 absolute -right-4 flex cursor-pointer items-center justify-center rounded-r-md px-4 py-4 text-sm group-hover:border-2 group-hover:shadow-sm ${subMenus[item.key] ? "rotate-360" : ""} transition-transform duration-300 ease-in-out ${!open ? "hidden" : ""}`}
-                      onClick={() => toggleSubMenu(item.key)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleSubMenu(item.key);
+                      }}
                     >
                       {subMenus[item.key] ? (
                         <FaChevronDown />
@@ -241,39 +253,45 @@ const Sidebar = () => {
 
       {/* Profile section - profile image, player name or username, logout */}
       <div
-        className="flex cursor-pointer items-center gap-5 rounded-md p-1 hover:bg-zinc-800/50"
+        className="flex cursor-pointer items-center justify-between gap-5 rounded-md p-1 hover:bg-zinc-800/50"
         onClick={() => setOpen(!open)}
       >
         {/* Profile image or avatar */}
-        {!userProfile.profileImage ? (
-          <div className="group relative">
-            <div className="absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-200 to-yellow-200 opacity-75 blur-[0.5px] transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-            <div className="relative">
-              <div className="h-12 w-12 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
-                {/* Profile avatar based on gender */}
-                {userProfile.gender === "male" ? (
-                  <MaleProfileIcon />
-                ) : (
-                  <FemaleProfileIcon />
-                )}
+        <div className="flex items-center gap-5">
+          {!userProfile.profileImage ? (
+            <div className="group relative">
+              <div className="absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-200 to-yellow-200 opacity-75 blur-[0.5px] transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+              <div className="relative">
+                <div className="h-12 w-12 transform rounded-full mask-b-from-100% object-cover transition-all duration-500 group-hover:scale-110">
+                  {/* Profile avatar based on gender */}
+                  {userProfile.gender === "male" ? (
+                    <MaleProfileIcon />
+                  ) : (
+                    <FemaleProfileIcon />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <img
-            src={userProfile.profileImage}
-            alt="profile img"
-            className="h-12 w-12 scale-105 cursor-pointer rounded-full object-cover object-center"
-          />
-        )}
+          ) : (
+            <img
+              src={userProfile.profileImage}
+              alt="profile img"
+              className="h-12 w-12 scale-105 cursor-pointer rounded-full object-cover object-center"
+            />
+          )}
 
-        {/* Full name */}
-        <Typography
-          variant="label"
-          className={`${!open && "hidden"} whitespace-nowrap`}
-        >
-          {userProfile.firstName} {userProfile.lastName}
-        </Typography>
+          {/* Full name */}
+          <Typography
+            variant="label"
+            className={classNames(
+              "origin-left transform-gpu transition-all duration-100",
+              "whitespace-nowrap",
+              open ? "scale-100 opacity-100" : "scale-0 opacity-0",
+            )}
+          >
+            {userProfile.firstName} {userProfile.lastName}
+          </Typography>
+        </div>
 
         {/* Profile and logout menu dropdown */}
         <Dropdown
