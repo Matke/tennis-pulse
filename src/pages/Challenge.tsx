@@ -43,8 +43,6 @@ const Challenge = () => {
       <SimpleCard
         parentContainerClass="h-full w-full"
         disableHover
-        className=""
-        contentClassName=""
         disablePadding
       >
         <div className="flex h-full w-full flex-row items-center justify-center">

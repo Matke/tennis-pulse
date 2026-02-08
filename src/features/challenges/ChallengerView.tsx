@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { calculateAge } from "@/utils/common";
 import {
   containerVariants,
-  itemVariants,
+  // itemVariants,
   itemVariantsX,
   profilePopVariant,
   revealVariant,
@@ -21,6 +21,7 @@ import {
 import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
 import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
 import { PiListHeartFill } from "react-icons/pi";
+import { useMemo } from "react";
 
 type ChallengerActionsData = {
   icon: React.ReactNode;
@@ -28,30 +29,33 @@ type ChallengerActionsData = {
   tooltipContent: string;
 };
 
-const challengerActions: ChallengerActionsData[] = [
-  {
-    icon: <MdEdit className="h-5 w-5" />,
-    tooltipId: "edit-profile",
-    tooltipContent: "Edit your profile",
-  },
-  {
-    icon: <FaLock className="h-5 w-5" />,
-    tooltipId: "private-public",
-    tooltipContent:
-      "Your profile is private, so it won't appear in challenges or matches searches",
-  },
-  {
-    icon: <PiListHeartFill className="h-5 w-5" />,
-    tooltipId: "list-favorite-opponents",
-    tooltipContent: "View list of your favorite opponents",
-  },
-];
-
 const ChallengerView = ({
   userProfile,
 }: {
   userProfile: Partial<UserProfileData>;
 }) => {
+  const challengerActions: ChallengerActionsData[] = useMemo(
+    () => [
+      {
+        icon: <MdEdit className="h-5 w-5" />,
+        tooltipId: "edit-profile",
+        tooltipContent: "Edit your profile",
+      },
+      {
+        icon: <FaLock className="h-5 w-5" />,
+        tooltipId: "private-public",
+        tooltipContent:
+          "Your profile is private, so it won't appear in challenges or matches searches",
+      },
+      {
+        icon: <PiListHeartFill className="h-5 w-5" />,
+        tooltipId: "list-favorite-opponents",
+        tooltipContent: "View list of your favorite opponents",
+      },
+    ],
+    [],
+  );
+
   const genderIcon =
     userProfile?.gender === "male" ? (
       <MaleProfileIcon />
@@ -60,8 +64,10 @@ const ChallengerView = ({
     );
 
   return (
-    <div className="border-tp-divider/20 hover:bg-tp-main-background/70 flex h-full w-1/2 cursor-pointer flex-col items-center justify-center border-r border-dashed transition-all duration-300">
-      <motion.div
+    // pseudo element to display VS text in the middle of the border (right side of element)
+    <div className="border-tp-divider/20 hover:bg-tp-main-background/70 after:text-tp-typography relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center border-r border-dashed transition-all duration-300 after:absolute after:-right-2.5 after:z-100 after:bg-transparent after:text-lg after:font-bold after:content-['VS']">
+      {/* TODO: return text for mobile version */}
+      {/* <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -72,12 +78,12 @@ const ChallengerView = ({
             Challenger
           </Typography>
         </motion.div>
-      </motion.div>
+      </motion.div> */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mt-8 flex h-full flex-col items-center justify-start gap-5 px-6"
+        className="flex h-full flex-col items-center justify-center gap-5 px-6"
       >
         <motion.div variants={profilePopVariant} className="group relative">
           <div className="animate-tilt absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-600 to-yellow-200 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
