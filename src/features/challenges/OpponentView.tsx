@@ -6,19 +6,30 @@ import ButtonActionsMenu, {
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import OpponentCard from "@/features/challenges/OpponentCard";
 import OpponentSearch from "@/features/challenges/OpponentSearch";
-import Typography from "@/components/text/Typography";
-import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
 // types
 import { type UserProfileData } from "@/types/authTypes";
 // icons
 import { IoCloseCircle, IoTennisball } from "react-icons/io5";
 import { FaHeart, FaPeopleArrows } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
+import CropModal from "@/components/modals/CropModal";
+import CreateChallengeForm from "@/features/challenges/CreateChallengeForm";
+import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
+import Typography from "@/components/text/Typography";
+import { AnimatePresence, motion } from "framer-motion";
+
+const CLOSE_ICON = <IoCloseCircle className="h-6 w-6" />;
+const TENNIS_BALL_ICON = <IoTennisball className="h-5 w-5" />;
+const HEART_ICON = <FaHeart className="h-5 w-5" />;
+const PEOPLE_ARROWS = <FaPeopleArrows className="h-5 w-5" />;
+const DETAILS_ICON = <CgDetailsMore className="h-5 w-5" />;
 
 const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
   const [selectedOpponent, setSelectedOpponent] =
     useState<UserProfileData | null>(null);
-  const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(true);
+  const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false);
+  const [isChallengeModalOpen, setIsChallengeModalOpen] =
+    useState<boolean>(false);
 
   const handlePlayerSelect = useCallback((player: UserProfileData) => {
     setSelectedOpponent(player);
@@ -31,19 +42,19 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
   const actionButtonsData: ButtonActionsData[] = useMemo(
     () => [
       {
-        icon: <FaHeart className="h-5 w-5" />,
+        icon: HEART_ICON,
         action: () => console.log("Save as favorite"),
         tooltipId: "favorite-opponent",
         tooltipContent: "Save as favorite opponent",
       },
       {
-        icon: <FaPeopleArrows className="h-5 w-5" />,
+        icon: PEOPLE_ARROWS,
         action: () => console.log("View head2head"),
         tooltipId: "list-challenges",
         tooltipContent: "View your head-to-head score with selected opponent",
       },
       {
-        icon: <CgDetailsMore className="h-5 w-5" />,
+        icon: DETAILS_ICON,
         action: toggleDetails,
         tooltipId: "full-player-details",
         tooltipContent: "Show player full details",
@@ -58,25 +69,34 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
         {/* Shows basic opponent info */}
         <OpponentCard selectedOpponent={selectedOpponent} />
 
-        <div
-          className={`bg-tp-main-background absolute inset-0 z-100 flex flex-col transition-transform duration-500 ease-in-out ${!showPlayerDetails ? "translate-x-0" : "translate-x-full"} `}
-        >
-          <div className="relative">
-            <FullPlayerDetails opponentData={selectedOpponent} />
-            <ButtonIcon
-              onClick={toggleDetails}
-              icon={<IoCloseCircle className="h-6 w-6" />}
-              variant="outlined"
-              className="absolute top-3 left-4 p-2.5 shadow-sm"
-              backgroundColor="bg-tp-card-back"
-              borderColor="border-none"
-              rounded
-            />
-            <Typography variant="paragraph" className="mt-5 ml-7">
-              Last 5 matches
-            </Typography>
-          </div>
-        </div>
+        <AnimatePresence mode="wait">
+          {showPlayerDetails && (
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              style={{ willChange: "transform" }}
+              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+              className="bg-tp-main-background absolute inset-0 z-100 flex flex-col"
+            >
+              <div className="relative">
+                <FullPlayerDetails opponentData={selectedOpponent} />
+                <ButtonIcon
+                  onClick={() => setShowPlayerDetails(false)}
+                  icon={CLOSE_ICON}
+                  variant="outlined"
+                  className="absolute top-3 left-4 p-2.5 shadow-sm"
+                  backgroundColor="bg-tp-card-back"
+                  borderColor="border-none"
+                  rounded
+                />
+                <Typography variant="paragraph" className="mt-5 ml-7">
+                  Last 5 matches
+                </Typography>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="mt-9 ml-1 flex items-center gap-2">
           {selectedOpponent && (
@@ -94,9 +114,9 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
 
           {selectedOpponent && (
             <ButtonIcon
-              onClick={() => console.log("Start a match")}
+              onClick={() => setIsChallengeModalOpen(!isChallengeModalOpen)}
               disabled={!selectedOpponent}
-              icon={<IoTennisball className="h-5 w-5" />}
+              icon={TENNIS_BALL_ICON}
               variant="outlined"
               className="shadow-tp-primary p-2.5 shadow-sm"
               backgroundColor="bg-tp-card-back"
@@ -110,6 +130,29 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
           )}
         </div>
       </div>
+      {/* modals */}
+      <CropModal
+        title="Create challenge"
+        open={isChallengeModalOpen}
+        onClose={() => setIsChallengeModalOpen(!isChallengeModalOpen)}
+        modalBoxClassName="max-w-3xl"
+        buttonsLayoutClassName="justify-end"
+        buttons={[
+          {
+            label: "Cancel",
+            themeColor: "warning",
+            onClick: () => setIsChallengeModalOpen(false),
+          },
+          {
+            type: "submit",
+            formId: "create-challenge-form",
+            label: "Confirm",
+            themeColor: "tertiary",
+          },
+        ]}
+      >
+        <CreateChallengeForm />
+      </CropModal>
     </div>
   );
 };

@@ -43,8 +43,8 @@ const InputRadio = <T extends string | number>({
           className={`flex ${direction === "horizontal" ? "space-x-8" : "flex-col space-y-5"} border-charcoal-600 h-full rounded-md border px-3 py-3.5 ${optionsContainer}`}
         >
           {data.map((item: RadioItemProps<T>) => (
-            <div key={item.id} className="relative flex items-center">
-              <div className="flex items-center">
+            <div key={item.id}>
+              <div className="flex items-start">
                 <input
                   id={String(item.id)}
                   aria-describedby={`${String(item.id)}-name`}
@@ -56,21 +56,24 @@ const InputRadio = <T extends string | number>({
                   onChange={() => onChange(item.id)}
                   className="checked:border-tp-typography focus:ring-typography-600 h-5.5 w-5.5 cursor-pointer appearance-none rounded-full border border-gray-400 checked:border-[6px] focus:ring-1 focus:outline-none"
                 />
-              </div>
-              <div
-                className={`ml-3 text-sm leading-6 tracking-wide ${labelContainer}`}
-              >
-                <label
-                  htmlFor={String(item.id)}
-                  className="text-tp-typography text-md cursor-pointer font-medium"
+                <div
+                  className={`ml-3 flex flex-col text-sm leading-6 tracking-wide ${labelContainer}`}
                 >
-                  {item.name}
-                </label>
-                {item.description && (
-                  <p id={`${item.id}-description`} className="text-gray-500">
-                    {item.description}
-                  </p>
-                )}
+                  <label
+                    htmlFor={String(item.id)}
+                    className="text-tp-typography text-md cursor-pointer font-medium"
+                  >
+                    {item.name}
+                  </label>
+                  {item.description && (
+                    <p
+                      id={`${item.id}-description`}
+                      className="w-60 text-xs text-gray-500"
+                    >
+                      {item.description}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           ))}

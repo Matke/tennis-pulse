@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import { calculateAge } from "@/utils/common";
 import {
   containerVariants,
-
   // itemVariants,
   itemVariantsX,
   profilePopVariant,
@@ -38,22 +37,26 @@ type BasicPlayerInfoChips = {
   tooltipPlacement?: TooltipPlacement;
 };
 
+const EDIT_ICON = <MdEdit className="h-5 w-5" />;
+const LOCK_ICON = <FaLock className="h-5 w-5" />;
+const LIST_HEART_ICON = <PiListHeartFill className="h-5 w-5" />;
+
 const ChallengerView = ({ userProfile }: { userProfile: UserProfileData }) => {
   const challengerActions: ChallengerActionsData[] = useMemo(
     () => [
       {
-        icon: <MdEdit className="h-5 w-5" />,
+        icon: EDIT_ICON,
         tooltipId: "edit-profile",
         tooltipContent: "Edit your profile",
       },
       {
-        icon: <FaLock className="h-5 w-5" />,
+        icon: LOCK_ICON,
         tooltipId: "private-public",
         tooltipContent:
           "Your profile is private, so it won't appear in challenges or matches searches",
       },
       {
-        icon: <PiListHeartFill className="h-5 w-5" />,
+        icon: LIST_HEART_ICON,
         tooltipId: "list-favorite-opponents",
         tooltipContent: "View list of your favorite opponents",
       },

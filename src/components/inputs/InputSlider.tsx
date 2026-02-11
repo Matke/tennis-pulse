@@ -5,6 +5,7 @@ import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 // icons
 import { MdInfo } from "react-icons/md";
+import { useMemo } from "react";
 
 type InputSliderProps = {
   value?: number;
@@ -22,13 +23,7 @@ type InputSliderProps = {
   helperIconTooltipText?: string;
 };
 
-// to display steps visually
-const marks: Record<number, number> = Object.fromEntries(
-  Array.from({ length: 16 }, (_, i) => {
-    const value = i + 1;
-    return [value, value];
-  }),
-);
+const INFO_ICON = <MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />;
 
 const InputSlider = ({
   value,
@@ -41,26 +36,38 @@ const InputSlider = ({
   mainContainerClassName = "",
   sliderClassName = "",
   labelIconContainer = "",
-  helperIcon = <MdInfo className="text-tp-divider h-5 w-5 cursor-pointer" />,
+  helperIcon = INFO_ICON,
   helperIconTooltipId,
   helperIconTooltipText = "",
 }: InputSliderProps) => {
   const hasHelperIcon = Boolean(helperIcon && helperIconTooltipId);
+
+  const marks: Record<number, number> = useMemo(() => {
+    return Object.fromEntries(
+      Array.from({ length: max }, (_, i) => {
+        const value = i + 1;
+        return [value, value];
+      }),
+    );
+  }, [max]);
+
   return (
     <div
       className={`-mt-6 mb-5 flex w-full flex-col gap-2 ${mainContainerClassName}`}
     >
       <div className={`flex items-center justify-start ${labelIconContainer}`}>
         {/* label */}
-        <Typography variant="label" as={"span"} className="">
-          {label}
-        </Typography>
+        <div className="flex flex-col">
+          <Typography variant="label" as={"span"} className="">
+            {label}
+          </Typography>
+        </div>
         {/* helper icon */}
         {hasHelperIcon && (
           <ButtonIcon
             icon={helperIcon}
             variant="blank"
-            className="z-100"
+            className="z-100 border-none"
             tooltipId={helperIconTooltipId}
             tooltipContent={helperIconTooltipText}
             tooltipPlacement="top"
