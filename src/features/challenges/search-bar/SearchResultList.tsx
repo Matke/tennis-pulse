@@ -1,23 +1,21 @@
 // components
 import FillingLoader from "@/components/loaders/FillingLoader";
 import Typography from "@/components/text/Typography";
-import SearchResult from "@/features/challenges/SearchResult";
+import SearchResult from "@/features/challenges/search-bar/SearchResult";
 // types
 import type { UserProfileData } from "@/types/authTypes";
-// import type { Dispatch, SetStateAction } from "react";
 
-type SearchResultListData = {
-  listData: UserProfileData[];
+type SearchResultListData<T extends UserProfileData> = {
+  listData: T[];
   isLoading: boolean;
-  onPlayerSelect: (player: UserProfileData) => void;
-  // onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
+  onPlayerSelect: (player: T) => void;
 };
 
-const SearchResultList = ({
+const SearchResultList = <T extends UserProfileData>({
   listData,
   isLoading,
   onPlayerSelect,
-}: SearchResultListData) => {
+}: SearchResultListData<T>) => {
   return (
     <div className="bg-tp-card-back shadow-tp-primary/20 scrollbar-hide absolute bottom-12 left-0 z-100 flex h-50 w-full flex-col overflow-y-auto rounded-lg p-3 shadow-xs">
       {/* <div className="max-h-60 overflow-y-auto"> inside div scroll */}
@@ -34,7 +32,7 @@ const SearchResultList = ({
           </Typography>
         </div>
       ) : (
-        listData.map((item: UserProfileData) => {
+        listData.map((item: T) => {
           return (
             <SearchResult
               key={item.id}

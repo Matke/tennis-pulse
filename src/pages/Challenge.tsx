@@ -29,7 +29,7 @@ const Challenge = () => {
 
   const handleTabChange = (tabValue: string) => {
     searchParams.set("tab", tabValue);
-    setSearchParams(searchParams); // so it re-renders page
+    setSearchParams(searchParams); // setSearchParams so it re-renders the page
   };
 
   return (
