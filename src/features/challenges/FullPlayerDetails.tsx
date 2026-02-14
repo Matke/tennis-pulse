@@ -99,7 +99,7 @@ const FullPlayerDetails = ({
   }));
 
   return (
-    <div className="border-tp border-tp-divider/20 flex items-center justify-center border-b border-dashed opacity-100 shadow-black select-none">
+    <div className="border-tp border-tp-divider/20 flex items-center justify-center border-b opacity-100 shadow-black select-none">
       <div className="group relative">
         {/* with absolute inset-0 position container across the parent relative div */}
         {/* with flex center content inside div */}

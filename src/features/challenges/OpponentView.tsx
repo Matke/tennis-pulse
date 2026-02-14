@@ -15,9 +15,10 @@ import { CgDetailsMore } from "react-icons/cg";
 import CropModal from "@/components/modals/CropModal";
 import CreateChallengeForm from "@/features/challenges/CreateChallengeForm";
 import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
-import Typography from "@/components/text/Typography";
+// import Typography from "@/components/text/Typography";
 import { AnimatePresence, motion } from "framer-motion";
 
+// ICONS
 const CLOSE_ICON = <IoCloseCircle className="h-6 w-6" />;
 const TENNIS_BALL_ICON = <IoTennisball className="h-5 w-5" />;
 const HEART_ICON = <FaHeart className="h-5 w-5" />;
@@ -77,9 +78,9 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
               exit={{ x: "100%" }}
               style={{ willChange: "transform" }}
               transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-              className="bg-tp-main-background absolute inset-0 z-100 flex flex-col"
+              className="bg-tp-main-background/80 absolute inset-0 z-100 flex h-full flex-col"
             >
-              <div className="relative">
+              <div className="relative h-full backdrop-blur-lg">
                 <FullPlayerDetails opponentData={selectedOpponent} />
                 <ButtonIcon
                   onClick={() => setShowPlayerDetails(false)}
@@ -90,9 +91,6 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
                   borderColor="border-none"
                   rounded
                 />
-                <Typography variant="paragraph" className="mt-5 ml-7">
-                  Last 5 matches
-                </Typography>
               </div>
             </motion.div>
           )}

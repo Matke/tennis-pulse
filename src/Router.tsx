@@ -90,7 +90,7 @@ const AppRouter = () => {
           <Route index element={<Navigate replace to="home" />} />
           <Route path="home" element={<Home />} />
           <Route path="matches" element={<Matches />} />
-          <Route path="challenge" element={<Challenge />} />
+          <Route path="challenges" element={<Challenge />} />
           <Route path="tournaments" element={<Tournaments />} />
           <Route path="head2head" element={<Head2Head />} />
           <Route path="settings" element={<Settings />} />

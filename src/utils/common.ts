@@ -217,3 +217,10 @@ export function generateSecurePassword(length: number = 15): string {
 
   return arrayPass.join("");
 }
+
+// check location = used for whether sub-menu item is active or not
+export const isSubItemActive = (path: string, query: string) => {
+  return (
+    location.pathname === `/${path}` && location.search === `?tab=${query}`
+  );
+};
