@@ -51,9 +51,6 @@ const ViewMatchups = () => {
             borderColor="border-none"
             hoverClass
             rounded
-            tooltipId="filter-incoming-sent"
-            tooltipContent="Filter"
-            tooltipPlacement="bottom"
           />
         </div>
         {/* List */}
@@ -94,9 +91,6 @@ const ViewMatchups = () => {
             borderColor="border-none"
             hoverClass
             rounded
-            tooltipId="filter-upcoming-rejected"
-            tooltipContent="Filter"
-            tooltipPlacement="bottom"
           />
         </div>
 

@@ -17,6 +17,7 @@ import CreateChallengeForm from "@/features/challenges/CreateChallengeForm";
 import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
 // import Typography from "@/components/text/Typography";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAuth } from "@/store/useAuth";
 
 // ICONS
 const CLOSE_ICON = <IoCloseCircle className="h-6 w-6" />;
@@ -25,7 +26,8 @@ const HEART_ICON = <FaHeart className="h-5 w-5" />;
 const PEOPLE_ARROWS = <FaPeopleArrows className="h-5 w-5" />;
 const DETAILS_ICON = <CgDetailsMore className="h-5 w-5" />;
 
-const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
+const OpponentView = () => {
+  const { userProfile } = useAuth();
   const [selectedOpponent, setSelectedOpponent] =
     useState<UserProfileData | null>(null);
   const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false);

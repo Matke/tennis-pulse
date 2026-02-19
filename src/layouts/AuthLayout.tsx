@@ -36,6 +36,7 @@ const AuthLayout = () => {
           videoSrc={tennisBallsComp}
           className="object-cover blur-[1.7px]"
         />
+        {/* blur left part of video */}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-full [background:linear-gradient(to_right,rgb(25_25_26)_5%,rgba(6_6_6/0.4)_7%)]" />
       </div>
     </div>

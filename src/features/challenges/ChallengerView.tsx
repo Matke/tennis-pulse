@@ -2,8 +2,6 @@
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
-// types
-import type { UserProfileData } from "@/types/authTypes";
 // icons
 import { MdEdit } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
@@ -23,6 +21,7 @@ import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
 import { PiListHeartFill } from "react-icons/pi";
 import { useMemo } from "react";
 import type { TooltipPlacement } from "@/components/tooltip/Tooltip";
+import { useAuth } from "@/store/useAuth";
 
 type ChallengerActionsData = {
   icon: React.ReactNode;
@@ -41,7 +40,9 @@ const EDIT_ICON = <MdEdit className="h-5 w-5" />;
 const LOCK_ICON = <FaLock className="h-5 w-5" />;
 const LIST_HEART_ICON = <PiListHeartFill className="h-5 w-5" />;
 
-const ChallengerView = ({ userProfile }: { userProfile: UserProfileData }) => {
+const ChallengerView = () => {
+  const { userProfile } = useAuth();
+
   const challengerActions: ChallengerActionsData[] = useMemo(
     () => [
       {

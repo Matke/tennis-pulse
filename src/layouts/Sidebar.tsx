@@ -90,6 +90,7 @@ const navigation: NavigationItem[] = [
         key: "favorite",
         icon: <FaHeart className="text-xl" />,
       },
+      { key: "view-all", icon: <FaListAlt className="text-xl" /> },
     ],
     icon: <MdSportsTennis className="h-6 w-6" />,
   },

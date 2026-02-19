@@ -2,32 +2,29 @@
 import { useSearchParams } from "react-router";
 // components
 import Tabs from "@/components/ui/Tabs";
-import OpponentView from "@/features/challenges/OpponentView";
-import ChallengerView from "@/features/challenges/ChallengerView";
 import PageNavigationWrapper from "@/layouts/PageNavigationWrapper";
 import SimpleCard from "@/components/ui/SimpleCard";
 import Switcher from "@/components/ui/Switcher";
-import ViewAllChallenges from "@/features/challenges/ViewAllChallenges";
-// context
-import { useAuth } from "@/store/useAuth";
+import ActiveChallengeTab from "@/features/challenges/ActiveChallengeTab";
 // icons
 import { FaHandshake } from "react-icons/fa";
 import { FaListAlt } from "react-icons/fa";
 import { RiGroup3Fill } from "react-icons/ri";
-import ViewMatchups from "@/features/challenges/ViewMatchups";
 
 // TABS ICONS
 const HANDSHAKE_ICON = <FaHandshake className="h-4 w-4" />;
 const LIST_ALL_ICON = <FaListAlt className="h-4 w-4" />;
 const MATCHUPS_ICON = <RiGroup3Fill className="h-4 w-4" />;
 
+export type ChallengeTabs = "new" | "matchups" | "view-all";
+
 const Challenge = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { userProfile } = useAuth();
 
-  const currentTab = searchParams.get("tab") || "new";
+  const currentTab: ChallengeTabs =
+    (searchParams.get("tab") as ChallengeTabs) || "new";
 
-  const handleTabChange = (tabValue: string) => {
+  const handleTabChange = (tabValue: ChallengeTabs) => {
     searchParams.set("tab", tabValue);
     setSearchParams(searchParams); // setSearchParams so it re-renders the page
   };
@@ -35,7 +32,7 @@ const Challenge = () => {
   return (
     <div className="flex h-full flex-col justify-between gap-5">
       <PageNavigationWrapper>
-        <Tabs
+        <Tabs<ChallengeTabs>
           currentTab={currentTab}
           changeTab={handleTabChange}
           tabs={[
@@ -67,16 +64,7 @@ const Challenge = () => {
         disableHover
         disablePadding
       >
-        {currentTab === "new" && (
-          <div className="flex h-full w-full flex-row items-center justify-center">
-            <ChallengerView userProfile={userProfile} />
-            <OpponentView userProfile={userProfile} />
-          </div>
-        )}
-
-        {currentTab === "matchups" && <ViewMatchups />}
-
-        {currentTab === "view-all" && <ViewAllChallenges />}
+        <ActiveChallengeTab currentTab={currentTab} />
       </SimpleCard>
     </div>
   );

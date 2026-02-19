@@ -8,26 +8,26 @@ import { TiTick } from "react-icons/ti";
 
 const TICK_ICON = <TiTick className="h-5 w-5" />;
 
-export type TabItem = {
-  label: string;
+export type TabItem<T extends string> = {
+  label: T;
   icon?: React.ReactNode;
 };
 
-export type TabsProps = {
-  tabs: TabItem[];
+export type TabsProps<T extends string> = {
+  tabs: TabItem<T>[];
   currentTab: string;
   helperText?: string;
-  changeTab: (tabValue: string) => void;
+  changeTab: (tabValue: T) => void;
   isDropdown?: boolean;
 };
 
-const Tabs = ({
+const Tabs = <T extends string>({
   tabs,
   changeTab,
   currentTab,
   helperText,
   isDropdown = false,
-}: TabsProps) => {
+}: TabsProps<T>) => {
   // open/close state for dropdown view only
   const [isOpen, setIsOpen] = useState(false);
 
@@ -110,7 +110,7 @@ const Tabs = ({
           key={tabIdx}
           label={tab.label.split("-").join(" ")}
           themeColor={currentTab === tab.label ? "primary" : "secondary"}
-          className="shadow-tp-primary/50 border-none shadow-none brightness-90 hover:bg-transparent"
+          className="shadow-tp-primary/50 min-w-37 border-none shadow-none brightness-90 hover:bg-transparent"
           buttonSize="medium"
           icon={tab.icon}
           uppercaseLabel

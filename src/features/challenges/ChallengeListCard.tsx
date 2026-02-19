@@ -1,5 +1,9 @@
+// components
 import Typography from "@/components/text/Typography";
+import ButtonIcon from "@/components/buttons/ButtonIcon";
+// types
 import type { UserProfileData } from "@/types/authTypes";
+// icons
 import { TiTick } from "react-icons/ti";
 import { TiTimes } from "react-icons/ti";
 import { TiLocation } from "react-icons/ti";
@@ -8,7 +12,6 @@ import { MdEdit } from "react-icons/md";
 import { GiTennisCourt } from "react-icons/gi";
 import { MdDateRange } from "react-icons/md";
 import { MdAccessTime } from "react-icons/md";
-import ButtonIcon from "@/components/buttons/ButtonIcon";
 
 // action icons
 const TICK_ICON = (
@@ -20,7 +23,6 @@ const TIMES_ICON = (
 const DETAILS_ICON = (
   <TiThList className="text-tp-typography/60 group-hover/action-buttons:text-tp-primary h-5 w-5" />
 );
-
 const EDIT_ICON = (
   <MdEdit className="text-tp-typography/60 group-hover/action-buttons:text-tp-secondary h-5 w-5" />
 );
@@ -61,7 +63,7 @@ const ChallengeListCard = ({
           <div className="flex items-center gap-2">
             <MdDateRange className="text-tp-typography/80 h-5 w-5" />
             <Typography variant="label-small" className="font-bold">
-              08-07-2026
+              08.07.2026
             </Typography>
           </div>
           <div className="flex items-center gap-2">
@@ -94,23 +96,15 @@ const ChallengeListCard = ({
               themeColor="blank"
               borderColor="border-none"
               rounded
-              tooltipContent="Accept"
-              tooltipId="accept-challenge"
-              tooltipPlacement="bottom"
             />
           )}
-
           <ButtonIcon
             icon={TIMES_ICON}
             className={`group/action-buttons hover:bg-tp-divider/20`}
             themeColor="blank"
             borderColor="border-none"
             rounded
-            tooltipContent="Reject"
-            tooltipId="reject-challenge"
-            tooltipPlacement="bottom"
           />
-
           {!isUpcoming && (
             <ButtonIcon
               icon={EDIT_ICON}
@@ -118,21 +112,14 @@ const ChallengeListCard = ({
               themeColor="blank"
               rounded
               borderColor="border-none"
-              tooltipContent="Change"
-              tooltipId="change-challenge"
-              tooltipPlacement="top"
             />
           )}
-
           <ButtonIcon
             icon={DETAILS_ICON}
             className={`group/action-buttons mt-0.5 hover:bg-zinc-800`}
             themeColor="blank"
             rounded
             borderColor="border-none"
-            tooltipContent="Details"
-            tooltipId="details-challenge"
-            tooltipPlacement="top"
           />
         </div>
       </div>
