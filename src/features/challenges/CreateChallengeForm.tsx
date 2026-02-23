@@ -7,6 +7,7 @@ import InputRadio, {
 } from "@/components/inputs/InputRadio";
 import InputSlider from "@/components/inputs/InputSlider";
 import InputText from "@/components/inputs/InputText";
+import FillingLoader from "@/components/loaders/FillingLoader";
 // types
 import type { CreateChallengeFormData } from "@/types/challengeTypes";
 
@@ -49,23 +50,27 @@ const surfaceType: RadioItemProps<string>[] = [
   },
 ];
 
-const CreateChallengeForm = () => {
+const CreateChallengeForm = ({
+  onCreateChallengeFormSubmit,
+  isCreatingChallenge,
+}: {
+  onCreateChallengeFormSubmit: SubmitHandler<CreateChallengeFormData>;
+  isCreatingChallenge: boolean;
+}) => {
   const { register, handleSubmit, control } =
     useForm<CreateChallengeFormData>();
 
-  const onCreateChallengeFormSubmit: SubmitHandler<CreateChallengeFormData> = (
-    data: CreateChallengeFormData,
-  ) => {
-    // temp log data
-    console.log(data);
-  };
-
   return (
     <form
-      className="mt-2.5 grid w-full grid-cols-2 grid-rows-1 gap-x-5 gap-y-8 overflow-hidden py-6 pl-6"
+      className="relative mt-2.5 grid w-full grid-cols-2 grid-rows-1 gap-x-5 gap-y-8 overflow-hidden py-6 pl-6"
       onSubmit={handleSubmit(onCreateChallengeFormSubmit)}
       id="create-challenge-form"
     >
+      {isCreatingChallenge && (
+        <div className="absolute inset-0 z-10000 flex items-center justify-center backdrop-blur-[3px]">
+          <FillingLoader classic />
+        </div>
+      )}
       {/* Scheduled match date and time */}
       <InputDate
         type="datetime-local"
@@ -73,7 +78,7 @@ const CreateChallengeForm = () => {
         fullWidth
         className="pr-4"
         backgroundInputColor="bg-charcoal-900/95"
-        {...register("scheduledMatchTime")}
+        {...register("matchDate")}
       />
 
       {/* Court or club name */}
@@ -108,7 +113,7 @@ const CreateChallengeForm = () => {
       {/* Surface type */}
       <Controller
         control={control}
-        name="surfaceType"
+        name="surface"
         defaultValue={"clay"}
         render={({ field }) => (
           <InputRadio
@@ -126,7 +131,7 @@ const CreateChallengeForm = () => {
       {/* Set length in games */}
       <Controller
         control={control}
-        name="setLength"
+        name="gamesPerSet"
         defaultValue={6}
         render={({ field }) => (
           <InputSlider
@@ -148,7 +153,7 @@ const CreateChallengeForm = () => {
       {/* Deciding set tiebreak length */}
       <Controller
         control={control}
-        name="matchTiebreakLength"
+        name="decidingSetTiebreakLength"
         defaultValue={7}
         render={({ field }) => (
           <InputSlider

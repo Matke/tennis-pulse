@@ -1,5 +1,6 @@
 import type { Variants } from "framer-motion";
 
+// must be put as parent for all variants
 export const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -11,6 +12,7 @@ export const containerVariants: Variants = {
   },
 };
 
+// child variations
 export const itemVariants: Variants = {
   hidden: { y: -10, opacity: 0 },
   visible: {

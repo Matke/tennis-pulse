@@ -20,6 +20,12 @@ import { FaHeart, FaPeopleArrows } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
 // framer
 import { AnimatePresence, motion } from "framer-motion";
+import { useCreateChallenge } from "@/features/challenges/useCreateChallenge";
+import type { SubmitHandler } from "react-hook-form";
+import type {
+  CreateChallengeData,
+  CreateChallengeFormData,
+} from "@/types/challengeTypes";
 
 // ICONS
 const CLOSE_ICON = <IoCloseCircle className="h-6 w-6" />;
@@ -36,6 +42,7 @@ const OpponentView = () => {
   const [isChallengeModalOpen, setIsChallengeModalOpen] =
     useState<boolean>(false);
   const [isCardLoading, setIsCardLoading] = useState<boolean>(false);
+  const { createChallenge, isCreatingChallenge } = useCreateChallenge();
 
   const handlePlayerSelect = useCallback((player: UserProfileData) => {
     setIsCardLoading(true);
@@ -80,6 +87,22 @@ const OpponentView = () => {
       return () => clearTimeout(timer);
     }
   }, [selectedOpponent]);
+
+  const onCreateChallengeFormSubmit: SubmitHandler<CreateChallengeFormData> = (
+    data: CreateChallengeFormData,
+  ) => {
+    if (!userProfile?.id || !selectedOpponent?.id) return;
+
+    const newChallenge: CreateChallengeData = {
+      challengeData: { ...data },
+      challengerId: userProfile?.id,
+      opponentId: selectedOpponent.id,
+    };
+
+    createChallenge(newChallenge, {
+      onSuccess: () => setIsChallengeModalOpen(false),
+    });
+  };
 
   return (
     <div className="hover:bg-tp-main-background/70 relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
@@ -170,10 +193,15 @@ const OpponentView = () => {
             formId: "create-challenge-form",
             label: "Confirm",
             themeColor: "tertiary",
+            isLoading: isCreatingChallenge,
+            disabled: isCreatingChallenge,
           },
         ]}
       >
-        <CreateChallengeForm />
+        <CreateChallengeForm
+          onCreateChallengeFormSubmit={onCreateChallengeFormSubmit}
+          isCreatingChallenge={isCreatingChallenge}
+        />
       </CropModal>
     </div>
   );

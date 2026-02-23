@@ -200,14 +200,14 @@ const Sidebar = () => {
             <div
               key={item.key}
               className={classNames(
-                "text-tp-typography group flex cursor-pointer flex-col rounded-md px-4 py-3 transition-all duration-300 ease-in-out",
+                "text-tp-typography group flex cursor-pointer flex-col rounded-md transition-all duration-300 ease-in-out",
                 item.gap ? "mt-9" : "mt-2",
                 isParentActive
                   ? "text-charcoal-950 bg-tp-primary/85"
                   : "hover:bg-zinc-800/50",
               )}
             >
-              <NavLink key={item.key} to={item.key}>
+              <NavLink key={item.key} to={item.key} className="px-4 py-3">
                 {({ isActive }) => (
                   <div
                     className={`relative flex h-full items-center justify-between ${isActive && "text-charcoal-950"}`}
@@ -246,14 +246,14 @@ const Sidebar = () => {
               {/* Sidebar submenus items */}
               {item.subMenu && subMenus[item.key] && open && (
                 <ul
-                  className={`${open && !isParentActive ? "block pt-4 pl-3" : "text-charcoal-950 block pt-4 pl-3"}`}
+                  className={`${open && !isParentActive ? "block py-1 pr-1 pl-3.5" : "text-charcoal-950 block py-1 pr-1 pl-3.5"}`}
                 >
                   {item.subMenu.map((subMenu: SubMenuItem) => (
                     // TODO: Add state where subitem will be highlighted if selected currently
                     <Link
                       to={`${item.key}?tab=${subMenu.key}`}
                       key={subMenu.key}
-                      className={`${isParentActive ? "hover:bg-tp-primary/60" : "hover:bg-tp-divider/20"} flex items-center gap-x-2 rounded-lg px-2 py-3 text-sm`}
+                      className={`${isParentActive ? "hover:bg-tp-primary/60" : "hover:bg-tp-divider/20"} flex items-center gap-x-2 rounded-lg px-4 py-3 text-sm`}
                     >
                       <span>{subMenu.icon}</span>
                       {/* uppercase only first letter of key to be the label and remove potential dashes */}
