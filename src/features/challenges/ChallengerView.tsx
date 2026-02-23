@@ -1,27 +1,25 @@
+import { useMemo } from "react";
+import { useAuth } from "@/store/useAuth";
 // components
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import Typography from "@/components/text/Typography";
 import Chip from "@/components/ui/Chip";
+import ProfileAvatar from "@/components/ui/ProfileAvatar";
+import type { TooltipPlacement } from "@/components/tooltip/Tooltip";
 // icons
 import { MdEdit } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-// import { FaPeopleArrows } from "react-icons/fa";
+import { PiListHeartFill } from "react-icons/pi";
 // utils
 import { motion } from "framer-motion";
 import { calculateAge } from "@/utils/common";
+// animation variants
 import {
   containerVariants,
-  // itemVariants,
   itemVariantsX,
   profilePopVariant,
   revealVariant,
 } from "@/utils/animationVariants";
-import MaleProfileIcon from "@/components/ui/MaleProfileIcon";
-import FemaleProfileIcon from "@/components/ui/FemaleProfileIcon";
-import { PiListHeartFill } from "react-icons/pi";
-import { useMemo } from "react";
-import type { TooltipPlacement } from "@/components/tooltip/Tooltip";
-import { useAuth } from "@/store/useAuth";
 
 type ChallengerActionsData = {
   icon: React.ReactNode;
@@ -36,6 +34,7 @@ type BasicPlayerInfoChips = {
   tooltipPlacement?: TooltipPlacement;
 };
 
+// icons
 const EDIT_ICON = <MdEdit className="h-5 w-5" />;
 const LOCK_ICON = <FaLock className="h-5 w-5" />;
 const LIST_HEART_ICON = <PiListHeartFill className="h-5 w-5" />;
@@ -65,13 +64,6 @@ const ChallengerView = () => {
     [],
   );
 
-  const genderIcon =
-    userProfile?.gender === "male" ? (
-      <MaleProfileIcon />
-    ) : (
-      <FemaleProfileIcon />
-    );
-
   const chipsPlayerInfo: BasicPlayerInfoChips[] = [
     {
       label: userProfile.userName,
@@ -97,24 +89,15 @@ const ChallengerView = () => {
           animate="visible"
           className="flex h-full flex-col items-center justify-center gap-5 px-6"
         >
+          {/* Profile image container */}
           <motion.div variants={profilePopVariant} className="group relative">
-            <div className="animate-tilt absolute -inset-0.5 rounded-full bg-linear-to-r from-orange-600 to-yellow-200 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-            <div className="relative">
-              {/* Profile image part */}
-              {userProfile.profileImage ? (
-                <img
-                  src={userProfile.profileImage}
-                  className="h-32 w-32 scale-110 rotate-6 transform rounded-full object-cover transition-all duration-500"
-                  alt="Profile"
-                />
-              ) : (
-                <div className="h-32 w-32 scale-110 transform rounded-full mask-b-from-100% object-cover transition-all duration-500">
-                  {genderIcon}
-                </div>
-              )}
-            </div>
+            <ProfileAvatar
+              imageUrl={userProfile?.profileImage}
+              gender={userProfile?.gender}
+            />
           </motion.div>
 
+          {/* First name and last name container */}
           <motion.div
             variants={revealVariant}
             className="flex flex-row items-center justify-center gap-2"
@@ -134,6 +117,7 @@ const ChallengerView = () => {
             </Typography>
           </motion.div>
 
+          {/* Basic stats container */}
           <motion.div
             variants={revealVariant}
             className="flex w-full justify-center gap-x-7"
@@ -159,6 +143,7 @@ const ChallengerView = () => {
             </div>
           </motion.div>
 
+          {/* Challenger info chips */}
           <motion.div variants={itemVariantsX} className="space-x-2">
             {chipsPlayerInfo.map(
               (item: BasicPlayerInfoChips, index: number) => (

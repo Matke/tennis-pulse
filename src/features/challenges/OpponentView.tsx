@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+// context
+import { useAuth } from "@/store/useAuth";
 // components
 import ButtonActionsMenu, {
   type ButtonActionsData,
@@ -6,18 +8,18 @@ import ButtonActionsMenu, {
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import OpponentCard from "@/features/challenges/OpponentCard";
 import OpponentSearch from "@/features/challenges/OpponentSearch";
+import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
+import SearchProfileSkeletonLoader from "@/components/loaders/SearchProfileSkeletonLoader";
+import CreateChallengeForm from "@/features/challenges/CreateChallengeForm";
+import CropModal from "@/components/modals/CropModal";
 // types
 import { type UserProfileData } from "@/types/authTypes";
 // icons
 import { IoCloseCircle, IoTennisball } from "react-icons/io5";
 import { FaHeart, FaPeopleArrows } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
-import CropModal from "@/components/modals/CropModal";
-import CreateChallengeForm from "@/features/challenges/CreateChallengeForm";
-import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
-// import Typography from "@/components/text/Typography";
+// framer
 import { AnimatePresence, motion } from "framer-motion";
-import { useAuth } from "@/store/useAuth";
 
 // ICONS
 const CLOSE_ICON = <IoCloseCircle className="h-6 w-6" />;
@@ -33,8 +35,10 @@ const OpponentView = () => {
   const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false);
   const [isChallengeModalOpen, setIsChallengeModalOpen] =
     useState<boolean>(false);
+  const [isCardLoading, setIsCardLoading] = useState<boolean>(false);
 
   const handlePlayerSelect = useCallback((player: UserProfileData) => {
+    setIsCardLoading(true);
     setSelectedOpponent(player);
   }, []);
 
@@ -66,12 +70,28 @@ const OpponentView = () => {
     [toggleDetails],
   );
 
+  // small wait for image to load
+  useEffect(() => {
+    if (selectedOpponent) {
+      const timer = setTimeout(() => {
+        setIsCardLoading(false);
+      }, 400);
+
+      return () => clearTimeout(timer);
+    }
+  }, [selectedOpponent]);
+
   return (
     <div className="hover:bg-tp-main-background/70 relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
       <div>
-        {/* Shows basic opponent info */}
-        <OpponentCard selectedOpponent={selectedOpponent} />
+        {/* Basic opponent details (OpponentCard preview) */}
+        {isCardLoading ? (
+          <SearchProfileSkeletonLoader />
+        ) : (
+          <OpponentCard selectedOpponent={selectedOpponent} />
+        )}
 
+        {/* Button actions menu option */}
         <AnimatePresence mode="wait">
           {showPlayerDetails && (
             <motion.div
@@ -98,6 +118,7 @@ const OpponentView = () => {
           )}
         </AnimatePresence>
 
+        {/* Bottom opponent menu with search bar */}
         <div className="mt-9 ml-1 flex items-center gap-2">
           {selectedOpponent && (
             <ButtonActionsMenu
@@ -130,6 +151,7 @@ const OpponentView = () => {
           )}
         </div>
       </div>
+
       {/* modals */}
       <CropModal
         title="Create challenge"

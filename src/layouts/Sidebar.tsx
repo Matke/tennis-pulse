@@ -17,7 +17,7 @@ import { MdUpcoming } from "react-icons/md";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
-import { BiSolidLogOut } from "react-icons/bi";
+import { BiSolidLogOut, BiSolidArchive } from "react-icons/bi";
 import { HiTrophy } from "react-icons/hi2";
 import { HiDotsVertical } from "react-icons/hi";
 // router
@@ -90,6 +90,7 @@ const navigation: NavigationItem[] = [
         key: "favorite",
         icon: <FaHeart className="text-xl" />,
       },
+      { key: "archived", icon: <BiSolidArchive className="text-xl" /> },
       { key: "view-all", icon: <FaListAlt className="text-xl" /> },
     ],
     icon: <MdSportsTennis className="h-6 w-6" />,
