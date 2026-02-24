@@ -10,6 +10,9 @@ import InputText from "@/components/inputs/InputText";
 import FillingLoader from "@/components/loaders/FillingLoader";
 // types
 import type { CreateChallengeFormData } from "@/types/challengeTypes";
+// yup
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const matchFormat: RadioItemProps<number>[] = [
   {
@@ -50,6 +53,21 @@ const surfaceType: RadioItemProps<string>[] = [
   },
 ];
 
+const schema: yup.ObjectSchema<CreateChallengeFormData> = yup.object({
+  matchDate: yup
+    .date()
+    // prevent past dates
+    .min(new Date(), "Date and time cannot be in past")
+    .required("Match date is required"),
+  courtName: yup.string().required("Court name is required"),
+  matchFormat: yup.number().required("Match format is required"),
+  surface: yup.string().required("Surface is required"),
+  gamesPerSet: yup.number().required("Set length is required"),
+  decidingSetTiebreakLength: yup
+    .number()
+    .required("Final set tiebreak length is required"),
+});
+
 const CreateChallengeForm = ({
   onCreateChallengeFormSubmit,
   isCreatingChallenge,
@@ -57,8 +75,16 @@ const CreateChallengeForm = ({
   onCreateChallengeFormSubmit: SubmitHandler<CreateChallengeFormData>;
   isCreatingChallenge: boolean;
 }) => {
-  const { register, handleSubmit, control } =
-    useForm<CreateChallengeFormData>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<CreateChallengeFormData>({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+  });
 
   return (
     <form
@@ -66,18 +92,23 @@ const CreateChallengeForm = ({
       onSubmit={handleSubmit(onCreateChallengeFormSubmit)}
       id="create-challenge-form"
     >
+      {/* Full form loader  */}
       {isCreatingChallenge && (
         <div className="absolute inset-0 z-10000 flex items-center justify-center backdrop-blur-[3px]">
           <FillingLoader classic />
         </div>
       )}
+
       {/* Scheduled match date and time */}
       <InputDate
         type="datetime-local"
         placeholder="Schedule match start"
         fullWidth
         className="pr-4"
+        // prevent past dates for challenge date
+        min={new Date().toISOString().slice(0, 16)}
         backgroundInputColor="bg-charcoal-900/95"
+        error={errors.matchDate?.message}
         {...register("matchDate")}
       />
 
@@ -90,6 +121,7 @@ const CreateChallengeForm = ({
         defaultValue={"TK "}
         backgroundInputColor="bg-charcoal-900/95"
         {...register("courtName")}
+        error={errors.courtName?.message}
       />
 
       {/* Match format */}

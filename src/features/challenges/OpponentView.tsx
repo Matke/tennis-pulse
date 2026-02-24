@@ -36,13 +36,15 @@ const DETAILS_ICON = <CgDetailsMore className="h-5 w-5" />;
 
 const OpponentView = () => {
   const { userProfile } = useAuth();
+  const { createChallenge, isCreatingChallenge } = useCreateChallenge();
+
+  // states
   const [selectedOpponent, setSelectedOpponent] =
     useState<UserProfileData | null>(null);
   const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false);
   const [isChallengeModalOpen, setIsChallengeModalOpen] =
     useState<boolean>(false);
   const [isCardLoading, setIsCardLoading] = useState<boolean>(false);
-  const { createChallenge, isCreatingChallenge } = useCreateChallenge();
 
   const handlePlayerSelect = useCallback((player: UserProfileData) => {
     setIsCardLoading(true);
@@ -88,10 +90,11 @@ const OpponentView = () => {
     }
   }, [selectedOpponent]);
 
+  // Challenge creation callback
   const onCreateChallengeFormSubmit: SubmitHandler<CreateChallengeFormData> = (
     data: CreateChallengeFormData,
   ) => {
-    if (!userProfile?.id || !selectedOpponent?.id) return;
+    if (!userProfile.id || !selectedOpponent?.id) return;
 
     const newChallenge: CreateChallengeData = {
       challengeData: { ...data },

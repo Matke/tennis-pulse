@@ -62,7 +62,7 @@ const InputDate = ({
           id={nameId}
           name={nameId}
           min={min}
-          max={max || new Date().toISOString().split("T")[0]}
+          max={max}
           placeholder=" "
           className={`peer text-tp-typography ${error ? "border-tp-warning" : "border-charcoal-600"} focus:border-tp-typography h-10 ${fullWidth ? "w-full" : "w-1/2"} rounded-sm border bg-transparent p-6 px-3 pr-10 focus:outline-none ${inputClass} /[&-moz-appearance:none] hide-datepicker-indicator relative flex items-center py-6`}
           {...rest}

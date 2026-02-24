@@ -27,7 +27,7 @@ export type ChallengeStatus =
   | "archived";
 
 export type CreateChallengeFormData = {
-  matchDate: string;
+  matchDate: Date;
   courtName: string;
   matchFormat: number;
   surface: string;
