@@ -81,7 +81,7 @@ const FullPlayerDetails = ({
 
   const selectedKeys: (keyof Omit<
     UserProfileData,
-    "id" | "profileImage" | "created_at"
+    "id" | "profileImage" | "isPublic" | "created_at"
   >)[] = [
     "dominantHand",
     "backhandType",

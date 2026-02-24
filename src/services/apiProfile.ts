@@ -1,5 +1,8 @@
 import supabase from "@/services/supabase";
-import type { UserProfileFormData } from "@/types/authTypes";
+import type {
+  ProfilePrivacyData,
+  UserProfileFormData,
+} from "@/types/authTypes";
 
 // profile is automatically created when user creates an account
 // with supabase trigger function
@@ -89,9 +92,6 @@ export const searchProfiles = async (
 
   const supabaseQuery = supabase
     .from("profiles")
-    // .select(
-    //   "userName,firstName,lastName,nationality,dateOfBirth, profileImage, weight, height, skillLevel",
-    // )
     .select("*")
     .neq("id", currentUserId)
     .or(
@@ -106,4 +106,20 @@ export const searchProfiles = async (
   }
 
   return matchedProfiles;
+};
+
+export const updateProfilePrivacy = async ({
+  userId,
+  isPublic,
+}: ProfilePrivacyData) => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({ isPublic })
+    .eq("id", userId)
+    .select()
+    .single();
+
+  if (error) throw new Error("Error while updating profile privacy!");
+
+  return data;
 };

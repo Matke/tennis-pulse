@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useAuth } from "@/store/useAuth";
 // components
 import ButtonIcon from "@/components/buttons/ButtonIcon";
@@ -8,7 +8,7 @@ import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import type { TooltipPlacement } from "@/components/tooltip/Tooltip";
 // icons
 import { MdEdit } from "react-icons/md";
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaUnlock } from "react-icons/fa";
 import { PiListHeartFill } from "react-icons/pi";
 // utils
 import { motion } from "framer-motion";
@@ -20,11 +20,15 @@ import {
   profilePopVariant,
   revealVariant,
 } from "@/utils/animationVariants";
+import { useUpdateProfilePrivacy } from "@/features/challenges/useUpdateProfilePrivacy";
 
 type ChallengerActionsData = {
   icon: React.ReactNode;
   tooltipId: string;
   tooltipContent: string;
+  isLoading?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
 };
 
 type BasicPlayerInfoChips = {
@@ -37,10 +41,12 @@ type BasicPlayerInfoChips = {
 // icons
 const EDIT_ICON = <MdEdit className="h-5 w-5" />;
 const LOCK_ICON = <FaLock className="h-5 w-5" />;
+const UNLOCK_ICON = <FaUnlock className="h-5 w-5" />;
 const LIST_HEART_ICON = <PiListHeartFill className="h-5 w-5" />;
 
 const ChallengerView = () => {
   const { userProfile } = useAuth();
+  const { updateProfilePrivacy, isUpdatingPrivacy } = useUpdateProfilePrivacy();
 
   const challengerActions: ChallengerActionsData[] = useMemo(
     () => [
@@ -50,10 +56,18 @@ const ChallengerView = () => {
         tooltipContent: "Edit your profile",
       },
       {
-        icon: LOCK_ICON,
+        icon: userProfile.isPublic ? UNLOCK_ICON : LOCK_ICON,
         tooltipId: "private-public",
-        tooltipContent:
-          "Your profile is private, so it won't appear in challenges or matches searches",
+        tooltipContent: userProfile?.isPublic
+          ? "Your profile is public, so it will appear in challenges or matches searches"
+          : "Your profile is private, so it won't appear in challenges or matches searches",
+        isLoading: isUpdatingPrivacy,
+        // disabled: isUpdatingPrivacy,
+        onClick: () =>
+          updateProfilePrivacy({
+            userId: userProfile?.id,
+            isPublic: !userProfile?.isPublic,
+          }),
       },
       {
         icon: LIST_HEART_ICON,
@@ -61,7 +75,12 @@ const ChallengerView = () => {
         tooltipContent: "View list of your favorite opponents",
       },
     ],
-    [],
+    [
+      userProfile.isPublic,
+      isUpdatingPrivacy,
+      updateProfilePrivacy,
+      userProfile.id,
+    ],
   );
 
   const chipsPlayerInfo: BasicPlayerInfoChips[] = [
@@ -78,6 +97,10 @@ const ChallengerView = () => {
       label: `${userProfile?.weight}kg`,
     },
   ];
+
+  useEffect(() => {
+    console.log("data");
+  }, []);
 
   return (
     // pseudo element to display VS text in the middle of the border (right side of element)
@@ -176,6 +199,9 @@ const ChallengerView = () => {
             <ButtonIcon
               key={action.tooltipId}
               icon={action.icon}
+              isLoading={action.isLoading ?? false}
+              onClick={action.onClick}
+              disabled={action.disabled ?? false}
               variant="outlined"
               className="shadow-tp-primary p-2.5 shadow-sm hover:border-none"
               backgroundColor="bg-tp-card-back"

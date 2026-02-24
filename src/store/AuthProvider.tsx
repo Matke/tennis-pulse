@@ -18,8 +18,6 @@ type AuthContextData = {
   setUser: Dispatch<SetStateAction<Partial<User> | null>>;
   setUserProfile: Dispatch<SetStateAction<UserProfileData>>;
   isLoading: boolean;
-  // isFetchingOnLogin: boolean;
-  // setIsFetchingOnLogin: Dispatch<SetStateAction<boolean>>;
   error: string;
   onLogout: () => void;
 };
@@ -30,8 +28,6 @@ const authContextInitialValue = {
   setUser: () => {},
   setUserProfile: () => {},
   isLoading: false,
-  // isFetchingOnLogin: false,
-  // setIsFetchingOnLogin: () => {},
   error: "",
   onLogout: () => {},
 };
@@ -44,7 +40,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useState<UserProfileData>(defaultUserProfile); // all are optional when Partial
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const [isFetchingOnLogin, setIsFetchingOnLogin] = useState<boolean>(true);
 
   const onLogout = async () => {
     try {
@@ -97,8 +92,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser,
         userProfile,
         setUserProfile,
-        // isFetchingOnLogin,
-        // setIsFetchingOnLogin,
         error,
         isLoading,
         onLogout,
