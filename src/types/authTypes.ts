@@ -17,12 +17,13 @@ export type UserProfileData = {
   bio: string;
   racket: string;
   dominantHand: string;
+  isPublic: boolean;
   created_at: string;
 };
 
 export type UserProfileFormData = Omit<
   UserProfileData,
-  "id" | "profileImage" | "created_at"
+  "id" | "profileImage" | "isPublic" | "created_at"
 > & {
   profileImage?: File;
 };
@@ -63,7 +64,13 @@ export const defaultUserProfile: UserProfileData = {
   bio: "",
   racket: "",
   dominantHand: "",
+  isPublic: true,
   created_at: "",
+};
+
+export type ProfilePrivacyData = {
+  userId: string;
+  isPublic: boolean;
 };
 
 export type SignupData = {
