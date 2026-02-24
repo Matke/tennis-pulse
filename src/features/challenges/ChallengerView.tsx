@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useAuth } from "@/store/useAuth";
 // components
 import ButtonIcon from "@/components/buttons/ButtonIcon";
@@ -54,6 +54,7 @@ const ChallengerView = () => {
         icon: EDIT_ICON,
         tooltipId: "edit-profile",
         tooltipContent: "Edit your profile",
+        onClick: () => console.log("Navigate to profile page"),
       },
       {
         icon: userProfile.isPublic ? UNLOCK_ICON : LOCK_ICON,
@@ -62,7 +63,6 @@ const ChallengerView = () => {
           ? "Your profile is public, so it will appear in challenges or matches searches"
           : "Your profile is private, so it won't appear in challenges or matches searches",
         isLoading: isUpdatingPrivacy,
-        // disabled: isUpdatingPrivacy,
         onClick: () =>
           updateProfilePrivacy({
             userId: userProfile?.id,
@@ -73,6 +73,7 @@ const ChallengerView = () => {
         icon: LIST_HEART_ICON,
         tooltipId: "list-favorite-opponents",
         tooltipContent: "View list of your favorite opponents",
+        onClick: () => console.log("Open a list of favorite opponents"),
       },
     ],
     [
@@ -97,10 +98,6 @@ const ChallengerView = () => {
       label: `${userProfile?.weight}kg`,
     },
   ];
-
-  useEffect(() => {
-    console.log("data");
-  }, []);
 
   return (
     // pseudo element to display VS text in the middle of the border (right side of element)
@@ -199,17 +196,17 @@ const ChallengerView = () => {
             <ButtonIcon
               key={action.tooltipId}
               icon={action.icon}
-              isLoading={action.isLoading ?? false}
               onClick={action.onClick}
+              isLoading={action.isLoading ?? false}
               disabled={action.disabled ?? false}
+              tooltipId={action.tooltipId}
+              tooltipContent={action.tooltipContent}
               variant="outlined"
               className="shadow-tp-primary p-2.5 shadow-sm hover:border-none"
               backgroundColor="bg-tp-card-back"
               borderColor="border-none"
               hoverClass
               rounded
-              tooltipId={action.tooltipId}
-              tooltipContent={action.tooltipContent}
               tooltipPlacement="top"
             />
           ))}

@@ -42,8 +42,10 @@ const OpponentView = () => {
   const [selectedOpponent, setSelectedOpponent] =
     useState<UserProfileData | null>(null);
   const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false);
+  // modal state
   const [isChallengeModalOpen, setIsChallengeModalOpen] =
     useState<boolean>(false);
+  // loading state
   const [isCardLoading, setIsCardLoading] = useState<boolean>(false);
 
   const handlePlayerSelect = useCallback((player: UserProfileData) => {
@@ -102,6 +104,7 @@ const OpponentView = () => {
       opponentId: selectedOpponent.id,
     };
 
+    // creates challenge and closes modal on successful creation
     createChallenge(newChallenge, {
       onSuccess: () => setIsChallengeModalOpen(false),
     });
