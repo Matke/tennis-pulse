@@ -1,39 +1,56 @@
-import { useState } from "react";
+// utils
+import { useSearchParams } from "react-router";
 // components
 import Tabs from "@/components/ui/Tabs";
-import OpponentView from "@/features/challenges/OpponentView";
-import ChallengerView from "@/features/challenges/ChallengerView";
 import PageNavigationWrapper from "@/layouts/PageNavigationWrapper";
 import SimpleCard from "@/components/ui/SimpleCard";
 import Switcher from "@/components/ui/Switcher";
-// context
-import { useAuth } from "@/store/useAuth";
+import ActiveChallengeTab from "@/features/challenges/ActiveChallengeTab";
 // icons
 import { FaHandshake } from "react-icons/fa";
 import { FaListAlt } from "react-icons/fa";
+import { RiGroup3Fill } from "react-icons/ri";
+
+// TABS ICONS
+const HANDSHAKE_ICON = <FaHandshake className="h-4 w-4" />;
+const LIST_ALL_ICON = <FaListAlt className="h-4 w-4" />;
+const MATCHUPS_ICON = <RiGroup3Fill className="h-4 w-4" />;
+
+export type ChallengeTabs = "new" | "matchups" | "view-all";
 
 const Challenge = () => {
-  const [currentTab, setCurrentTab] = useState("create");
-  const { userProfile } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentTab: ChallengeTabs =
+    (searchParams.get("tab") as ChallengeTabs) || "new";
+
+  const handleTabChange = (tabValue: ChallengeTabs) => {
+    searchParams.set("tab", tabValue);
+    setSearchParams(searchParams); // setSearchParams so it re-renders the page
+  };
 
   return (
     <div className="flex h-full flex-col justify-between gap-5">
       <PageNavigationWrapper>
-        <Tabs
+        <Tabs<ChallengeTabs>
           currentTab={currentTab}
-          changeTab={setCurrentTab}
+          changeTab={handleTabChange}
           tabs={[
             {
-              label: "create",
-              icon: <FaHandshake className="h-4 w-4" />,
+              label: "new",
+              icon: HANDSHAKE_ICON,
+            },
+            {
+              label: "matchups",
+              icon: MATCHUPS_ICON,
             },
             {
               label: "view-all",
-              icon: <FaListAlt className="h-4 w-4" />,
+              icon: LIST_ALL_ICON,
             },
           ]}
         />
-        {currentTab !== "view-all" && (
+        {currentTab === "new" && (
           <Switcher
             tooltipId="search-by"
             tooltipContent="Search by location or profiles"
@@ -41,15 +58,13 @@ const Challenge = () => {
         )}
       </PageNavigationWrapper>
 
+      {/* main view */}
       <SimpleCard
-        parentContainerClass="h-full w-full"
+        parentContainerClass="flex-1 min-h-0 w-full"
         disableHover
         disablePadding
       >
-        <div className="flex h-full w-full flex-row items-center justify-center">
-          <ChallengerView userProfile={userProfile} />
-          <OpponentView userProfile={userProfile} />
-        </div>
+        <ActiveChallengeTab currentTab={currentTab} />
       </SimpleCard>
     </div>
   );

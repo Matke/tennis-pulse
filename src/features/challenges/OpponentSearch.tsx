@@ -1,5 +1,5 @@
-import SearchBar from "@/features/challenges/SearchBar";
-import SearchResultList from "@/features/challenges/SearchResultList";
+import SearchBar from "@/features/challenges/search-bar/SearchBar";
+import SearchResultList from "@/features/challenges/search-bar/SearchResultList";
 import { searchProfiles } from "@/services/apiProfile";
 import type { UserProfileData } from "@/types/authTypes";
 import { useEffect, useState } from "react";

@@ -5,8 +5,13 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
+// icons
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+
+const MAGNIFY_GLASS_ICON = (
+  <FaMagnifyingGlass className="text-tp-typography h-4 w-4" />
+);
 
 export type SearchBarProps = {
   icon?: React.ReactNode;
@@ -29,7 +34,7 @@ const SearchBar = ({
   value,
   setValue,
   onChange,
-  icon = <FaMagnifyingGlass className="text-tp-typography h-4 w-4" />,
+  icon = MAGNIFY_GLASS_ICON,
   placeholder,
   children,
   type = "text",

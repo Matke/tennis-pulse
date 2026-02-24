@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+// context
+import { useAuth } from "@/store/useAuth";
 // components
 import ButtonActionsMenu, {
   type ButtonActionsData,
@@ -6,21 +8,46 @@ import ButtonActionsMenu, {
 import ButtonIcon from "@/components/buttons/ButtonIcon";
 import OpponentCard from "@/features/challenges/OpponentCard";
 import OpponentSearch from "@/features/challenges/OpponentSearch";
-import Typography from "@/components/text/Typography";
 import FullPlayerDetails from "@/features/challenges/FullPlayerDetails";
+import SearchProfileSkeletonLoader from "@/components/loaders/SearchProfileSkeletonLoader";
+import CreateChallengeForm from "@/features/challenges/CreateChallengeForm";
+import CropModal from "@/components/modals/CropModal";
 // types
 import { type UserProfileData } from "@/types/authTypes";
 // icons
 import { IoCloseCircle, IoTennisball } from "react-icons/io5";
 import { FaHeart, FaPeopleArrows } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
+// framer
+import { AnimatePresence, motion } from "framer-motion";
+import { useCreateChallenge } from "@/features/challenges/useCreateChallenge";
+import type { SubmitHandler } from "react-hook-form";
+import type {
+  CreateChallengeData,
+  CreateChallengeFormData,
+} from "@/types/challengeTypes";
 
-const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
+// ICONS
+const CLOSE_ICON = <IoCloseCircle className="h-6 w-6" />;
+const TENNIS_BALL_ICON = <IoTennisball className="h-5 w-5" />;
+const HEART_ICON = <FaHeart className="h-5 w-5" />;
+const PEOPLE_ARROWS = <FaPeopleArrows className="h-5 w-5" />;
+const DETAILS_ICON = <CgDetailsMore className="h-5 w-5" />;
+
+const OpponentView = () => {
+  const { userProfile } = useAuth();
+  const { createChallenge, isCreatingChallenge } = useCreateChallenge();
+
+  // states
   const [selectedOpponent, setSelectedOpponent] =
     useState<UserProfileData | null>(null);
-  const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(true);
+  const [showPlayerDetails, setShowPlayerDetails] = useState<boolean>(false);
+  const [isChallengeModalOpen, setIsChallengeModalOpen] =
+    useState<boolean>(false);
+  const [isCardLoading, setIsCardLoading] = useState<boolean>(false);
 
   const handlePlayerSelect = useCallback((player: UserProfileData) => {
+    setIsCardLoading(true);
     setSelectedOpponent(player);
   }, []);
 
@@ -31,19 +58,19 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
   const actionButtonsData: ButtonActionsData[] = useMemo(
     () => [
       {
-        icon: <FaHeart className="h-5 w-5" />,
+        icon: HEART_ICON,
         action: () => console.log("Save as favorite"),
         tooltipId: "favorite-opponent",
         tooltipContent: "Save as favorite opponent",
       },
       {
-        icon: <FaPeopleArrows className="h-5 w-5" />,
+        icon: PEOPLE_ARROWS,
         action: () => console.log("View head2head"),
         tooltipId: "list-challenges",
         tooltipContent: "View your head-to-head score with selected opponent",
       },
       {
-        icon: <CgDetailsMore className="h-5 w-5" />,
+        icon: DETAILS_ICON,
         action: toggleDetails,
         tooltipId: "full-player-details",
         tooltipContent: "Show player full details",
@@ -52,32 +79,72 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
     [toggleDetails],
   );
 
+  // small wait for image to load
+  useEffect(() => {
+    if (selectedOpponent) {
+      const timer = setTimeout(() => {
+        setIsCardLoading(false);
+      }, 400);
+
+      return () => clearTimeout(timer);
+    }
+  }, [selectedOpponent]);
+
+  // Challenge creation callback
+  const onCreateChallengeFormSubmit: SubmitHandler<CreateChallengeFormData> = (
+    data: CreateChallengeFormData,
+  ) => {
+    if (!userProfile.id || !selectedOpponent?.id) return;
+
+    const newChallenge: CreateChallengeData = {
+      challengeData: { ...data },
+      challengerId: userProfile?.id,
+      opponentId: selectedOpponent.id,
+    };
+
+    createChallenge(newChallenge, {
+      onSuccess: () => setIsChallengeModalOpen(false),
+    });
+  };
+
   return (
     <div className="hover:bg-tp-main-background/70 relative flex h-full w-1/2 cursor-pointer flex-col items-center justify-center transition-all duration-300">
       <div>
-        {/* Shows basic opponent info */}
-        <OpponentCard selectedOpponent={selectedOpponent} />
+        {/* Basic opponent details (OpponentCard preview) */}
+        {isCardLoading ? (
+          <SearchProfileSkeletonLoader />
+        ) : (
+          <OpponentCard selectedOpponent={selectedOpponent} />
+        )}
 
-        <div
-          className={`bg-tp-main-background absolute inset-0 z-100 flex flex-col transition-transform duration-500 ease-in-out ${!showPlayerDetails ? "translate-x-0" : "translate-x-full"} `}
-        >
-          <div className="relative">
-            <FullPlayerDetails opponentData={selectedOpponent} />
-            <ButtonIcon
-              onClick={toggleDetails}
-              icon={<IoCloseCircle className="h-6 w-6" />}
-              variant="outlined"
-              className="absolute top-3 left-4 p-2.5 shadow-sm"
-              backgroundColor="bg-tp-card-back"
-              borderColor="border-none"
-              rounded
-            />
-            <Typography variant="paragraph" className="mt-5 ml-7">
-              Last 5 matches
-            </Typography>
-          </div>
-        </div>
+        {/* Button actions menu option */}
+        <AnimatePresence mode="wait">
+          {showPlayerDetails && (
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              style={{ willChange: "transform" }}
+              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+              className="bg-tp-main-background/80 absolute inset-0 z-100 flex h-full flex-col"
+            >
+              <div className="relative h-full backdrop-blur-lg">
+                <FullPlayerDetails opponentData={selectedOpponent} />
+                <ButtonIcon
+                  onClick={() => setShowPlayerDetails(false)}
+                  icon={CLOSE_ICON}
+                  variant="outlined"
+                  className="absolute top-3 left-4 p-2.5 shadow-sm"
+                  backgroundColor="bg-tp-card-back"
+                  borderColor="border-none"
+                  rounded
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
+        {/* Bottom opponent menu with search bar */}
         <div className="mt-9 ml-1 flex items-center gap-2">
           {selectedOpponent && (
             <ButtonActionsMenu
@@ -94,9 +161,9 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
 
           {selectedOpponent && (
             <ButtonIcon
-              onClick={() => console.log("Start a match")}
+              onClick={() => setIsChallengeModalOpen(!isChallengeModalOpen)}
               disabled={!selectedOpponent}
-              icon={<IoTennisball className="h-5 w-5" />}
+              icon={TENNIS_BALL_ICON}
               variant="outlined"
               className="shadow-tp-primary p-2.5 shadow-sm"
               backgroundColor="bg-tp-card-back"
@@ -110,6 +177,35 @@ const OpponentView = ({ userProfile }: { userProfile: UserProfileData }) => {
           )}
         </div>
       </div>
+
+      {/* modals */}
+      <CropModal
+        title="Create challenge"
+        open={isChallengeModalOpen}
+        onClose={() => setIsChallengeModalOpen(!isChallengeModalOpen)}
+        modalBoxClassName="max-w-3xl"
+        buttonsLayoutClassName="justify-end"
+        buttons={[
+          {
+            label: "Cancel",
+            themeColor: "warning",
+            onClick: () => setIsChallengeModalOpen(false),
+          },
+          {
+            type: "submit",
+            formId: "create-challenge-form",
+            label: "Confirm",
+            themeColor: "tertiary",
+            isLoading: isCreatingChallenge,
+            disabled: isCreatingChallenge,
+          },
+        ]}
+      >
+        <CreateChallengeForm
+          onCreateChallengeFormSubmit={onCreateChallengeFormSubmit}
+          isCreatingChallenge={isCreatingChallenge}
+        />
+      </CropModal>
     </div>
   );
 };

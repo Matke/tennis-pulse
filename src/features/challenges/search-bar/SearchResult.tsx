@@ -4,15 +4,16 @@ import Typography from "@/components/text/Typography";
 import type { UserProfileData } from "@/types/authTypes";
 // utils
 import { calculateAge } from "@/utils/common";
-// import type { Dispatch, SetStateAction } from "react";
 
-type SearchResultData = {
-  data: UserProfileData;
-  onPlayerSelect: (player: UserProfileData) => void;
-  // onPlayerSelect: Dispatch<SetStateAction<UserProfileData | null>>;
+type SearchResultData<T extends UserProfileData> = {
+  data: T;
+  onPlayerSelect: (player: T) => void;
 };
 
-const SearchResult = ({ data, onPlayerSelect }: SearchResultData) => {
+const SearchResult = <T extends UserProfileData>({
+  data,
+  onPlayerSelect,
+}: SearchResultData<T>) => {
   return (
     <div
       className="hover:bg-tp-main-background z-100 flex items-center justify-between gap-3 rounded-md p-2 not-disabled:active:scale-99 not-disabled:active:brightness-99"

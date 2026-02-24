@@ -18,6 +18,8 @@ export type ButtonActionsMenuProps = {
   isMenuDisabled: boolean;
 };
 
+const ARROW_UP = <TiArrowSortedUp className="h-5 w-5" />;
+
 const ButtonActionsMenu = ({
   actions,
   isMenuDisabled,
@@ -42,9 +44,9 @@ const ButtonActionsMenu = ({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             // absolute will move this component into normal flow
             className="absolute bottom-0 z-50 mb-14 flex flex-col items-center gap-3"
@@ -77,7 +79,7 @@ const ButtonActionsMenu = ({
         <ButtonIcon
           variant="outlined"
           onClick={() => setIsOpen(!isOpen)}
-          icon={<TiArrowSortedUp className="h-5 w-5" />}
+          icon={ARROW_UP}
           disabled={isMenuDisabled}
           className={`shadow-tp-primary z-10 flex items-center justify-center rounded-full p-2.5 shadow-sm transition-all duration-300`}
           backgroundColor="bg-tp-card-back"
