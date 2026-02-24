@@ -57,8 +57,9 @@ const schema: yup.ObjectSchema<CreateChallengeFormData> = yup.object({
   matchDate: yup
     .date()
     // prevent past dates
-    .min(new Date(), "Date and time cannot be in past")
-    .required("Match date is required"),
+    .typeError("Please enter a valid date and time")
+    .required("Match date is required")
+    .min(new Date(), "Date and time cannot be in past"),
   courtName: yup.string().required("Court name is required"),
   matchFormat: yup.number().required("Match format is required"),
   surface: yup.string().required("Surface is required"),
