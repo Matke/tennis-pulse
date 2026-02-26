@@ -43,7 +43,7 @@ const Welcome = () => {
       </header>
 
       {/* Form section */}
-      <section className="h-full w-full flex-1">
+      <section className="mt-2.5 h-full w-full flex-1">
         <ActiveForm />
       </section>
 
@@ -79,6 +79,7 @@ const Welcome = () => {
           title="Welcome to Tennis Pulse!"
           description="We're pleased to have you onboard! Your tennis journey begins here. Whether you are total beginner or experienced player this app is designed to level up your game. "
           open={isWelcomeModalOpen}
+          buttonsLayoutClassName="mt-3"
           onClose={() => setIsWelcomeModalOpen(false)} // when clicked outside of modal
           buttons={[
             {
@@ -86,6 +87,7 @@ const Welcome = () => {
               themeColor: "tertiary",
               buttonSize: "large",
               className: "w-full",
+
               icon: <FaCircleArrowRight className="h-5 w-5" />,
               iconPosition: "right",
               onClick: () => setIsWelcomeModalOpen(false),

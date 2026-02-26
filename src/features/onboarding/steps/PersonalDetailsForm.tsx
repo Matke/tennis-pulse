@@ -170,7 +170,7 @@ const PersonalDetailsForm = () => {
       />
 
       {/* Image  */}
-      <div className="flex items-center justify-center">
+      <div className="mt-2 flex items-center justify-center">
         <div className="container flex items-end justify-center">
           {/* React Dropzone */}
           <ProfileImageUploader setIsCropModalOpen={setIsCropModalOpen} />

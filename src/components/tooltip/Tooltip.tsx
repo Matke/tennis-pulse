@@ -41,6 +41,7 @@ const Tooltip = ({
           whiteSpace: "normal",
           wordWrap: "break-word",
           textAlign: "justify",
+          zIndex: 100,
         }}
         variant={variant || "dark"}
         content={content}

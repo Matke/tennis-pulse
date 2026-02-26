@@ -154,7 +154,7 @@ const ImageCropper = ({
       ]}
     >
       <div className="grid w-full grid-cols-2">
-        <div className="relative col-span-2 h-70 overflow-hidden rounded-sm">
+        <div className="relative col-span-2 mt-1 h-70 overflow-hidden rounded-sm">
           <Cropper
             image={imageUrl}
             crop={crop}
@@ -166,7 +166,7 @@ const ImageCropper = ({
             onZoomChange={setZoom}
             onRotationChange={setRotation}
             classes={{
-              containerClassName: "rounded-xl",
+              containerClassName: "rounded-lg",
               cropAreaClassName: "border-2 border-tp-typography",
             }}
             cropShape={cropShape}

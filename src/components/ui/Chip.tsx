@@ -9,7 +9,7 @@ export type ChipSize = "standard" | "medium" | "large" | "huge"; // medium best 
 export type ChipVariant = "filled" | "outline";
 
 export type ChipProps = {
-  label: string;
+  label?: string;
   themeColor?: ChipThemeColor;
   chipSize?: ChipSize;
   variant?: ChipVariant;

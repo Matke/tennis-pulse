@@ -18,15 +18,15 @@ export type ModalBaseProps = {
 
 // animation setup for framer
 const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
+  hidden: { opacity: 0, x: -5 },
+  visible: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -5 },
 };
 
 const modalVariants = {
-  hidden: { opacity: 0, scale: 0.95, y: 25 },
+  hidden: { opacity: 0, scale: 0.98, y: 10 },
   visible: { opacity: 1, scale: 1, y: 0 },
-  exit: { opacity: 0, scale: 0.95, y: 25 },
+  exit: { opacity: 0, scale: 0.98, y: 10 },
 };
 
 const ModalBase = ({

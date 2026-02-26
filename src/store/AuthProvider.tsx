@@ -9,29 +9,25 @@ import {
 import { getCurrentUser, getUserProfile, logout } from "@/services/apiAuth";
 // types
 import type { User } from "@supabase/supabase-js";
-import type { UserProfileData } from "@/types/authTypes";
+import { defaultUserProfile, type UserProfileData } from "@/types/authTypes";
 import { toast } from "react-hot-toast";
 
 type AuthContextData = {
   user: Partial<User> | null;
-  userProfile: Partial<UserProfileData>;
+  userProfile: UserProfileData;
   setUser: Dispatch<SetStateAction<Partial<User> | null>>;
-  setUserProfile: Dispatch<SetStateAction<Partial<UserProfileData>>>;
+  setUserProfile: Dispatch<SetStateAction<UserProfileData>>;
   isLoading: boolean;
-  // isFetchingOnLogin: boolean;
-  // setIsFetchingOnLogin: Dispatch<SetStateAction<boolean>>;
   error: string;
   onLogout: () => void;
 };
 
 const authContextInitialValue = {
   user: null,
-  userProfile: {},
+  userProfile: defaultUserProfile,
   setUser: () => {},
   setUserProfile: () => {},
   isLoading: false,
-  // isFetchingOnLogin: false,
-  // setIsFetchingOnLogin: () => {},
   error: "",
   onLogout: () => {},
 };
@@ -40,10 +36,10 @@ const AuthContext = createContext<AuthContextData>(authContextInitialValue);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<Partial<User> | null>(null);
-  const [userProfile, setUserProfile] = useState<Partial<UserProfileData>>({}); // all are optional when Partial
+  const [userProfile, setUserProfile] =
+    useState<UserProfileData>(defaultUserProfile); // all are optional when Partial
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const [isFetchingOnLogin, setIsFetchingOnLogin] = useState<boolean>(true);
 
   const onLogout = async () => {
     try {
@@ -51,7 +47,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       toast.success("Successfully logged out");
       setUser(null);
-      setUserProfile({});
+      setUserProfile(defaultUserProfile);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -96,8 +92,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser,
         userProfile,
         setUserProfile,
-        // isFetchingOnLogin,
-        // setIsFetchingOnLogin,
         error,
         isLoading,
         onLogout,

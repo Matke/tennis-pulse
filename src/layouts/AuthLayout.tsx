@@ -9,7 +9,7 @@ const AuthLayout = () => {
   return (
     <div className="flex h-screen">
       {/* LEFT — Form part */}
-      <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:p-8 lg:w-1/2">
+      <div className="bg-charcoal-900 z-1000 w-full select-none md:block md:p-2 lg:w-1/2">
         <Card headerCardContent={<WelcomeMessage />}>
           <div className="w-full px-0 sm:px-0 md:px-12">
             <Outlet />
@@ -36,6 +36,7 @@ const AuthLayout = () => {
           videoSrc={tennisBallsComp}
           className="object-cover blur-[1.7px]"
         />
+        {/* blur left part of video */}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-full [background:linear-gradient(to_right,rgb(25_25_26)_5%,rgba(6_6_6/0.4)_7%)]" />
       </div>
     </div>
